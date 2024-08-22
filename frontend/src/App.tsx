@@ -23,6 +23,7 @@ const App: React.FC = () => {
           }
         />
       </Routes>
+      <button onClick={() => setIsVideoCallOpen(true)}>Open Video Call</button>
     </Router>
   );
 };
