@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -29,4 +30,14 @@ public class Profile {
     private DocumentType documentType;
 
     private String documentNumber;
+
+    private String avatarUrl;
+
+    private LocalDate birth;
+
+    private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "district_id")
+    private District district;
 }
