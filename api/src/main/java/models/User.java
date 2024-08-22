@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
