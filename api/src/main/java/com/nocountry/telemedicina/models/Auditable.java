@@ -1,4 +1,4 @@
-package models;
+package com.nocountry.telemedicina.models;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
