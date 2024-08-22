@@ -44,6 +44,6 @@ public class Schedules {
     @ManyToOne
     @JoinColumn(name = "specialist_id",foreignKey = @ForeignKey(name = "FK_SCHEDULES_SPECIALIST"), nullable = false)
     Specialist specialist;
-
+    
     private Boolean active;
 }
