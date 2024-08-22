@@ -6,7 +6,6 @@ const Login: React.FC = () => {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    // Aquí puedes manejar el envío del formulario
     console.log("Usuario:", username);
     console.log("Contraseña:", password);
   };
