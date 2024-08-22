@@ -17,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "bookings")
-public class Booking extends Auditablegit{
+public class Booking extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,7 +36,7 @@ public class Booking extends Auditablegit{
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Enum<State> state;
+    private State state;
 
     @OneToOne(mappedBy = "booking",cascade = {CascadeType.ALL},orphanRemoval = true)
     @JsonIgnore
