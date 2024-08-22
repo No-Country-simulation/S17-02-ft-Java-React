@@ -1,4 +1,5 @@
 import React from "react";
+import Login from "../login/login.tsx";
 
 const Navbar: React.FC = () => {
   return (
@@ -17,6 +18,9 @@ const Navbar: React.FC = () => {
           <a href="#contact">Contacto</a>
         </li>
       </ul>
+      <div className="login-container">
+        <Login />
+      </div>
     </nav>
   );
 };
