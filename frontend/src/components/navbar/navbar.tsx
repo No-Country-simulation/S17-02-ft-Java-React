@@ -1,26 +1,26 @@
 import React from "react";
-import Login from "../login/login.tsx";
+import { Link } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   return (
     <nav>
       <ul>
         <li>
-          <a href="#home">Inicio</a>
+          <Link to="/">Inicio</Link>
         </li>
         <li>
-          <a href="#about">Acerca de</a>
+          <Link to="#about">Acerca de</Link>
         </li>
         <li>
-          <a href="#services">Servicios</a>
+          <Link to="#services">Servicios</Link>
         </li>
         <li>
-          <a href="#contact">Contacto</a>
+          <Link to="#contact">Contacto</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
-      <div className="login-container">
-        <Login />
-      </div>
     </nav>
   );
 };

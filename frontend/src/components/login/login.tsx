@@ -1,4 +1,5 @@
 import React, { useState, FormEvent } from "react";
+import { Link } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -36,6 +37,9 @@ const Login: React.FC = () => {
         </div>
         <button type="submit">Iniciar sesión</button>
       </form>
+      <p>
+        <Link to="/">Inicio</Link>
+      </p>
     </div>
   );
 };
