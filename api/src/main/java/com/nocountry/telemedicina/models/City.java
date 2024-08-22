@@ -2,6 +2,7 @@ package com.nocountry.telemedicina.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,11 +27,11 @@ public class City {
     @Column(name = "city_id")
     private Long cityId;
 
-    @Column(name = "city_name")
+    @Column(name = "city_name",length = 25, nullable = false)
     private String cityName;
 
     @ManyToOne
-    @JoinColumn(name = "departament_id")
+    @JoinColumn(name = "departament_id",foreignKey = @ForeignKey(name = "FK_CITIES_DEPARMENT"), nullable = false)
     private Departament departament;
 
 }

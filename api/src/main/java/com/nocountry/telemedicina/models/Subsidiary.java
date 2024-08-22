@@ -21,26 +21,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "specialists")
-public class Specialist {
+@Table(name = "subsidiaries")
+public class Subsidiary {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "specialist_id")
-    private UUID specialistId = UUID.randomUUID();
+    @Column(name = "subsidiary_id")
+    private UUID subsidiaryId=UUID.randomUUID();
 
-    @Column(name = "specialist_code",nullable = false,length = 20)
-    private String specialistCode;
-
-    @ManyToOne
-    @JoinColumn(name = "specialty_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_SPECIALTY"), nullable = false)
-    private Specialty specialty;
-
-
-    @Column(name = "booking_price",nullable = false)
-    private Double bookingPrice;
+    @Column(name = "address",nullable = false,length = 120)
+    private String address;
 
     @ManyToOne
-    @JoinColumn(name = "clinic_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_CLINIC"), nullable = false)
-    private Clinic clinic;
+    @JoinColumn(name = "district_id",foreignKey = @ForeignKey(name = "FK_SUBDIARIES_DISTRICT"), nullable = false)
+    District district;
+    
+    @ManyToOne
+    @JoinColumn(name = "clinic_id",foreignKey = @ForeignKey(name = "FK_SUBDIARIES_CLINIC"), nullable = false)
+    Clinic clinic;
 }

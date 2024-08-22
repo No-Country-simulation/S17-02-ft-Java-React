@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,21 +21,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Sites")
-public class Site {
+@Table(name = "payments")
+public class Pay {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "site_id")
-    private UUID siteId=UUID.randomUUID();
-
-    private String address;
+    @Column(name = "pay_id")
+    private UUID payId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "district_id")
-    District district;
-    
-    @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    Clinic clinic;
+    @JoinColumn(name = "schedules_id",foreignKey = @ForeignKey(name = "FK_PAYMENTS_SCHEDULES"),nullable = false)
+    private Schedules schedules;
 }

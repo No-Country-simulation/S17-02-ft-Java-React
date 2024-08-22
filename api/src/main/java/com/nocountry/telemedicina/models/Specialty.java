@@ -24,7 +24,9 @@ public class Specialty {
     @Column(name = "specialty_id")
     private Long specialtyId;
 
+    @Column(name = "specialty_name",nullable = false,length = 30)
     private String specialtyName;
-
+    
+    @Column(name = "specialty_description",nullable = false,length = 80)
     private String specialtyDescription;
 }
