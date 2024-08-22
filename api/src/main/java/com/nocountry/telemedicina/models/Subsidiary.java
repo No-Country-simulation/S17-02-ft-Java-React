@@ -22,7 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "subsidiaries")
-public class Subsidiary {
+public class Subsidiary extends Auditable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,10 +33,10 @@ public class Subsidiary {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "district_id",foreignKey = @ForeignKey(name = "FK_SUBDIARIES_DISTRICT"), nullable = false)
-    District district;
+    @JoinColumn(name = "district_id",foreignKey = @ForeignKey(name = "FK_SUBSIDIARIES_DISTRICT"), nullable = false)
+    private District district;
     
     @ManyToOne
-    @JoinColumn(name = "clinic_id",foreignKey = @ForeignKey(name = "FK_SUBDIARIES_CLINIC"), nullable = false)
-    Clinic clinic;
+    @JoinColumn(name = "clinic_id",foreignKey = @ForeignKey(name = "FK_SUBSIDIARIES_CLINIC"), nullable = false)
+    private Clinic clinic;
 }

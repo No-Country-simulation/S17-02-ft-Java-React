@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,4 +29,16 @@ public class User extends Auditable{
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private List<Role>roles;
+
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private Profile profile;
+
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private List<Clinic>clinics;
+
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private ClinicalHistory clinicalHistory;
 }

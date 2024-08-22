@@ -2,19 +2,10 @@ package com.nocountry.telemedicina.models;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nocountry.telemedicina.models.enums.State;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,7 +17,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "bookings")
-public class Booking {
+public class Booking extends Auditablegit{
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -46,4 +37,12 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Enum<State> state;
+
+    @OneToOne(mappedBy = "booking",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private Pay pay;
+
+    @OneToOne(mappedBy = "booking",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private ClinicalRecord clinicalRecord;
 }

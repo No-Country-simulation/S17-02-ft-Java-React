@@ -35,5 +35,5 @@ public class Country {
 
     @OneToMany(mappedBy = "country", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore
-    private List<Departament> departaments;
+    private List<Department> departments;
 }

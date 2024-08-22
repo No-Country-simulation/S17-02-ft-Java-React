@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "profile_id")
@@ -45,4 +45,8 @@ public class Profile {
     @ManyToOne
     @JoinColumn(name = "district_id",foreignKey = @ForeignKey(name = "FK_PROFILES_DISTRICT"), nullable = false)
     private District district;
+
+    @OneToOne
+    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_PROFILE_USER"), nullable = false)
+    private User user;
 }

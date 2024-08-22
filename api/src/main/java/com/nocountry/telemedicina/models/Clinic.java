@@ -1,16 +1,10 @@
 package com.nocountry.telemedicina.models;
 
+import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "clinics")
-public class Clinic {
+public class Clinic extends Auditable{
      @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "clinic_id")
@@ -34,4 +28,12 @@ public class Clinic {
     @ManyToOne
     @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_CLINICS_USER"), nullable = false)
     User user;
+
+    @OneToMany(mappedBy = "clinic",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private List<Specialist>specialists;
+
+    @OneToMany(mappedBy = "clinic",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private List<Subsidiary> subsidiaries;
 }
