@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class RoleServiceImpl extends CRUDServiceImpl<Role, UUID> implements IRoleService {
+public class RoleServiceImpl extends CRUDServiceImpl<Role, Long> implements IRoleService {
 
     @Autowired
     private IRoleRepo repo;
 
     @Override
-    protected IGenericRepo<Role, UUID> getRepo() {
+    protected IGenericRepo<Role, Long> getRepo() {
         return repo;
     }
 }

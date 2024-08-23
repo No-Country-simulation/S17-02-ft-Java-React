@@ -7,16 +7,15 @@ import com.nocountry.telemedicina.services.IDepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
-public class DepartmentServiceImpl extends CRUDServiceImpl<Department, UUID> implements IDepartmentService {
+public class DepartmentServiceImpl extends CRUDServiceImpl<Department, Long> implements IDepartmentService {
 
     @Autowired
     private IDepartmentRepo repo;
 
     @Override
-    protected IGenericRepo<Department, UUID> getRepo() {
+    protected IGenericRepo<Department, Long> getRepo() {
         return repo;
     }
 }

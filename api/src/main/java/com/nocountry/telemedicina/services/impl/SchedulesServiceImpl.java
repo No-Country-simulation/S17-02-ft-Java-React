@@ -7,16 +7,15 @@ import com.nocountry.telemedicina.services.ISchedulesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
-public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, UUID> implements ISchedulesService {
+public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, Long> implements ISchedulesService {
 
     @Autowired
     private ISchedulesRepo repo;
 
     @Override
-    protected IGenericRepo<Schedules, UUID> getRepo() {
+    protected IGenericRepo<Schedules, Long> getRepo() {
         return repo;
     }
 }

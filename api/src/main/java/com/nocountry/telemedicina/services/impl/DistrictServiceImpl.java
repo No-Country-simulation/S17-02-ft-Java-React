@@ -7,16 +7,15 @@ import com.nocountry.telemedicina.services.IDistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
-public class DistrictServiceImpl extends CRUDServiceImpl<District, UUID> implements IDistrictService {
+public class DistrictServiceImpl extends CRUDServiceImpl<District, Long> implements IDistrictService {
 
     @Autowired
     private IDistrictRepo repo;
 
     @Override
-    protected IGenericRepo<District, UUID> getRepo() {
+    protected IGenericRepo<District, Long> getRepo() {
         return repo;
     }
 }

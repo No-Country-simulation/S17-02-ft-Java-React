@@ -7,16 +7,15 @@ import com.nocountry.telemedicina.services.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 
 @Service
-public class CountryServiceImpl extends CRUDServiceImpl<Country, UUID> implements ICountryService {
+public class CountryServiceImpl extends CRUDServiceImpl<Country, Long> implements ICountryService {
 
     @Autowired
     private ICountryRepo repo;
 
     @Override
-    protected IGenericRepo<Country, UUID> getRepo() {
+    protected IGenericRepo<Country, Long> getRepo() {
         return repo;
     }
 }

@@ -1,7 +1,5 @@
 package com.nocountry.telemedicina.dto.request;
-
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
