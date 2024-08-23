@@ -1,7 +1,8 @@
 package com.nocountry.telemedicina.dto.request;
 
-import com.nocountry.telemedicina.dto.response.DepartmentResponseDTO;
-import jakarta.validation.constraints.Max;
+import com.nocountry.telemedicina.dto.response.ClinicResponseDTO;
+import com.nocountry.telemedicina.dto.response.DistrictResponseDTO;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -13,13 +14,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CityRequestDTO {
-
-    @Min(3)
-    @Max(15)
-    @NotBlank
-    private String cityName;
+public class SubsidiaryRequestDTO {
 
     @NotBlank
-    private DepartmentResponseDTO department;
+    @Min(5)
+    private String address;
+
+    @NotBlank
+    private DistrictResponseDTO district;
+
+    @NotBlank
+    private ClinicResponseDTO clinic;
 }

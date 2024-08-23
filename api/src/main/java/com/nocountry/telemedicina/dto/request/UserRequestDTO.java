@@ -1,23 +1,29 @@
 package com.nocountry.telemedicina.dto.request;
 
-import com.nocountry.telemedicina.dto.response.CountryResponseDTO;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
+
+import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentRequestDTO {
+@NoArgsConstructor
+public class UserRequestDTO {
 
     @NotBlank
-    @Min(3)
-    private String departmentName;
+    @UniqueElements
+    @Email
+    private String username;
+
+    private String password;
 
     @NotBlank
-    private CountryResponseDTO country;
+    private List<RoleRequestDTO> roles;
 }

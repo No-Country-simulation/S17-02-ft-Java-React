@@ -1,6 +1,6 @@
 package com.nocountry.telemedicina.dto.request;
 
-import com.nocountry.telemedicina.dto.response.CountryResponseDTO;
+import com.nocountry.telemedicina.dto.response.UserResponseDTO;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,14 +10,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class DepartmentRequestDTO {
+@NoArgsConstructor
+public class ClinicRequestDTO {
 
     @NotBlank
-    @Min(3)
-    private String departmentName;
+    private UserResponseDTO user;
 
     @NotBlank
-    private CountryResponseDTO country;
+    @Min(5)
+    private String historyCode;
 }
