@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Service
@@ -20,8 +19,11 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
     @Transactional
     @Override
     public T save(T t) {
-        t.setActive(true);
-        t.setCreatedAt(LocalDateTime.now());
+        if(!t.getActive()){
+            t.setActive(true);
+            t.setCreatedAt(LocalDateTime.now());
+        }
+        // Function for set user who created
         //t.setCreateBy();
         return getRepo().save(t);
     }
@@ -40,6 +42,9 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
     @Transactional
     @Override
     public void deleteById(ID id) {
-        //t.setActive()
+        T t = getRepo().findById(id).orElseThrow();
+        if(t.getActive()) {
+            t.setActive(false);
+        }
     }
 }
