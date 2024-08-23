@@ -65,6 +65,7 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
         T t = getRepo().findById(id).orElseThrow();
         if(t.getActive()) {
             t.setActive(false);
+            //t.setDeleteBy();
         }
     }
 }
