@@ -5,9 +5,11 @@ import com.nocountry.telemedicina.repository.ICountryRepo;
 import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.services.ICountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class CountryServiceImpl extends CRUDServiceImpl<Country, UUID> implements ICountryService {
 
     @Autowired

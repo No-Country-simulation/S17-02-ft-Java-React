@@ -5,9 +5,11 @@ import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.repository.ISubsidiaryRepo;
 import com.nocountry.telemedicina.services.ISubsidiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class SubsidiaryServiceImpl extends CRUDServiceImpl<Subsidiary, UUID> implements ISubsidiaryService {
 
     @Autowired

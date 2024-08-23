@@ -5,9 +5,11 @@ import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.repository.IPayRepo;
 import com.nocountry.telemedicina.services.IPayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class PayServiceImpl extends CRUDServiceImpl<Pay, UUID> implements IPayService {
 
     @Autowired

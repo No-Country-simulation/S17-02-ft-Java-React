@@ -5,9 +5,11 @@ import com.nocountry.telemedicina.repository.IClinicalHistoryRepo;
 import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.services.IClinicalHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class ClinicalHistoryServiceImpl extends CRUDServiceImpl<ClinicalHistory, UUID> implements IClinicalHistoryService {
 
     @Autowired
