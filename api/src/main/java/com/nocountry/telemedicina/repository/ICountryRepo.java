@@ -2,6 +2,8 @@ package com.nocountry.telemedicina.repository;
 
 import com.nocountry.telemedicina.models.Country;
 
-public interface ICountryRepo extends IGenericRepo<Country,Long>{
+import java.util.UUID;
+
+public interface ICountryRepo extends IGenericRepo<Country, UUID>{
 
 }
