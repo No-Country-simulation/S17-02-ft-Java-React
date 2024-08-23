@@ -8,4 +8,5 @@ import java.util.List;
 @Getter
 @Setter
 public record SpecialtyResponseDTO(Long specialtyId, String specialtyName, String specialtyDescription, List<SpecialistResponseDTO> specialists) {
+
 }
