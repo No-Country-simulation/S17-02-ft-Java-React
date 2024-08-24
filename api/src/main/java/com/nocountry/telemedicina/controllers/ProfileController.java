@@ -98,7 +98,7 @@ public class ProfileController {
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,@PathVariable("id") UUID id){
+    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,@PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id){
         Profile obj = service.updateById(id,mapper.toProfile(dto));
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
