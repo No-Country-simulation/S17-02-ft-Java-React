@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.config.mapper;
 
+import com.nocountry.telemedicina.dto.request.ProfileRequestDTO;
 import com.nocountry.telemedicina.dto.response.ProfileResponseDTO;
 import com.nocountry.telemedicina.models.Profile;
 import org.mapstruct.Mapper;
@@ -16,8 +17,7 @@ public interface ProfileMapper {
     @Mapping(source = "district.districtName",target = "districtName")
     ProfileResponseDTO toProfileDTO(Profile profile);
 
-    @Mapping(source = "email",target = "user.username")
-    @Mapping(source = "userId",target = "user.userId")
-    @Mapping(source = "districtName",target = "district.districtName")
-    Profile toProfile(ProfileResponseDTO profileDTO);
+    @Mapping(source = "user.userId",target = "user")
+    @Mapping(source = "district.districtName",target = "district")
+    Profile toProfile(ProfileRequestDTO profileDTO);
 }
