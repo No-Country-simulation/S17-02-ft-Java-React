@@ -17,7 +17,7 @@ public interface ProfileMapper {
     @Mapping(source = "district.districtName",target = "districtName")
     ProfileResponseDTO toProfileDTO(Profile profile);
 
-    @Mapping(source = "user.userId",target = "user")
-    @Mapping(source = "district.districtName",target = "district")
+    @Mapping(source = "user",target = "user")
+    @Mapping(source = "district",target = "district")
     Profile toProfile(ProfileRequestDTO profileDTO);
 }
