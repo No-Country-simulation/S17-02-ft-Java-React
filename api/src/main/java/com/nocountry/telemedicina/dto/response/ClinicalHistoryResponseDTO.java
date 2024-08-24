@@ -5,7 +5,5 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 public record ClinicalHistoryResponseDTO(UUID clinicalHistoryId,UserResponseDTO user,String historyCode) {
 }

@@ -6,7 +6,5 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 public record PayResponseDTO(UUID payId, String operationNumber, State payState, String clinicName, Double mountPay) {
 }

@@ -7,7 +7,5 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 public record BookingResponseDTO(UUID bookingId, State state, SchedulesResponseDTO schedules, UserResponseDTO user, PayResponseDTO pay, ClinicalRecordResponseDTO clinicalRecord) {
 }

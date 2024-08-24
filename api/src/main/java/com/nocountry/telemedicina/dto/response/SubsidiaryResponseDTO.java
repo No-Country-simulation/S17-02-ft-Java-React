@@ -7,7 +7,5 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
 public record SubsidiaryResponseDTO(UUID subsidiaryId,String address,DistrictResponseDTO district,ClinicResponseDTO clinic) {
 }

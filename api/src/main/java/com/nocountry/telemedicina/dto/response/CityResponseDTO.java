@@ -6,7 +6,5 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 public record CityResponseDTO(Long cityId, String cityName, List<DistrictResponseDTO> districts) {
 }
