@@ -1,8 +1,6 @@
 package com.nocountry.telemedicina.dto.response;
 
 import com.nocountry.telemedicina.models.enums.DocumentType;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
