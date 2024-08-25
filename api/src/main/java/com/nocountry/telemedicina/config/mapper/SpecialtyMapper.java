@@ -13,7 +13,7 @@ public interface SpecialtyMapper {
     SpecialistMapper INSTANCE = Mappers.getMapper(SpecialistMapper.class);
 
     @Mapping(source = "specialists",target = "specialists")
-    SpecialtyResponseDTO toSpecialtyDto(Specialty specialty);
+    SpecialtyResponseDTO toSpecialtyDTO(Specialty specialty);
 
     Specialty toSpecialty(SpecialtyRequestDTO dto);
 }

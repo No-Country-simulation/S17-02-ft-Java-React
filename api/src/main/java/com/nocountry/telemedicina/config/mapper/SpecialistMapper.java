@@ -16,7 +16,7 @@ public interface SpecialistMapper {
     @Mapping(source = "clinic.clinicName",target = "clinicName")
     @Mapping(source = "specialty.name",target = "specialtyName")
     @Mapping(source = "specialty.id",target = "specialtyId")
-    SpecialistResponseDTO toSpecialistDto(Specialist specialist);
+    SpecialistResponseDTO toSpecialistDTO(Specialist specialist);
 
     @Mapping(source = "clinic",target = "clinic")
     @Mapping(source = "specialty",target = "specialty")

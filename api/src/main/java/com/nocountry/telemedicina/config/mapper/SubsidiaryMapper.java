@@ -15,7 +15,7 @@ public interface SubsidiaryMapper {
     @Mapping(source = "district.districtName",target = "districtName")
     @Mapping(source = "clinic.clinicId",target = "clinicId")
     @Mapping(source = "clinic.clinicName",target = "clinicName")
-    SubsidiaryResponseDTO toSubsidiaryDto(Subsidiary subsidiary);
+    SubsidiaryResponseDTO toSubsidiaryDTO(Subsidiary subsidiary);
 
     @Mapping(source = "district",target = "district")
     @Mapping(source = "clinic",target = "clinic")
