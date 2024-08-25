@@ -13,7 +13,7 @@ public interface SchedulesMapper {
     SchedulesMapper INSTANCE = Mappers.getMapper(SchedulesMapper.class);
 
     @Mapping(source = "specialist.specialistId", target = "specialistId")
-    @Mapping(source = "specialist.specialistName",target = "specialistName")
+    @Mapping(source = "specialist.profile.profileName",target = "specialistName")
     SchedulesResponseDTO toSchedulesDTO(Schedules schedules);
 
     @Mapping(source = "specialist",target = "specialist")

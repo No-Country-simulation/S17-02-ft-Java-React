@@ -6,10 +6,12 @@ import java.util.UUID;
 public record SpecialistResponseDTO(
         UUID specialistId,
         String specialistCode,
-        UUID specialtyId,
+        Long specialtyId,
         String specialtyName,
         Double bookingPrice,
         UUID clinicId,
         String clinicName,
+        String specialistName,
+        String specialistLastname,
         List<SchedulesResponseDTO> schedules) {
 }

@@ -18,8 +18,7 @@ public interface PayMapper {
     @Mapping(source = "booking.schedules.specialist.bookingPrice",target = "mountPay")
     PayResponseDTO toPayDTO(Pay pay);
 
-    @Mapping(source = "schedules",target = "schedules")
-    @Mapping(source = "user",target = "user")
+    @Mapping(source = "booking",target = "booking")
     Pay toPay(PayRequestDTO dto);
 
 }
