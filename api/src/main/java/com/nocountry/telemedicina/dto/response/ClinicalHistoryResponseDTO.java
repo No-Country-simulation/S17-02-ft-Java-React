@@ -2,5 +2,10 @@ package com.nocountry.telemedicina.dto.response;
 
 import java.util.UUID;
 
-public record ClinicalHistoryResponseDTO(UUID clinicalHistoryId,UserResponseDTO user,String historyCode) {
+// TODO: Usar de preferencia una referencia con perfil
+public record ClinicalHistoryResponseDTO(
+        UUID clinicalHistoryId,
+        String username,
+        String userId,
+        String historyCode) {
 }
