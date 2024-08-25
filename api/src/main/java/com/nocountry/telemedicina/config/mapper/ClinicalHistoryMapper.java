@@ -8,9 +8,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface ClinicHistoryMapper {
+public interface ClinicalHistoryMapper {
 
-    ClinicHistoryMapper INSTANCE = Mappers.getMapper(ClinicHistoryMapper.class);
+    ClinicalHistoryMapper INSTANCE = Mappers.getMapper(ClinicalHistoryMapper.class);
 
     @Mapping(source = "user.username",target = "username")
     @Mapping(source = "user.userId",target = "userId")
