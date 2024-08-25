@@ -19,5 +19,5 @@ public class ClinicRequestDTO {
 
     @NotBlank
     @Min(5)
-    private String historyCode;
+    private String clinicName;
 }

@@ -38,6 +38,10 @@ public class Specialist extends Auditable{
     @JoinColumn(name = "clinic_id", foreignKey = @ForeignKey(name = "FK_SPECIALISTS_CLINIC"), nullable = false)
     private Clinic clinic;
 
+    @OneToOne
+    @JoinColumn(name = "profile_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_Profile"),nullable = false)
+    private Profile profile;
+
     @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore
     private List<Schedules>schedules;

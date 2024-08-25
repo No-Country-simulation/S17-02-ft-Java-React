@@ -1,11 +1,13 @@
 package com.nocountry.telemedicina.dto.response;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.nocountry.telemedicina.models.enums.State;
 
 import java.util.UUID;
 
-@Getter
-@Setter
-public record PayResponseDTO(UUID payId, String operationNumber, BookingResponseDTO booking) {
+public record PayResponseDTO(
+        UUID payId,
+        String operationNumber,
+        State payState,
+        String clinicName,
+        Double mountPay) {
 }
