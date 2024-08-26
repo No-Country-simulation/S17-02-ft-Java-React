@@ -4,6 +4,7 @@ import Home from "./components/home/index.tsx";
 import Login from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
 import "./App.css";
+import Profile from "./components/Profile/Profile.tsx";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/video-call"
           element={

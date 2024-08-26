@@ -23,6 +23,9 @@ const Navbar: React.FC = () => {
         <li>
           <Link to="/video-call">Video Llamada</Link>{" "}
         </li>
+        <li>
+          <Link to="/profile">Ver Perfil</Link>
+        </li>
       </ul>
     </nav>
   );
