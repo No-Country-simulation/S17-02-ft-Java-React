@@ -7,10 +7,8 @@ import RegisterClinic from "../registerClinic/index.tsx";
 import RegisterEspecialist from "../registerEspecialist/index.tsx";
 
 const Home: React.FC = () => {
-  // State to determine which form is currently shown
   const [activeForm, setActiveForm] = useState<string | null>(null);
 
-  // Function to open a specific form and close others
   const toggleForm = (form: string) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
