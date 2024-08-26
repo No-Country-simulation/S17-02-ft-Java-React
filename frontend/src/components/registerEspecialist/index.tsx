@@ -13,6 +13,8 @@ interface FormData {
   licenseNumber: string;
   email: string;
   phone: string;
+  username: string;
+  password: string;
   selectedSpecialties: Specialty[];
 }
 
@@ -31,6 +33,8 @@ const DoctorRegistrationForm: React.FC = () => {
     licenseNumber: "",
     email: "",
     phone: "",
+    username: "",
+    password: "",
     selectedSpecialties: [],
   });
 
@@ -43,22 +47,24 @@ const DoctorRegistrationForm: React.FC = () => {
   };
 
   const handleSpecialtyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target as HTMLInputElement;
-    setFormData((prevData) => {
-      const selectedSpecialties = checked
-        ? [...prevData.selectedSpecialties, value as Specialty]
-        : prevData.selectedSpecialties.filter(
-            (specialty) => specialty !== (value as Specialty)
-          );
+    const { value, checked } = e.target;
+    if (value in specialties) {
+      setFormData((prevData) => {
+        const selectedSpecialties = checked
+          ? [...prevData.selectedSpecialties, value as Specialty]
+          : prevData.selectedSpecialties.filter(
+              (specialty) => specialty !== (value as Specialty)
+            );
 
-      return { ...prevData, selectedSpecialties };
-    });
+        return { ...prevData, selectedSpecialties };
+      });
+    }
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     console.log("Datos del formulario:", formData);
+    // Handle form submission logic (e.g., API call) here
   };
 
   return (
@@ -105,6 +111,28 @@ const DoctorRegistrationForm: React.FC = () => {
           name="phone"
           value={formData.phone}
           onChange={handleChange}
+        />
+      </label>
+
+      <label>
+        Nombre de usuario:
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          required
+        />
+      </label>
+
+      <label>
+        Contraseña:
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
         />
       </label>
 
