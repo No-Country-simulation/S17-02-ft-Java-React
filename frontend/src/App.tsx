@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/home/home.tsx";
-import Login from "./components/login/login.tsx";
-import VideoCall from "./components/videoCall/videocall.tsx";
+import Home from "./components/home/index.tsx";
+import Login from "./components/login/index.tsx";
+import VideoCall from "./components/videoCall/index.tsx";
 import "./App.css";
 
 const App: React.FC = () => {
