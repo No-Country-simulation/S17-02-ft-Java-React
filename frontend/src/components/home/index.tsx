@@ -7,7 +7,6 @@ import RegisterUser from "../registerUser/index.tsx";
 import RegisterClinic from "../registerClinic/index.tsx";
 import RegisterEspecialist from "../registerEspecialist/index.tsx";
 
-// Establece el elemento raíz para el modal
 Modal.setAppElement("#root");
 
 const Home: React.FC = () => {
