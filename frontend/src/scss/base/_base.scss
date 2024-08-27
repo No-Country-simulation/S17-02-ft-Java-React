@@ -1,6 +1,8 @@
+
+html {
+    font-size: 62.5%;
+  }
+
 body{
-    font-family: var(--font-primary);
-    font-weight: 300    ;
-    font-size: 20px;
-    line-height: 1.5;
+    font-family: $font-primary;
 }

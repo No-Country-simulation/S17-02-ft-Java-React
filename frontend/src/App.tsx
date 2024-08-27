@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home/index.tsx";
 import Login from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
-import "./App.scss";
+import "../src/css/App.scss";
+import { PaymentGateway } from "./components/paymentGateway/paymentGateway.tsx";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
@@ -13,6 +14,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/payment" element={<PaymentGateway />} />
         <Route
           path="/video-call"
           element={

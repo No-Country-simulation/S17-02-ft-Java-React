@@ -27,7 +27,6 @@ const Home: React.FC = () => {
     <div>
       <Header />
       <NavBar />
-
       <button onClick={() => openModal("user")}>
         {activeForm === "user"
           ? "Cerrar Registro de Usuario"
