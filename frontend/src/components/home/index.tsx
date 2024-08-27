@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import Header from "../header/index.tsx";
-import Footer from "../footer/index.tsx";
-import NavBar from "../navbar/index.tsx";
-import RegisterUser from "../registerUser/index.tsx";
-import RegisterClinic from "../registerClinic/index.tsx";
-import RegisterEspecialist from "../registerEspecialist/index.tsx";
+import { Header } from "../header/index.tsx";
+import { Footer } from "../footer/index.tsx";
+import { Navbar } from "../navbar/index.tsx";
+import { RegisterUser } from "../registerUser/index.tsx";
+import { RegisterClinic } from "../registerClinic/index.tsx";
+import { RegisterEspecialist } from "../registerEspecialist/index.tsx";
 
 Modal.setAppElement("#root");
 
@@ -26,7 +26,7 @@ const Home: React.FC = () => {
   return (
     <div>
       <Header />
-      <NavBar />
+      <Navbar />
       <button onClick={() => openModal("user")}>
         {activeForm === "user"
           ? "Cerrar Registro de Usuario"

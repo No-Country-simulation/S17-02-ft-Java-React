@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 type Specialty =
   | "Cardiología"
@@ -27,7 +27,7 @@ const specialties: Specialty[] = [
   "Oftalmología",
 ];
 
-const DoctorRegistrationForm: React.FC = () => {
+export const RegisterEspecialist = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
     licenseNumber: "",
@@ -155,5 +155,3 @@ const DoctorRegistrationForm: React.FC = () => {
     </form>
   );
 };
-
-export default DoctorRegistrationForm;

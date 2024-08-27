@@ -7,7 +7,7 @@ interface FormState {
   confirmPassword: string;
 }
 
-const Register: React.FC = () => {
+export const RegisterUser = () => {
   const [form, setForm] = useState<FormState>({
     username: "",
     email: "",
@@ -103,5 +103,3 @@ const Register: React.FC = () => {
     </div>
   );
 };
-
-export default Register;

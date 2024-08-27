@@ -7,7 +7,7 @@ interface FormData {
   direccion: string;
 }
 
-const RegisterClinic: React.FC = () => {
+export const RegisterClinic = () => {
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
     correo: "",
@@ -81,5 +81,3 @@ const RegisterClinic: React.FC = () => {
     </div>
   );
 };
-
-export default RegisterClinic;
