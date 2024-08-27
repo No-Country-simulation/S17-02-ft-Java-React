@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home/index.tsx";
 import Login from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
-import "./App.css";
+import "./App.scss";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
