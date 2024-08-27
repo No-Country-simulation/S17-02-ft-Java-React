@@ -1,18 +1,19 @@
 package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.config.mapper.UserMapper;
+import com.nocountry.telemedicina.dto.request.LoginRequestDTO;
 import com.nocountry.telemedicina.dto.request.RegisterRequestDTO;
-import com.nocountry.telemedicina.dto.response.UserResponseDTO;
-import com.nocountry.telemedicina.models.User;
-import com.nocountry.telemedicina.services.IUserService;
-import com.nocountry.telemedicina.services.impl.JpaUserDetailsService;
+import com.nocountry.telemedicina.dto.response.AuthResponseDTO;
+
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
+import com.nocountry.telemedicina.services.impl.AuthServiceImpl;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Tag(name = "Autentificación y Registro", description = "Registro de usuario según roles y Autentificación")
 @RestController
@@ -20,30 +21,26 @@ import java.util.Optional;
 public class AuthController {
 
     @Autowired
-    private JpaUserDetailsService userService;
+    AuthServiceImpl authService;
 
-    @Autowired
-    private UserMapper mapper;
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
 
-    @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody RegisterRequestDTO user) {
-        try {
-            User registeredUser = userService.register(user);
-            return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        AuthResponseDTO response = authService.login(loginRequestDTO);
+        return ResponseEntity.status(200).body(response);
     }
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<UserResponseDTO> findUser(@PathVariable("username") String username) {
-        Optional<User> userOptional = userService.findUserByUsername(username);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            UserResponseDTO userDTO = mapper.toUserDTO(user);
-            return new ResponseEntity<>(userDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
+        AuthResponseDTO response = authService.register(registerRequestDTO);
+        return ResponseEntity.status(201).body(response);
+    }
+
+    @GetMapping("/check-login")
+    public ResponseEntity<?> checkLogin(@CurrentUser UserPrincipal userPrincipal) {
+        if (userPrincipal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not authenticated");
         }
+        return ResponseEntity.status(200).body(authService.getUserByUsername(userPrincipal.getUsername()));
     }
 }
