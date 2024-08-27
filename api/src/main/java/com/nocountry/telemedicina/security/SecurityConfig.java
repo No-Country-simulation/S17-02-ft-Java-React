@@ -1,6 +1,6 @@
 package com.nocountry.telemedicina.security;
 
-import com.nocountry.telemedicina.security.filter.JwtValidationFilter;
+import com.nocountry.telemedicina.security.filter.JwtAuthenticationFilter;
 import com.nocountry.telemedicina.security.oauth2.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,9 +37,9 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-// @EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-public class SpringSecurityConfig {
+@EnableMethodSecurity(prePostEnabled = true)
+public class SecurityConfig {
         private final static String OAUTH2_BASE_URI = "/api/auth/oauth2/authorize";
         private final static String OAUTH2_REDIRECTION_ENDPOINT = "/oauth2/callback/*";
         private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
@@ -46,38 +47,35 @@ public class SpringSecurityConfig {
         private final ClientRegistrationRepository clientRegistrationRepository;
         private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
         private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+        @Autowired
+        private JwtAuthenticationFilter jwtAuthenticationFilter;
+        @Autowired
+        private AuthenticationProvider authenticationProvider;
+        // @Autowired
+        // private CorsConfigurationSource corsConfigurationSource;
 
-        @Autowired
-        private final AuthenticationProvider authenticationProvider;
-        @Autowired
-        private final JwtValidationFilter jwtValidationFilter;
+        private static final String[] AUTH_ENDPOINTS_PUBLIC = {
+                        "/api/auth/login",
+                        "/api/auth/greet",
+                        "/api/auth/register",
+                        "/api/auth/check-login",
+                        "/api/auth/login/oauth",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
+        };
 
         @Bean
-        SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .cors(corsConfig -> corsConfig.configurationSource(corsConfigurationSource()))
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .csrf(crsf -> crsf.disable())
                                 .authorizeHttpRequests(authConfig -> {
-                                        authConfig.requestMatchers(HttpMethod.GET,
-                                                        "/api/health").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.POST,
-                                                        "/api/users").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.POST,
-                                                        "/api/profiles").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.GET,
-                                                        "/v3/api-docs/**").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.GET,
-                                                        "/swagger-ui/**").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.GET,
-                                                        "/api/users").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.POST,
-                                                        "/api/auth/register").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.POST,
-                                                        "/api/auth/login").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.POST,
-                                                        "/api/auth/register").permitAll();
-                                        authConfig.requestMatchers(HttpMethod.GET,
-                                                        "/api/auth/check-login").permitAll();
+                                        authConfig.requestMatchers(AUTH_ENDPOINTS_PUBLIC).permitAll();
+                                        authConfig.requestMatchers("/private").hasRole("USER");
+                                        authConfig.requestMatchers("/api/profiles").hasAnyRole("USER", "ADMIN",
+                                                        "SPECIALIST");
+                                        // authConfig.requestMatchers(HttpMethod.GET, "/v3/api-docs/").permitAll();
+                                        // authConfig.requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll();
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2
@@ -101,15 +99,20 @@ public class SpringSecurityConfig {
                                                 .successHandler(oAuth2AuthenticationSuccessHandler)
                                                 .failureHandler(oAuth2AuthenticationFailureHandler))
                                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                                                .accessDeniedHandler(accessDeniedHandler())
-                                                .authenticationEntryPoint(authenticationEntryPoint()))
+                                                .accessDeniedHandler(accessDeniedHandler()) // Custom handler for access
+                                                                                            // denied
+                                                .authenticationEntryPoint(authenticationEntryPoint()) // Custom entry
+                                                                                                      // point for
+                                                                                                      // authentication
+                                                                                                      // errors
+                                )
                                 .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authenticationProvider)
-                                .addFilterBefore(jwtValidationFilter,
+                                .addFilterBefore(jwtAuthenticationFilter,
                                                 UsernamePasswordAuthenticationFilter.class);
-                return http.build();
 
+                return http.build();
         }
 
         private OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> authorizationCodeTokenResponseClient() {
@@ -137,19 +140,20 @@ public class SpringSecurityConfig {
 
         @Bean
         public AuthenticationEntryPoint authenticationEntryPoint() {
-                return new Http403ForbiddenEntryPoint();
+                return new Http403ForbiddenEntryPoint(); // This will return a 403 error if not authenticated
         }
 
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowCredentials(true);
-                configuration.setAllowedOrigins(List.of("http://localhost:5173", "*"));
+                configuration.setAllowedOrigins(List.of("http://localhost:5173"));
                 configuration.setAllowedMethods(
                                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
                 configuration.setAllowedHeaders(List.of("*"));
-                configuration.setMaxAge(3600L);
+                configuration.setMaxAge(3600L); // 1 hour
 
+                // Add CSRF protection
                 configuration.setExposedHeaders(List.of("X-CSRF-TOKEN"));
                 UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
                 source.registerCorsConfiguration("/**", configuration);

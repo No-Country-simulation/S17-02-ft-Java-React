@@ -3,7 +3,9 @@ package com.nocountry.telemedicina.security.oauth2;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
+
 import com.nocountry.telemedicina.utils.CookieUtils;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -12,7 +14,6 @@ public class HttpCookieOAuth2AuthorizationRequestRepository
         implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";
     public static final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
-    // @Value("${oauth.redirect.front}")
     private final static String REDIRECT_URI = "http://localhost:5173/login";
     private static final int cookieExpireSeconds = 180;
 

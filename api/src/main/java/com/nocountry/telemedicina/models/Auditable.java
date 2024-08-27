@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -29,5 +27,5 @@ public abstract class Auditable {
 
     private LocalDateTime deletedAt;
 
-    private Boolean active;
+    private Boolean active = true;
 }
