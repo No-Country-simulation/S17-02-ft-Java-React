@@ -23,6 +23,7 @@ import com.nocountry.telemedicina.security.oauth2.user.UserInfoOAuth;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 
 import io.micrometer.common.util.StringUtils;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDateTime;
@@ -49,6 +50,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     }
 
+    @Transactional
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         UserInfoOAuth userInfoOAuth = new UserInfoOAuth(oAuth2User.getAttributes());
 
@@ -69,6 +71,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (userOptional.isPresent()) {
             user = userOptional.get();
         } else {
+
             user = new User();
             user.setUsername(userInfoOAuth.getEmail());
             user.setActive(true);
@@ -77,21 +80,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             Role role = roleRepo.findById(1L).orElseThrow(() -> new NotFoundException("Role not found"));
             user.getRoles().add(role);
             userRepository.save(user);
-            user.setCreateBy(user.getUserId());
-            userRepository.save(user);
+            userRepository.updateCreateByWithUserId(user.getUserId());
         }
 
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 }
-
-// user = new User();
-// user.setUsername(email);
-// user.setActive(true);
-// user.setCreatedAt(LocalDateTime.now());
-// Role role = roleRepo.findById(1L).orElseThrow(() -> new
-// NotFoundException("Role not found"));
-// user.getRoles().add(role);
-// userRepository.save(user);
-// user.setCreateBy(user.getUserId());
-// userRepository.save(user);
