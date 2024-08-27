@@ -17,4 +17,8 @@
     src: url('../../assets/fonts/Gotham\ Rounded\ Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
+};
+
+:root{
+    --font-primary: 'Gotham Rounded', sans-serif;
 }
