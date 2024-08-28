@@ -12,7 +12,7 @@ public interface ReviewMapper {
 
     ReviewMapper INSTANCE = Mappers.getMapper(ReviewMapper.class);
 
-    @Mapping(source = "user.userid", target = "userId")
+    @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "user.username", target = "userName")
     @Mapping(source = "specialist.specialistId", target = "specialistId")
     @Mapping(source = "specialist.profile.profileName", target = "specialistName")

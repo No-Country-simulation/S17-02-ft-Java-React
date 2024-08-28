@@ -19,7 +19,7 @@ public class ReviewRequestDTO {
 
     @NotBlank
     @Min(0)
-    @Max(6)
+    @Max(5)
     @Schema(example = "0 - 5",requiredMode = Schema.RequiredMode.REQUIRED)
     Integer stars;
 

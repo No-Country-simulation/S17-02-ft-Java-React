@@ -9,5 +9,5 @@ public record ReviewResponseDTO(
         UUID userId,
         String userName,
         UUID specialistId,
-        String specialistName ) {
+        String specialistName) {
 }

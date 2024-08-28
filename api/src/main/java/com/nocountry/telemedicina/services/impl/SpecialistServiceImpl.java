@@ -61,7 +61,12 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
 
     @Override
     public Page<Specialist> findSpecialistByReputation(Integer reputation, int page, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        List<Specialist> list = getRepo().findAllByActiveTrue().stream()
+                .filter(t -> t.getReputation().equals(reputation)).toList();
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 
     @Override
@@ -100,6 +105,11 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
 
     @Override
     public Page<Specialist> findSpecialistByClinicReputation(Integer reputation, int page, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        List<Specialist> list = getRepo().findAllByActiveTrue().stream()
+                .filter(t -> t.getClinic().getReputation().equals(reputation)).toList();
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), list.size());
+        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 }

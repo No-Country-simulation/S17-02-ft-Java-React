@@ -25,6 +25,9 @@ public class Clinic extends Auditable {
     @Column(name = "clinic_name",nullable = false,length = 70)
     private String clinicName;
 
+    @Column(name = "reputation",nullable = false)
+    private Integer reputation;
+
     @ManyToOne
     @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_CLINICS_USER"), nullable = false)
     User user;
