@@ -8,20 +8,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Service
 public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDService<T,ID> {
 
-    protected abstract IGenericRepo<T, ID> getRepo();
+    protected abstract IGenericRepo<T , ID> getRepo();
 
     @Transactional
     @Override
     public T save(T t) {
-        if(!t.getActive()){
+        if(!t.getActive()) {
             t.setActive(true);
         }
         t.setCreatedAt(LocalDateTime.now());
@@ -30,24 +28,22 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
         return getRepo().save(t);
     }
 
+    @Transactional
     @Override
     public T updateById(ID id, T t) {
+        T old_t = getRepo().findById(id).orElseThrow();
+        old_t = t;
         if(t.getActive()){
-            t.setUpdatedAt(LocalDateTime.now());
+            old_t.setUpdatedAt(LocalDateTime.now());
             // Function for set user who updated
-            //t.setUpdateBy();
-            return getRepo().save(t);
+            //old_t.setUpdateBy();
         }
-        return null;
+        return getRepo().save(old_t);
     }
 
     @Override
     public T findById(ID id) {
-        T t = getRepo().findById(id).orElseThrow();
-        if(t.getActive()) {
-            return t;
-        }
-        return null;
+        return getRepo().findById(id).orElseThrow();
     }
 
     @Override
@@ -66,5 +62,6 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
         if(t.getActive()) {
             t.setActive(false);
         }
+        getRepo().save(t);
     }
 }

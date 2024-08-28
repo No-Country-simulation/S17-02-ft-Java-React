@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends Auditable{
+public class User extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
@@ -41,4 +41,8 @@ public class User extends Auditable{
     @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
     @JsonIgnore
     private ClinicalHistory clinicalHistory;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
 }
