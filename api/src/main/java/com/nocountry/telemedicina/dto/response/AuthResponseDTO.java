@@ -1,5 +1,13 @@
 package com.nocountry.telemedicina.dto.response;
 
-public record AuthResponseDTO(UserResponseDTO userResponseDTO, String token) {
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class AuthResponseDTO {
+    private UserResponseDTO userResponseDTO;
+    private String token;
 
 }

@@ -35,6 +35,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Security config.
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -64,6 +67,13 @@ public class SecurityConfig {
                         "/v3/api-docs/**"
         };
 
+        /**
+         * Security filter chain security filter chain.
+         *
+         * @param http the http
+         * @return the security filter chain
+         * @throws Exception the exception
+         */
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
@@ -130,6 +140,11 @@ public class SecurityConfig {
                 return tokenResponseClient;
         }
 
+        /**
+         * Access denied handler access denied handler.
+         *
+         * @return the access denied handler
+         */
         @Bean
         public AccessDeniedHandler accessDeniedHandler() {
                 return (request, response, accessDeniedException) -> {
@@ -138,11 +153,21 @@ public class SecurityConfig {
                 };
         }
 
+        /**
+         * Authentication entry point authentication entry point.
+         *
+         * @return the authentication entry point
+         */
         @Bean
         public AuthenticationEntryPoint authenticationEntryPoint() {
                 return new Http403ForbiddenEntryPoint(); // This will return a 403 error if not authenticated
         }
 
+        /**
+         * Cors configuration source cors configuration source.
+         *
+         * @return the cors configuration source
+         */
         @Bean
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();

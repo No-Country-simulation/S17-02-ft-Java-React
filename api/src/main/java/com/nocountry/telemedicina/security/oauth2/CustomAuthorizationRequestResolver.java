@@ -18,13 +18,22 @@ import org.springframework.security.oauth2.core.endpoint.PkceParameterNames;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+/**
+ * The type Custom authorization request resolver.
+ */
 public class CustomAuthorizationRequestResolver implements OAuth2AuthorizationRequestResolver {
 
     private final OAuth2AuthorizationRequestResolver defaultResolver;
     private final StringKeyGenerator secureKeyGenerator = new Base64StringKeyGenerator(
             Base64.getUrlEncoder().withoutPadding(), 96);
 
-    // Client id desde ClientRegistrationRepository
+    /**
+     * Instantiates a new Custom authorization request resolver.
+     *
+     * @param repo                        the repo
+     * @param authorizationRequestBaseUri the authorization request base uri
+     */
+// Client id desde ClientRegistrationRepository
     public CustomAuthorizationRequestResolver(ClientRegistrationRepository repo, String authorizationRequestBaseUri) {
         defaultResolver = new DefaultOAuth2AuthorizationRequestResolver(repo, authorizationRequestBaseUri);
     }

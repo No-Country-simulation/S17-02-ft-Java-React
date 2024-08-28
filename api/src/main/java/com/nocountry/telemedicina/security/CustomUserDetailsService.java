@@ -10,6 +10,9 @@ import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * The type Custom user details service.
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,6 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         return UserPrincipal.create(user);
     }
 
+    /**
+     * Load user by id user details.
+     *
+     * @param id the id
+     * @return the user details
+     */
     public UserDetails loadUserById(UUID id) {
         User user = userRepository
                 .findById(id)
