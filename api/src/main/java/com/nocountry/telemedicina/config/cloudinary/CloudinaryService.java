@@ -19,7 +19,7 @@ public class CloudinaryService {
     private final Cloudinary cloudinary;
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public String uploadProfilePick(MultipartFile file, String publicId) throws IOException {
+    public String uploadAvatar(MultipartFile file, String publicId) {
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File is empty");
         }
@@ -45,13 +45,17 @@ public class CloudinaryService {
     }
 
     @SuppressWarnings("rawtypes")
-    public Map delete(String publicId) throws IOException {
-        Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-        return result;
+    public Map delete(String publicId) {
+        try {
+            Map result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+            return result;
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @SuppressWarnings({ "unchecked" })
-    public String uploadPdf(MultipartFile file, String publicId) throws IOException {
+    public String uploadPdf(MultipartFile file, String publicId) {
         try {
             if (file.isEmpty()) {
                 throw new IllegalArgumentException("File is empty");

@@ -74,6 +74,8 @@ public class SecurityConfig {
                                         authConfig.requestMatchers("/private").hasRole("USER");
                                         authConfig.requestMatchers("/api/profiles").hasAnyRole("USER", "ADMIN",
                                                         "SPECIALIST");
+                                        authConfig.requestMatchers("/api/profiles/**").hasAnyRole("USER", "ADMIN",
+                                                        "SPECIALIST");
                                         // authConfig.requestMatchers(HttpMethod.GET, "/v3/api-docs/").permitAll();
                                         // authConfig.requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll();
                                         authConfig.anyRequest().denyAll();

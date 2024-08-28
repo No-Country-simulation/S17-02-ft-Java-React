@@ -1,6 +1,5 @@
 package com.nocountry.telemedicina.controllers;
 
-import com.nocountry.telemedicina.config.mapper.UserMapper;
 import com.nocountry.telemedicina.dto.request.LoginRequestDTO;
 import com.nocountry.telemedicina.dto.request.RegisterRequestDTO;
 import com.nocountry.telemedicina.dto.response.AuthResponseDTO;
@@ -10,6 +9,7 @@ import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.impl.AuthServiceImpl;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
