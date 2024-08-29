@@ -116,4 +116,11 @@ public class ProfileController {
             return ResponseEntity.status(400).body("Hubo un error al cargar el avatar");
         }
     }
+
+    @PostMapping("/create-avatar-url")
+    public ResponseEntity<?> createAvatarUrl(@RequestParam("file") MultipartFile file,
+            @CurrentUser UserPrincipal userPrincipal) {
+        String result = cloudinaryService.uploadAvatar(file, userPrincipal.getUsername());
+        return ResponseEntity.status(201).body(result);
+    }
 }
