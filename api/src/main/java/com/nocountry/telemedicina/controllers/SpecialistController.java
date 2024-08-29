@@ -9,6 +9,8 @@ import com.nocountry.telemedicina.models.Specialist;
 import com.nocountry.telemedicina.services.ISpecialistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -157,18 +159,18 @@ public class SpecialistController {
     }
 
     /**
-     * Filter all specialist in a paginated manner.
+     * Filter and order all specialist in a paginated manner.
      *
      * @param page the page number
      * @param size the page size
      * @return the list of specialist
      */
     @Operation(
-            summary = "Filtra todos los Especialistas de forma paginada",
-            description = "Filtra todos los especialistas inscritos en la aplicación",
+            summary = "Filtra y ordena todos los Especialistas de forma paginada",
+            description = "Filtra y ordena todos los especialistas inscritos en la aplicación",
             tags = { })
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SpecialistResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200",content= {@Content(array = @ArraySchema(schema = @Schema(implementation = SpecialistResponseDTO.class)),mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/filtered")
@@ -182,13 +184,22 @@ public class SpecialistController {
             @RequestParam(required = false) Double minPrice,
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size){
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false, defaultValue = "true") boolean isAscendant,
+            @Parameter(
+                    in = ParameterIn.QUERY,
+                    description = "Campo por el cual ordenar",
+                    schema = @Schema(type = "string",
+                    allowableValues = {"reputation", "price", "specialty", "location","clinic"}),
+                    example = "reputation"
+            )
+            @RequestParam(required = false, defaultValue = "reputation") String query ){
         try {
             List<SpecialistResponseDTO> list = service
                     .getFilteredSpecialists(
                             districtName, specialtyName, profileName,
                             reputation, clinicName, clinicReputation,
-                            minPrice, maxPrice, page,size).stream()
+                            minPrice, maxPrice, page,size, isAscendant, query).stream()
                     .map(p -> mapper.toSpecialistDTO(p)).collect(Collectors.toList());
             return new ResponseEntity<>(list, HttpStatus.OK);
         }catch (Exception e) {
