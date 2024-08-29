@@ -1,10 +1,14 @@
 package com.nocountry.telemedicina.controllers;
 
+import com.cloudinary.http45.api.Response;
+import com.nocountry.telemedicina.config.cloudinary.CloudinaryService;
 import com.nocountry.telemedicina.config.mapper.ProfileMapper;
 import com.nocountry.telemedicina.dto.request.ProfileRequestDTO;
 import com.nocountry.telemedicina.dto.response.ProfileResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.models.Profile;
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.IProfileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,8 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.UUID;
 
@@ -32,7 +36,8 @@ public class ProfileController {
 
     @Autowired
     private IProfileService service;
-
+    @Autowired
+    private CloudinaryService cloudinaryService;
     @Autowired
     private ProfileMapper mapper;
 
@@ -42,20 +47,19 @@ public class ProfileController {
      * @param id the ID of the profile to find
      * @return the found profile
      */
-    @Operation(
-            summary = "Busca un Perfil por su ID",
-            description = "Busca un Perfil.Se requiere el parametro ID del perfil",
-            tags = { })
+    @Operation(summary = "Busca un Perfil por su ID", description = "Busca un Perfil.Se requiere el parametro ID del perfil", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =ProfileResponseDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProfileResponseDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileResponseDTO> findById(@PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id){
+    public ResponseEntity<ProfileResponseDTO> findById(
+            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
         Profile obj = service.findById(id);
-        if(obj == null){
+        if (obj == null) {
             throw new NotAuthorizedException("ID NOT FOUND: " + id);
-        }else {
+        } else {
             return new ResponseEntity<>(mapper.toProfileDTO(obj), HttpStatus.OK);
         }
     }
@@ -66,18 +70,17 @@ public class ProfileController {
      * @param dto the profile data to create
      * @return the created profile
      */
-    @Operation(
-            summary = "Crea un perfil",
-            description = "Crea un Perfil.Se requiere enviar los parametros descritos a continuación",
-            tags = { })
+    @Operation(summary = "Crea un perfil", description = "Crea un Perfil.Se requiere enviar los parametros descritos a continuación", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =ProfileRequestDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProfileRequestDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ProfileRequestDTO dto){
+    public ResponseEntity<Void> save(@RequestBody ProfileRequestDTO dto) {
         Profile obj = service.save(mapper.toProfile(dto));
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getProfileId()).toUri();
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getProfileId())
+                .toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -85,21 +88,39 @@ public class ProfileController {
      * Updates a profile by its ID.
      *
      * @param dto the profile data to update
-     * @param id the ID of the profile to update
+     * @param id  the ID of the profile to update
      * @return the updated profile
      */
-    @Operation(
-            summary = "Actualiza datos de un Perfil por ID",
-            description = "Actualiza los datos de un Perfil.Se envia los atributos a actualizar del perfil y el ID del Perfil",
-            tags = { })
+    @Operation(summary = "Actualiza datos de un Perfil por ID", description = "Actualiza los datos de un Perfil.Se envia los atributos a actualizar del perfil y el ID del Perfil", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =ProfileRequestDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProfileRequestDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,@PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id){
-        Profile obj = service.updateById(id,mapper.toProfile(dto));
+    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,
+            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
+        Profile obj = service.updateById(id, mapper.toProfile(dto));
         return new ResponseEntity<>(obj, HttpStatus.OK);
+    }
+
+    @PostMapping("/update-avatar")
+    public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file,
+            @CurrentUser UserPrincipal userPrincipal) {
+        String result = cloudinaryService.uploadAvatar(file, userPrincipal.getUsername());
+        Boolean response = service.updateAvatar(userPrincipal.getId(), result);
+        if (response) {
+            return ResponseEntity.status(200).body(result);
+        } else {
+            return ResponseEntity.status(400).body("Hubo un error al cargar el avatar");
+        }
+    }
+
+    @PostMapping("/create-avatar-url")
+    public ResponseEntity<?> createAvatarUrl(@RequestParam("file") MultipartFile file,
+            @CurrentUser UserPrincipal userPrincipal) {
+        String result = cloudinaryService.uploadAvatar(file, userPrincipal.getUsername());
+        return ResponseEntity.status(201).body(result);
     }
 }

@@ -7,8 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
 @Setter
@@ -16,11 +24,11 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User extends Auditable{
+public class User extends Auditable implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
-    private UUID userId=UUID.randomUUID();
+    private UUID userId = UUID.randomUUID();
 
     private String username;
 
@@ -28,17 +36,24 @@ public class User extends Auditable{
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private List<Role>roles;
+    private List<Role> roles;
 
-    @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JsonIgnore
     private Profile profile;
 
-    @OneToMany(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JsonIgnore
-    private List<Clinic>clinics;
+    private List<Clinic> clinics;
 
-    @OneToOne(mappedBy = "user",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JsonIgnore
     private ClinicalHistory clinicalHistory;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = this.getRoles().stream()
+                .map(rol -> new SimpleGrantedAuthority(rol.getRoleName())).collect(Collectors.toList());
+        return authorities;
+    }
 }
