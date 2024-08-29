@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 
 interface FormState {
-  username: string;
   email: string;
   password: string;
-  confirmPassword: string;
 }
 
 export const RegisterUser = () => {
   const [form, setForm] = useState<FormState>({
-    username: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
 
   const [errors, setErrors] = useState<string[]>([]);
@@ -27,11 +23,8 @@ export const RegisterUser = () => {
 
   const validateForm = () => {
     const newErrors: string[] = [];
-    if (!form.username) newErrors.push("Username is required.");
     if (!form.email) newErrors.push("Email is required.");
     if (!form.password) newErrors.push("Password is required.");
-    if (form.password !== form.confirmPassword)
-      newErrors.push("Passwords must match.");
     return newErrors;
   };
 
@@ -59,16 +52,6 @@ export const RegisterUser = () => {
       )}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="username">Usuario:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={form.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
@@ -88,17 +71,7 @@ export const RegisterUser = () => {
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label htmlFor="confirmPassword">Confirmar Contraseña :</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={form.confirmPassword}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Registrate</button>
+        <button type="submit">Regístrate</button>
       </form>
     </div>
   );
