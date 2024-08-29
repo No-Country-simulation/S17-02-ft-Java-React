@@ -67,6 +67,11 @@ public class SecurityConfig {
                         "/v3/api-docs/**"
         };
 
+        private static final String [] OTHERS_ENDPOINTS_PUBLIC = {
+                "/api/specialist",
+                "/api/schedules",
+                "/api/clinics"
+        };
         /**
          * Security filter chain security filter chain.
          *
@@ -81,11 +86,10 @@ public class SecurityConfig {
                                 .csrf(crsf -> crsf.disable())
                                 .authorizeHttpRequests(authConfig -> {
                                         authConfig.requestMatchers(AUTH_ENDPOINTS_PUBLIC).permitAll();
+                                        authConfig.requestMatchers(HttpMethod.GET,OTHERS_ENDPOINTS_PUBLIC).permitAll();
                                         authConfig.requestMatchers("/private").hasRole("USER");
                                         authConfig.requestMatchers("/api/profiles").hasAnyRole("USER", "ADMIN",
                                                         "SPECIALIST");
-                                        // authConfig.requestMatchers(HttpMethod.GET, "/v3/api-docs/").permitAll();
-                                        // authConfig.requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll();
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2
