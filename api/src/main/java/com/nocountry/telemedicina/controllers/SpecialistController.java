@@ -155,4 +155,44 @@ public class SpecialistController {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    /**
+     * Filter all specialist in a paginated manner.
+     *
+     * @param page the page number
+     * @param size the page size
+     * @return the list of specialist
+     */
+    @Operation(
+            summary = "Filtra todos los Especialistas de forma paginada",
+            description = "Filtra todos los especialistas inscritos en la aplicación",
+            tags = { })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SpecialistResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @GetMapping("/filtered")
+    public ResponseEntity<List<SpecialistResponseDTO>> findAllByFilters (
+            @RequestParam(required = false) String districtName,
+            @RequestParam(required = false) String specialtyName,
+            @RequestParam(required = false) String profileName,
+            @RequestParam(required = false) Integer reputation,
+            @RequestParam(required = false) String clinicName,
+            @RequestParam(required = false) Integer clinicReputation,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size){
+        try {
+            List<SpecialistResponseDTO> list = service
+                    .getFilteredSpecialists(
+                            districtName, specialtyName, profileName,
+                            reputation, clinicName, clinicReputation,
+                            minPrice, maxPrice, page,size).stream()
+                    .map(p -> mapper.toSpecialistDTO(p)).collect(Collectors.toList());
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }catch (Exception e) {
+            throw new RuntimeException("Error al obtener los especialistas", e);
+        }
+    }
 }
