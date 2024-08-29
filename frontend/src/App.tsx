@@ -3,8 +3,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home/index.tsx";
 import { Login } from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
-import "../src/css/App.scss";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
+import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
+import "../src/css/App.scss";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
@@ -24,6 +25,7 @@ const App: React.FC = () => {
             />
           }
         />
+        <Route path="/registerespecialist" element={<RegisterEspecialist />} />
       </Routes>
       <button onClick={() => setIsVideoCallOpen(true)}>Open Video Call</button>
     </Router>

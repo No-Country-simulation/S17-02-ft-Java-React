@@ -64,7 +64,6 @@ export const RegisterEspecialist = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Datos del formulario:", formData);
-    // Handle form submission logic (e.g., API call) here
   };
 
   return (

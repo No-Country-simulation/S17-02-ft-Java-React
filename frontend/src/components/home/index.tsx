@@ -5,7 +5,7 @@ import { Footer } from "../footer/index.tsx";
 import { Navbar } from "../navbar/index.tsx";
 import { RegisterUser } from "../registerUser/index.tsx";
 import { RegisterClinic } from "../registerClinic/index.tsx";
-import { RegisterEspecialist } from "../registerEspecialist/index.tsx";
+import { Link } from "react-router-dom";
 
 Modal.setAppElement("#root");
 
@@ -37,11 +37,9 @@ const Home: React.FC = () => {
           ? "Cerrar Registro de Clínica"
           : "Registro de Clínica"}
       </button>
-      <button onClick={() => openModal("especialist")}>
-        {activeForm === "especialist"
-          ? "Cerrar Registro de Especialista"
-          : "Registro de Especialista"}
-      </button>
+      <Link to="/registerespecialist">
+        <button>Registro de Especialista</button>
+      </Link>
 
       <Modal
         isOpen={modalIsOpen}
@@ -51,7 +49,6 @@ const Home: React.FC = () => {
         <button onClick={closeModal}>Cerrar</button>
         {activeForm === "user" && <RegisterUser />}
         {activeForm === "clinic" && <RegisterClinic />}
-        {activeForm === "especialist" && <RegisterEspecialist />}
       </Modal>
 
       <Footer />
