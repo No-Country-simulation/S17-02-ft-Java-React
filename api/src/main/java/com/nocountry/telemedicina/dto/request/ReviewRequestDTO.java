@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.dto.request;
 
+import com.nocountry.telemedicina.dto.response.SpecialistResponseDTO;
 import com.nocountry.telemedicina.dto.response.UserResponseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
@@ -14,17 +15,25 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClinicRequestDTO {
+public class ReviewRequestDTO {
 
     @NotBlank
-    private UserResponseDTO user;
-
-    @NotBlank
-    @Min(5)
-    private String clinicName;
-
     @Min(0)
     @Max(5)
     @Schema(example = "0 - 5",requiredMode = Schema.RequiredMode.REQUIRED)
-    private Integer reputation;
+    Integer stars;
+
+    @NotBlank
+    @Min(0)
+    @Max(200)
+    @Schema(example = "Nice doctor",requiredMode = Schema.RequiredMode.REQUIRED)
+    String comment;
+
+    @NotBlank
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+    UserResponseDTO user;
+
+    @NotBlank
+    @Schema(requiredMode = Schema.RequiredMode.REQUIRED)
+    SpecialistResponseDTO specialist;
 }

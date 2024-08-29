@@ -13,5 +13,6 @@ public record SpecialistResponseDTO(
         String clinicName,
         String specialistName,
         String specialistLastname,
+        Integer reputation,
         List<SchedulesResponseDTO> schedules) {
 }

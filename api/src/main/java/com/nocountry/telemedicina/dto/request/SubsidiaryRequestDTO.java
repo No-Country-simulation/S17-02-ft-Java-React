@@ -2,7 +2,6 @@ package com.nocountry.telemedicina.dto.request;
 
 import com.nocountry.telemedicina.dto.response.ClinicResponseDTO;
 import com.nocountry.telemedicina.dto.response.DistrictResponseDTO;
-
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

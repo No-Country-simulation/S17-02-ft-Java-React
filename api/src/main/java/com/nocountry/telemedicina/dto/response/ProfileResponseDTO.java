@@ -17,5 +17,4 @@ public record ProfileResponseDTO(
         String districtName,
         String email,
         String userId ) {
-
 }
