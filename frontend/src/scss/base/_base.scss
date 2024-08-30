@@ -7,11 +7,12 @@ html {
 body{
     font-family: $font-primary;
     background-color: $primaryColor-active;
+    height: 100vh;
 }
-
-h1,h2,h3{
+*,*::before, *::after {
+  box-sizing: inherit;
+}
+h1, h2, h3{
   font-weight: 700;
 }
-h1{
-  font-size: 40rem;
-}
+

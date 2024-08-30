@@ -20,7 +20,7 @@ const FormInput: React.FC<FormInputProps> = ({
   return (
     <div>
       <label htmlFor={id}>{name}:</label>
-      <input type={type} id={id} name={id} value={value} onChange={onChange} />
+      <input className="input-register" type={type} id={id} name={id} value={value} onChange={onChange} />
       {error && <p>{error}</p>}
     </div>
   );

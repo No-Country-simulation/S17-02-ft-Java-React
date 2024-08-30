@@ -1,0 +1,20 @@
+.navbar{
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: $neutralColor-100;
+}
+.navbar ul{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap:2rem;
+    justify-content: center;
+}
+.navbar li{
+    font-size: $heading-d-4;
+    font-family: $font-primary;
+}

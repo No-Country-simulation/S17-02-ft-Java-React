@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <nav>
-      <ul>
+    <nav className="navbar">
+      <ul className="d-flex justify-content-center">
         <li>
           <Link to="/">Inicio</Link>
         </li>

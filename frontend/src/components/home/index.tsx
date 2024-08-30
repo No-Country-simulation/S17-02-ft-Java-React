@@ -47,34 +47,44 @@ const Home: React.FC = () => {
   };
 
   return (
-    <>
+    <section className="container-home">
+
+      <div>
+        
       <Header />
       <Navbar />
-      <button onClick={() => openModal("user")}>
+      </div>
+      <div>
+
+      <button className="btn btn-secondary" onClick={() => openModal("user")}>
         {activeForm === "user"
           ? REGISTRATION_TEXTS.user.close
           : REGISTRATION_TEXTS.user.open}
       </button>
-      <button onClick={() => openModal("clinic")}>
+      <button className="btn btn-secondary" onClick={() => openModal("clinic")}>
         {activeForm === "clinic"
           ? REGISTRATION_TEXTS.clinic.close
           : REGISTRATION_TEXTS.clinic.open}
       </button>
       <Link to="/registerespecialist">
-        <button>{REGISTRATION_TEXTS.specialist}</button>
+        <button  className="btn btn-secondary">{REGISTRATION_TEXTS.specialist}</button>
       </Link>
+      </div>
+          <div>
 
       <Modal
+        className="d-flex justify-content-center"
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Registro Modal"
-      >
-        <button onClick={closeModal}>Cerrar</button>
+        >
+        <button className="close-btn" onClick={closeModal}>X</button>
         {renderForm()}
       </Modal>
 
       <Footer />
-    </>
+          </div>
+    </section>
   );
 };
 

@@ -29,7 +29,9 @@ export const RegisterEspecialist = () => {
   } = useForm(specialties);
 
   return (
-    <div>
+    <div className="container-xxl register-container">
+      <div className="col-5-xxl col-1-md"></div>
+      <div className=" register-specialist">
       <nav>
         <Link to="/">Inicio</Link>
       </nav>
@@ -40,6 +42,7 @@ export const RegisterEspecialist = () => {
         <label>
           Nombre completo:
           <input
+            className="input-register"
             type="text"
             name="name"
             value={formData.name}
@@ -52,6 +55,7 @@ export const RegisterEspecialist = () => {
         <label>
           Número de licencia:
           <input
+            className="input-register"
             type="text"
             name="licenseNumber"
             value={formData.licenseNumber}
@@ -64,6 +68,7 @@ export const RegisterEspecialist = () => {
         <label>
           Correo electrónico:
           <input
+            className="input-register"
             type="email"
             name="email"
             value={formData.email}
@@ -78,6 +83,7 @@ export const RegisterEspecialist = () => {
         <label>
           Teléfono:
           <input
+            className="input-register"
             type="tel"
             name="phone"
             value={formData.phone}
@@ -90,6 +96,7 @@ export const RegisterEspecialist = () => {
         <label>
           Nombre de usuario:
           <input
+            className="input-register"
             type="text"
             name="username"
             value={formData.username}
@@ -102,6 +109,7 @@ export const RegisterEspecialist = () => {
         <label>
           Contraseña:
           <input
+            className="input-register"
             type={passwordVisible ? "text" : "password"}
             name="password"
             value={formData.password}
@@ -123,6 +131,7 @@ export const RegisterEspecialist = () => {
           {specialties.map((specialty) => (
             <label key={specialty}>
               <input
+
                 type="checkbox"
                 value={specialty}
                 checked={formData.selectedSpecialties.includes(specialty)}
@@ -135,6 +144,8 @@ export const RegisterEspecialist = () => {
 
         <button type="submit">Registrar Médico</button>
       </form>
+      </div>
+      
     </div>
   );
 };
