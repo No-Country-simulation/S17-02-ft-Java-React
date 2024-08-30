@@ -12,7 +12,7 @@ export const RegisterUser = () => {
     const payload = {
       username: form.email,
       password: form.password,
-      rolesId: [0], // Asegúrate de que este valor es correcto
+      rolesId: [1], // Asegúrate de que este valor es correcto
     };
 
     try {
