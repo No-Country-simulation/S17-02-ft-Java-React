@@ -1,8 +1,38 @@
-import FormInput from "./formImput/index.tsx";
-import useForm from "./useForm/index.tsx";
+import React from "react";
+import axios from "axios";
+import FormInput from "./formInput"; // Asegúrate de que esta ruta sea correcta
+import useForm from "./useForm"; // Asegúrate de que esta ruta sea correcta
 
 export const RegisterUser = () => {
-  const { form, errors, handleChange, handleSubmit } = useForm();
+  const { form, errors, handleChange } = useForm();
+
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const payload = {
+      username: form.email,
+      password: form.password,
+      rolesId: [0], // Asegúrate de que este valor es correcto
+    };
+
+    try {
+      const response = await axios.post("/api/auth/register", payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("User registered successfully:", response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error registering user:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
+  };
 
   return (
     <div>
@@ -14,7 +44,7 @@ export const RegisterUser = () => {
           ))}
         </ul>
       )}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={submitForm}>
         <FormInput
           id="email"
           name="Email"
