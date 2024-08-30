@@ -1,34 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import useMediaStream from "./useMediaStream";
 
 interface VideoCallModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const VideoCall: React.FC<VideoCallModalProps> = ({ isOpen }) => {
-  const [stream, setStream] = useState<MediaStream | null>(null);
+const VideoCall: React.FC<VideoCallModalProps> = ({ isOpen, onClose }) => {
+  const stream = useMediaStream(isOpen);
   const videoRef = useRef<HTMLVideoElement>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isOpen) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: true })
-        .then((mediaStream) => {
-          setStream(mediaStream);
-        })
-        .catch((err) => {
-          console.error("Error accessing media devices.", err);
-        });
-
-      return () => {
-        if (stream) {
-          stream.getTracks().forEach((track) => track.stop());
-        }
-      };
-    }
-  }, [isOpen]);
 
   useEffect(() => {
     if (videoRef.current && stream) {
@@ -36,18 +18,21 @@ const VideoCall: React.FC<VideoCallModalProps> = ({ isOpen }) => {
     }
   }, [stream]);
 
+  const handleClose = () => {
+    onClose();
+    navigate("/");
+  };
+
   if (!isOpen) {
     return null;
   }
 
-  const handleClose = () => {
-    navigate("/");
-  };
-
   return (
     <div>
       <div>
-        <button onClick={handleClose}>X</button>
+        <button onClick={handleClose} aria-label="Close">
+          X
+        </button>
         <div>
           <video ref={videoRef} autoPlay muted playsInline />
         </div>

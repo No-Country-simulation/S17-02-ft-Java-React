@@ -7,7 +7,7 @@ import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
 import "../src/css/App.scss";
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
 
   return (
