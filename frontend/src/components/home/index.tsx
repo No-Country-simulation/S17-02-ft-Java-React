@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { Header } from "../header/index.tsx";
-import { Footer } from "../footer/index.tsx";
-import { Navbar } from "../navbar/index.tsx";
-import { RegisterUser } from "../registerUser/index.tsx";
-import { RegisterClinic } from "../registerClinic/index.tsx";
+import { Header } from "../header";
+import { Footer } from "../footer";
+import { Navbar } from "../navbar";
+import { RegisterUser } from "../registerUser";
+import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
 
 Modal.setAppElement("#root");
+
+const REGISTRATION_TEXTS = {
+  user: {
+    open: "Registro de Usuario",
+    close: "Cerrar Registro de Usuario",
+  },
+  clinic: {
+    open: "Registro de Clínica",
+    close: "Cerrar Registro de Clínica",
+  },
+  specialist: "Registro de Especialista",
+};
 
 const Home: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -23,22 +35,33 @@ const Home: React.FC = () => {
     setActiveForm(null);
   };
 
+  const renderForm = () => {
+    switch (activeForm) {
+      case "user":
+        return <RegisterUser />;
+      case "clinic":
+        return <RegisterClinic />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div>
+    <>
       <Header />
       <Navbar />
       <button onClick={() => openModal("user")}>
         {activeForm === "user"
-          ? "Cerrar Registro de Usuario"
-          : "Registro de Usuario"}
+          ? REGISTRATION_TEXTS.user.close
+          : REGISTRATION_TEXTS.user.open}
       </button>
       <button onClick={() => openModal("clinic")}>
         {activeForm === "clinic"
-          ? "Cerrar Registro de Clínica"
-          : "Registro de Clínica"}
+          ? REGISTRATION_TEXTS.clinic.close
+          : REGISTRATION_TEXTS.clinic.open}
       </button>
       <Link to="/registerespecialist">
-        <button>Registro de Especialista</button>
+        <button>{REGISTRATION_TEXTS.specialist}</button>
       </Link>
 
       <Modal
@@ -47,12 +70,11 @@ const Home: React.FC = () => {
         contentLabel="Registro Modal"
       >
         <button onClick={closeModal}>Cerrar</button>
-        {activeForm === "user" && <RegisterUser />}
-        {activeForm === "clinic" && <RegisterClinic />}
+        {renderForm()}
       </Modal>
 
       <Footer />
-    </div>
+    </>
   );
 };
 
