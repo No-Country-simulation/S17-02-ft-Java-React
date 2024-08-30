@@ -1,12 +1,17 @@
 import { useState, FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/index.tsx";
+import Modal from "react-modal";
+
+// Configura el root element para el modal
+Modal.setAppElement("#root");
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(true); // Modal abierto por defecto
   const { setToken, setRole } = useAuth();
   const navigate = useNavigate();
 
@@ -37,14 +42,24 @@ export const Login = () => {
       console.log("User role:", roleName);
 
       navigate("/");
+      closeModal(); // Cierra el modal después de iniciar sesión
     } catch (err) {
       console.error("Login failed:", err);
       setError("Login failed. Please check your credentials and try again.");
     }
   };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+    navigate("/"); // Redirige a la ruta principal
+  };
+
   return (
-    <div>
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      contentLabel="Login Modal"
+    >
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -70,9 +85,9 @@ export const Login = () => {
         <button type="submit">Iniciar sesión</button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <p>
-        <Link to="/">Inicio</Link>
-      </p>
-    </div>
+      <button onClick={closeModal} style={{ marginTop: "10px" }}>
+        Cerrar
+      </button>
+    </Modal>
   );
 };
