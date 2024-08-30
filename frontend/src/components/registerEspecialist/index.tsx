@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent, useCallback } from "react";
+import { useForm } from "./userForm";
 import { Link } from "react-router-dom";
 
 type Specialty =
@@ -8,16 +8,6 @@ type Specialty =
   | "Dermatología"
   | "Ginecología"
   | "Oftalmología";
-
-interface FormData {
-  name: string;
-  licenseNumber: string;
-  email: string;
-  phone: string;
-  username: string;
-  password: string;
-  selectedSpecialties: Specialty[];
-}
 
 const specialties: Specialty[] = [
   "Cardiología",
@@ -29,49 +19,14 @@ const specialties: Specialty[] = [
 ];
 
 export const RegisterEspecialist = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    licenseNumber: "",
-    email: "",
-    phone: "",
-    username: "",
-    password: "",
-    selectedSpecialties: [],
-  });
-
-  const handleChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }, []);
-
-  const handleSpecialtyChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { value, checked } = e.target;
-      if (specialties.includes(value as Specialty)) {
-        setFormData((prevData) => {
-          const selectedSpecialties = checked
-            ? [...prevData.selectedSpecialties, value as Specialty]
-            : prevData.selectedSpecialties.filter(
-                (specialty) => specialty !== (value as Specialty)
-              );
-
-          return { ...prevData, selectedSpecialties };
-        });
-      }
-    },
-    []
-  );
-
-  const handleSubmit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      console.log("Datos del formulario:", formData);
-    },
-    [formData]
-  );
+  const {
+    formData,
+    passwordVisible,
+    handleChange,
+    handleSpecialtyChange,
+    handleSubmit,
+    setPasswordVisible,
+  } = useForm(specialties);
 
   return (
     <div>
@@ -90,6 +45,7 @@ export const RegisterEspecialist = () => {
             value={formData.name}
             onChange={handleChange}
             required
+            aria-required="true"
           />
         </label>
 
@@ -101,6 +57,7 @@ export const RegisterEspecialist = () => {
             value={formData.licenseNumber}
             onChange={handleChange}
             required
+            aria-required="true"
           />
         </label>
 
@@ -112,6 +69,9 @@ export const RegisterEspecialist = () => {
             value={formData.email}
             onChange={handleChange}
             required
+            aria-required="true"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Please enter a valid email address"
           />
         </label>
 
@@ -122,6 +82,8 @@ export const RegisterEspecialist = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            pattern="\d{10}"
+            title="Please enter a 10-digit phone number"
           />
         </label>
 
@@ -133,18 +95,27 @@ export const RegisterEspecialist = () => {
             value={formData.username}
             onChange={handleChange}
             required
+            aria-required="true"
           />
         </label>
 
         <label>
           Contraseña:
           <input
-            type="password"
+            type={passwordVisible ? "text" : "password"}
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
+            aria-required="true"
           />
+          <button
+            type="button"
+            onClick={() => setPasswordVisible(!passwordVisible)}
+            aria-label={passwordVisible ? "Hide password" : "Show password"}
+          >
+            {passwordVisible ? "Hide" : "Show"}
+          </button>
         </label>
 
         <fieldset>
