@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { Header } from "../header";
 import { Footer } from "../footer";
 import { Navbar } from "../navbar";
+import { NavbarAdmin } from "../../componentsAdmin/navbarAdmin/index.tsx";
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
@@ -25,7 +26,7 @@ const REGISTRATION_TEXTS = {
 const Home: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
-  const { token } = useAuth();
+  const { token, role } = useAuth();
 
   const openModal = (form: string) => {
     setActiveForm(form);
@@ -51,26 +52,29 @@ const Home: React.FC = () => {
   return (
     <>
       <Header />
-      <Navbar />
+      {role === "admin" ? <NavbarAdmin /> : <Navbar />}
       {!token ? (
-        <button onClick={() => openModal("user")}>
-          {activeForm === "user"
-            ? REGISTRATION_TEXTS.user.close
-            : REGISTRATION_TEXTS.user.open}
-        </button>
-      ) : (
         <>
+          <button onClick={() => openModal("user")}>
+            {activeForm === "user"
+              ? REGISTRATION_TEXTS.user.close
+              : REGISTRATION_TEXTS.user.open}
+          </button>
           <button onClick={() => openModal("clinic")}>
             {activeForm === "clinic"
               ? REGISTRATION_TEXTS.clinic.close
               : REGISTRATION_TEXTS.clinic.open}
           </button>
-          <Link to="/registerespecialist">
-            <button>{REGISTRATION_TEXTS.specialist}</button>
-          </Link>
+        </>
+      ) : (
+        <>
+          {role === "admin" && (
+            <Link to="/registerespecialist">
+              <button>{REGISTRATION_TEXTS.specialist}</button>
+            </Link>
+          )}
         </>
       )}
-
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -79,7 +83,6 @@ const Home: React.FC = () => {
         <button onClick={closeModal}>Cerrar</button>
         {renderForm()}
       </Modal>
-
       <Footer />
     </>
   );

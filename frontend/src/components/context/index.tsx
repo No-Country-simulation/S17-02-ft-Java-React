@@ -2,7 +2,9 @@ import React, { createContext, useState, useContext, ReactNode } from "react";
 
 interface AuthContextType {
   token: string | null;
+  role: string | null;
   setToken: (token: string | null) => void;
+  setRole: (role: string | null) => void;
   logout: () => void;
 }
 
@@ -14,6 +16,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
+  const [role, setRole] = useState<string | null>(localStorage.getItem("role"));
 
   const updateToken = (newToken: string | null) => {
     setToken(newToken);
@@ -24,12 +27,30 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const updateRole = (newRole: string | null) => {
+    setRole(newRole);
+    if (newRole) {
+      localStorage.setItem("role", newRole);
+    } else {
+      localStorage.removeItem("role");
+    }
+  };
+
   const logout = () => {
     updateToken(null); // Limpia el token
+    updateRole(null); // Limpia el rol
   };
 
   return (
-    <AuthContext.Provider value={{ token, setToken: updateToken, logout }}>
+    <AuthContext.Provider
+      value={{
+        token,
+        role,
+        setToken: updateToken,
+        setRole: updateRole,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -4,7 +4,7 @@ import Home from "./components/home/index.tsx";
 import { Login } from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
-import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
+import { RegisterEspecialist } from "./componentsAdmin/registerEspecialist/index.tsx";
 import axios from "axios";
 import "../src/css/App.scss";
 

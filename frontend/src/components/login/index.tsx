@@ -7,7 +7,7 @@ export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const { setToken } = useAuth();
+  const { setToken, setRole } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: FormEvent) => {
@@ -18,8 +18,24 @@ export const Login = () => {
         username,
         password,
       });
+
       console.log("Login successful:", response.data);
-      setToken(response.data.token);
+
+      const { token, userResponseDTO } = response.data;
+      setToken(token);
+
+      const role = userResponseDTO.roles[0]?.roleId;
+      let roleName = "unknown";
+
+      if (role === 1) {
+        roleName = "user";
+      } else if (role === 2) {
+        roleName = "admin";
+      }
+
+      setRole(roleName);
+      console.log("User role:", roleName);
+
       navigate("/");
     } catch (err) {
       console.error("Login failed:", err);
