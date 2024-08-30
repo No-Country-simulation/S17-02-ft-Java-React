@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
-import FormInput from "./formInput"; // Asegúrate de que esta ruta sea correcta
-import useForm from "./useForm"; // Asegúrate de que esta ruta sea correcta
+import FormInput from "./formInput";
+import useForm from "./useForm";
 
 export const RegisterUser = () => {
   const { form, errors, handleChange } = useForm();
@@ -12,7 +12,7 @@ export const RegisterUser = () => {
     const payload = {
       username: form.email,
       password: form.password,
-      rolesId: [1], // Asegúrate de que este valor es correcto
+      rolesId: [1],
     };
 
     try {
