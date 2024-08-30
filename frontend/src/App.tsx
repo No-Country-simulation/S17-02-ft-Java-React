@@ -27,7 +27,6 @@ const App: React.FC = () => {
         />
         <Route path="/registerespecialist" element={<RegisterEspecialist />} />
       </Routes>
-      <button onClick={() => setIsVideoCallOpen(true)}>Open Video Call</button>
     </Router>
   );
 };
