@@ -1,20 +1,49 @@
 // src/components/navbarAdmin.tsx
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/context";
 
 export const NavbarAdmin: React.FC = () => {
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    logout();
+    navigate("/");
+  };
+
   return (
     <nav>
-      {/* Contenido del NavbarAdmin */}
       <ul>
         <li>
-          <a href="/admin/dashboard">Dashboard</a>
+          <Link to="/">Inicio</Link>
         </li>
         <li>
-          <a href="/admin/users">Users</a>
+          <Link to="#about">Acerca de</Link>
         </li>
         <li>
-          <a href="/admin/settings">Settings</a>
+          <Link to="#services">Servicios</Link>
         </li>
+        <li>
+          <Link to="#contact">Contacto</Link>
+        </li>
+        {token ? (
+          <>
+            <li>
+              <Link to="/video-call">Video Llamada</Link>
+            </li>
+            <li>
+              <a href="#" onClick={handleLogout}>
+                Logout
+              </a>{" "}
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
