@@ -1,6 +1,17 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/index.tsx";
 
 export const Navbar = () => {
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    logout();
+    navigate("/");
+  };
+
   return (
     <nav>
       <ul>
@@ -16,12 +27,22 @@ export const Navbar = () => {
         <li>
           <Link to="#contact">Contacto</Link>
         </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/video-call">Video Llamada</Link>{" "}
-        </li>
+        {token ? (
+          <>
+            <li>
+              <Link to="/video-call">Video Llamada</Link>
+            </li>
+            <li>
+              <a href="#" onClick={handleLogout}>
+                Logout
+              </a>{" "}
+            </li>
+          </>
+        ) : (
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

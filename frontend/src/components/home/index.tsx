@@ -6,6 +6,7 @@ import { Navbar } from "../navbar";
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/index.tsx";
 
 Modal.setAppElement("#root");
 
@@ -24,6 +25,7 @@ const REGISTRATION_TEXTS = {
 const Home: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
+  const { token } = useAuth();
 
   const openModal = (form: string) => {
     setActiveForm(form);
@@ -50,19 +52,24 @@ const Home: React.FC = () => {
     <>
       <Header />
       <Navbar />
-      <button onClick={() => openModal("user")}>
-        {activeForm === "user"
-          ? REGISTRATION_TEXTS.user.close
-          : REGISTRATION_TEXTS.user.open}
-      </button>
-      <button onClick={() => openModal("clinic")}>
-        {activeForm === "clinic"
-          ? REGISTRATION_TEXTS.clinic.close
-          : REGISTRATION_TEXTS.clinic.open}
-      </button>
-      <Link to="/registerespecialist">
-        <button>{REGISTRATION_TEXTS.specialist}</button>
-      </Link>
+      {!token ? (
+        <button onClick={() => openModal("user")}>
+          {activeForm === "user"
+            ? REGISTRATION_TEXTS.user.close
+            : REGISTRATION_TEXTS.user.open}
+        </button>
+      ) : (
+        <>
+          <button onClick={() => openModal("clinic")}>
+            {activeForm === "clinic"
+              ? REGISTRATION_TEXTS.clinic.close
+              : REGISTRATION_TEXTS.clinic.open}
+          </button>
+          <Link to="/registerespecialist">
+            <button>{REGISTRATION_TEXTS.specialist}</button>
+          </Link>
+        </>
+      )}
 
       <Modal
         isOpen={modalIsOpen}

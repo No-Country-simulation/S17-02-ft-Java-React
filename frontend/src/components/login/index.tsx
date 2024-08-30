@@ -1,14 +1,30 @@
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../context/index.tsx";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const { setToken } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("Usuario:", username);
-    console.log("Contraseña:", password);
+
+    try {
+      const response = await axios.post("/api/auth/login", {
+        username,
+        password,
+      });
+      console.log("Login successful:", response.data);
+      setToken(response.data.token);
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Login failed. Please check your credentials and try again.");
+    }
   };
 
   return (
@@ -37,6 +53,7 @@ export const Login = () => {
         </div>
         <button type="submit">Iniciar sesión</button>
       </form>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <p>
         <Link to="/">Inicio</Link>
       </p>
