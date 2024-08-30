@@ -1,85 +1,47 @@
-import React, { useState } from "react";
+import FormInput from "./formInPut/index.tsx";
+import useForm from "./useForm/index.tsx";
 
-interface FormData {
-  nombre: string;
-  correo: string;
-  telefono: string;
-  direccion: string;
-}
-
-const RegisterClinic: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    nombre: "",
-    correo: "",
-    telefono: "",
-    direccion: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Datos del formulario:", formData);
-  };
+export const RegisterClinic = () => {
+  const { formData, handleChange, handleSubmit } = useForm();
 
   return (
     <div>
       <h1>Registro de Clínica</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="nombre">Nombre de la Clínica:</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={formData.nombre}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="correo">Correo Electrónico:</label>
-          <input
-            type="email"
-            id="correo"
-            name="correo"
-            value={formData.correo}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="telefono">Teléfono:</label>
-          <input
-            type="tel"
-            id="telefono"
-            name="telefono"
-            value={formData.telefono}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="direccion">Dirección:</label>
-          <input
-            type="text"
-            id="direccion"
-            name="direccion"
-            value={formData.direccion}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <FormInput
+          id="nombre"
+          label="Nombre de la Clínica"
+          type="text"
+          value={formData.nombre}
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          id="correo"
+          label="Correo Electrónico"
+          type="email"
+          value={formData.correo}
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          id="telefono"
+          label="Teléfono"
+          type="tel"
+          value={formData.telefono}
+          onChange={handleChange}
+          required
+        />
+        <FormInput
+          id="direccion"
+          label="Dirección"
+          type="text"
+          value={formData.direccion}
+          onChange={handleChange}
+          required
+        />
         <button type="submit">Registrar Clínica</button>
       </form>
     </div>
   );
 };
-
-export default RegisterClinic;

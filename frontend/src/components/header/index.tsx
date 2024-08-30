@@ -1,11 +1,7 @@
-import React from "react";
-
-const Header: React.FC = () => {
+export const Header = () => {
   return (
     <header>
-      <h1>Tele Medicina</h1>
+      <h1>HEY DOCTOR!!!!</h1>
     </header>
   );
 };
-
-export default Header;

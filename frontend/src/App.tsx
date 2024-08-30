@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/home/index.tsx";
-import Login from "./components/login/index.tsx";
+import { Login } from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
-import "./App.css";
-import Profile from "./components/Profile/Profile.tsx";
+import { PaymentGateway } from "./components/paymentGateway/index.tsx";
+import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
+import "../src/css/App.scss";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
@@ -14,7 +15,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/payment" element={<PaymentGateway />} />
         <Route
           path="/video-call"
           element={
@@ -24,8 +25,8 @@ const App: React.FC = () => {
             />
           }
         />
+        <Route path="/registerespecialist" element={<RegisterEspecialist />} />
       </Routes>
-      <button onClick={() => setIsVideoCallOpen(true)}>Open Video Call</button>
     </Router>
   );
 };

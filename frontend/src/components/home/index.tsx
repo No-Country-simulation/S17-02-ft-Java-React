@@ -1,42 +1,55 @@
 import React, { useState } from "react";
-import Header from "../header/index.tsx";
-import Footer from "../footer/index.tsx";
-import NavBar from "../navbar/index.tsx";
-import RegisterUser from "../registerUser/index.tsx";
-import RegisterClinic from "../registerClinic/index.tsx";
-import RegisterEspecialist from "../registerEspecialist/index.tsx";
+import Modal from "react-modal";
+import { Header } from "../header/index.tsx";
+import { Footer } from "../footer/index.tsx";
+import { Navbar } from "../navbar/index.tsx";
+import { RegisterUser } from "../registerUser/index.tsx";
+import { RegisterClinic } from "../registerClinic/index.tsx";
+import { Link } from "react-router-dom";
+
+Modal.setAppElement("#root");
 
 const Home: React.FC = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
 
-  const toggleForm = (form: string) => {
-    setActiveForm((prevForm) => (prevForm === form ? null : form));
+  const openModal = (form: string) => {
+    setActiveForm(form);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setActiveForm(null);
   };
 
   return (
     <div>
       <Header />
-      <NavBar />
-      <button onClick={() => toggleForm("user")}>
+      <Navbar />
+      <button onClick={() => openModal("user")}>
         {activeForm === "user"
           ? "Cerrar Registro de Usuario"
           : "Registro de Usuario"}
       </button>
-      {activeForm === "user" && <RegisterUser />}
-
-      <button onClick={() => toggleForm("clinic")}>
+      <button onClick={() => openModal("clinic")}>
         {activeForm === "clinic"
           ? "Cerrar Registro de Clínica"
           : "Registro de Clínica"}
       </button>
-      {activeForm === "clinic" && <RegisterClinic />}
+      <Link to="/registerespecialist">
+        <button>Registro de Especialista</button>
+      </Link>
 
-      <button onClick={() => toggleForm("especialist")}>
-        {activeForm === "especialist"
-          ? "Cerrar Registro de Especialista"
-          : "Registro de Especialista"}
-      </button>
-      {activeForm === "especialist" && <RegisterEspecialist />}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Registro Modal"
+      >
+        <button onClick={closeModal}>Cerrar</button>
+        {activeForm === "user" && <RegisterUser />}
+        {activeForm === "clinic" && <RegisterClinic />}
+      </Modal>
 
       <Footer />
     </div>

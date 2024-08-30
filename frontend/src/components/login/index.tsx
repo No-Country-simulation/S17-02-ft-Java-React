@@ -1,7 +1,7 @@
-import React, { useState, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
-const Login: React.FC = () => {
+export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -43,5 +43,3 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
-export default Login;

@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useForm } from "./userForm";
+import { Link } from "react-router-dom";
 
 type Specialty =
   | "Cardiología"
@@ -7,16 +8,6 @@ type Specialty =
   | "Dermatología"
   | "Ginecología"
   | "Oftalmología";
-
-interface FormData {
-  name: string;
-  licenseNumber: string;
-  email: string;
-  phone: string;
-  username: string;
-  password: string;
-  selectedSpecialties: Specialty[];
-}
 
 const specialties: Specialty[] = [
   "Cardiología",
@@ -27,133 +18,123 @@ const specialties: Specialty[] = [
   "Oftalmología",
 ];
 
-const DoctorRegistrationForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    licenseNumber: "",
-    email: "",
-    phone: "",
-    username: "",
-    password: "",
-    selectedSpecialties: [],
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSpecialtyChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = e.target;
-    if (value in specialties) {
-      setFormData((prevData) => {
-        const selectedSpecialties = checked
-          ? [...prevData.selectedSpecialties, value as Specialty]
-          : prevData.selectedSpecialties.filter(
-              (specialty) => specialty !== (value as Specialty)
-            );
-
-        return { ...prevData, selectedSpecialties };
-      });
-    }
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Datos del formulario:", formData);
-    // Handle form submission logic (e.g., API call) here
-  };
+export const RegisterEspecialist = () => {
+  const {
+    formData,
+    passwordVisible,
+    handleChange,
+    handleSpecialtyChange,
+    handleSubmit,
+    setPasswordVisible,
+  } = useForm(specialties);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Registro de Médico</h2>
+    <div>
+      <nav>
+        <Link to="/">Inicio</Link>
+      </nav>
 
-      <label>
-        Nombre completo:
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
+      <form onSubmit={handleSubmit}>
+        <h2>Registro de Médico</h2>
 
-      <label>
-        Número de licencia:
-        <input
-          type="text"
-          name="licenseNumber"
-          value={formData.licenseNumber}
-          onChange={handleChange}
-          required
-        />
-      </label>
+        <label>
+          Nombre completo:
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </label>
 
-      <label>
-        Correo electrónico:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
+        <label>
+          Número de licencia:
+          <input
+            type="text"
+            name="licenseNumber"
+            value={formData.licenseNumber}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </label>
 
-      <label>
-        Teléfono:
-        <input
-          type="tel"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-        />
-      </label>
+        <label>
+          Correo electrónico:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            aria-required="true"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Please enter a valid email address"
+          />
+        </label>
 
-      <label>
-        Nombre de usuario:
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-      </label>
+        <label>
+          Teléfono:
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            pattern="\d{10}"
+            title="Please enter a 10-digit phone number"
+          />
+        </label>
 
-      <label>
-        Contraseña:
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-      </label>
+        <label>
+          Nombre de usuario:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </label>
 
-      <fieldset>
-        <legend>Especialidades:</legend>
-        {specialties.map((specialty) => (
-          <label key={specialty}>
-            <input
-              type="checkbox"
-              value={specialty}
-              checked={formData.selectedSpecialties.includes(specialty)}
-              onChange={handleSpecialtyChange}
-            />
-            {specialty}
-          </label>
-        ))}
-      </fieldset>
+        <label>
+          Contraseña:
+          <input
+            type={passwordVisible ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+          <button
+            type="button"
+            onClick={() => setPasswordVisible(!passwordVisible)}
+            aria-label={passwordVisible ? "Hide password" : "Show password"}
+          >
+            {passwordVisible ? "Hide" : "Show"}
+          </button>
+        </label>
 
-      <button type="submit">Registrar Médico</button>
-    </form>
+        <fieldset>
+          <legend>Especialidades:</legend>
+          {specialties.map((specialty) => (
+            <label key={specialty}>
+              <input
+                type="checkbox"
+                value={specialty}
+                checked={formData.selectedSpecialties.includes(specialty)}
+                onChange={handleSpecialtyChange}
+              />
+              {specialty}
+            </label>
+          ))}
+        </fieldset>
+
+        <button type="submit">Registrar Médico</button>
+      </form>
+    </div>
   );
 };
-
-export default DoctorRegistrationForm;
