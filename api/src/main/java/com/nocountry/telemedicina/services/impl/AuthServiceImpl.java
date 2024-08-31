@@ -11,9 +11,7 @@ import com.nocountry.telemedicina.models.User;
 import com.nocountry.telemedicina.repository.IRoleRepo;
 import com.nocountry.telemedicina.repository.IUserRepo;
 import com.nocountry.telemedicina.security.filter.JwtUtils;
-
 import jakarta.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

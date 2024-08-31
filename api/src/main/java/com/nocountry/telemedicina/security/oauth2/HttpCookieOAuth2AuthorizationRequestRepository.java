@@ -1,13 +1,11 @@
 package com.nocountry.telemedicina.security.oauth2;
 
+import com.nocountry.telemedicina.utils.CookieUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.stereotype.Component;
-
-import com.nocountry.telemedicina.utils.CookieUtils;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class HttpCookieOAuth2AuthorizationRequestRepository

@@ -1,6 +1,5 @@
 package com.nocountry.telemedicina.controllers;
 
-import com.cloudinary.http45.api.Response;
 import com.nocountry.telemedicina.config.cloudinary.CloudinaryService;
 import com.nocountry.telemedicina.config.mapper.ProfileMapper;
 import com.nocountry.telemedicina.dto.request.ProfileRequestDTO;
@@ -23,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.UUID;
 

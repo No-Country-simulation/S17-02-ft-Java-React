@@ -1,13 +1,6 @@
 package com.nocountry.telemedicina.security.oauth2;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Objects;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.security.NoSuchAlgorithmException;
-import java.security.MessageDigest;
-
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.crypto.keygen.Base64StringKeyGenerator;
 import org.springframework.security.crypto.keygen.StringKeyGenerator;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -16,7 +9,13 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.oauth2.core.endpoint.PkceParameterNames;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * The type Custom authorization request resolver.
