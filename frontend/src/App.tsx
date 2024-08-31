@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/home/index.tsx";
+
 import { Login } from "./components/login/index.tsx";
 import VideoCall from "./components/videoCall/index.tsx";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
 import "../src/css/App.scss";
+import Home from "./Pages/Home.tsx";
 
 const App: React.FC = () => {
   const [isVideoCallOpen, setIsVideoCallOpen] = useState(false);
