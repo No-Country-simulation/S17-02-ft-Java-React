@@ -3,6 +3,7 @@ package com.nocountry.telemedicina.config.mapper;
 import com.nocountry.telemedicina.dto.request.BookingRequestDTO;
 import com.nocountry.telemedicina.dto.response.BookingResponseDTO;
 import com.nocountry.telemedicina.models.Booking;
+import com.nocountry.telemedicina.repository.projection.IBookingProjection;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -22,4 +23,9 @@ public interface BookingMapper {
     @Mapping(source = "user",target = "user")
     Booking toBooking(BookingRequestDTO dto);
 
+
+    @Mapping(source = "bookingId", target = "bookingId")
+    @Mapping(source = "ISchedulesProjection.schedulesDay", target = "schedulesDay")
+    @Mapping(source = "ISchedulesProjection.schedulesStart", target = "schedulesStart")
+    BookingResponseDTO toBookingDTO(IBookingProjection bookingProjection);
 }
