@@ -8,6 +8,7 @@ import { RegisterEspecialist } from "./componentsAdmin/registerEspecialist/index
 import axios from "axios";
 import "../src/css/App.scss";
 import Layout from "./components/layout.tsx/index.tsx";
+import Profile from "./components/Profile/Profile.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/payment" element={<PaymentGateway />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/video-call"
           element={
