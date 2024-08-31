@@ -1,8 +1,5 @@
 package com.nocountry.telemedicina.models;
 
-import java.util.List;
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,13 +7,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.UUID;
+
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "clinics")
-public class Clinic extends Auditable{
+public class Clinic extends Auditable {
      @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "clinic_id")
@@ -24,6 +24,9 @@ public class Clinic extends Auditable{
     
     @Column(name = "clinic_name",nullable = false,length = 70)
     private String clinicName;
+
+    @Column(name = "reputation",nullable = false)
+    private Integer reputation;
 
     @ManyToOne
     @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_CLINICS_USER"), nullable = false)

@@ -56,4 +56,7 @@ public class User extends Auditable implements UserDetails {
                 .map(rol -> new SimpleGrantedAuthority(rol.getRoleName())).collect(Collectors.toList());
         return authorities;
     }
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
 }

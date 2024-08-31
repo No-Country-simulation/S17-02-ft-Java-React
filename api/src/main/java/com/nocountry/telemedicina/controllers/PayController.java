@@ -4,7 +4,6 @@ import com.nocountry.telemedicina.config.mapper.PayMapper;
 import com.nocountry.telemedicina.dto.request.PayRequestDTO;
 import com.nocountry.telemedicina.dto.response.PayResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
-import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Pay;
 import com.nocountry.telemedicina.services.IPayService;
 import io.swagger.v3.oas.annotations.Operation;

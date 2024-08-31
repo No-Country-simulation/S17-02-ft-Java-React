@@ -7,5 +7,6 @@ public record UserResponseDTO(
         UUID userId,
         String username,
         String password,
-        List<RoleResponseDTO> roles ) {
+        List<RoleResponseDTO> role) {
+
 }
