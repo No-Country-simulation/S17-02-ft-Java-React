@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { Header } from "../header";
-import { Footer } from "../footer";
-import { Navbar } from "../navbar";
-import { NavbarAdmin } from "../../componentsAdmin/navbarAdmin/index.tsx";
+
+
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
@@ -51,8 +49,8 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Header />
-      {role === "admin" ? <NavbarAdmin /> : <Navbar />}
+      
+      
       {!token ? (
         <>
           <button onClick={() => openModal("user")}>
@@ -83,7 +81,6 @@ const Home: React.FC = () => {
         <button onClick={closeModal}>Cerrar</button>
         {renderForm()}
       </Modal>
-      <Footer />
     </>
   );
 };
