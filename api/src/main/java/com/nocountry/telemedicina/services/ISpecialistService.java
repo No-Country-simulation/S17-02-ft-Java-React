@@ -16,5 +16,7 @@ public interface ISpecialistService extends ICRUDService<Specialist, UUID> {
             Integer clinicReputation,
             Double minPrice,
             Double maxPrice,
-            int page, int size);
+            int page, int size,
+            boolean isAscendant,
+            String query);
 }

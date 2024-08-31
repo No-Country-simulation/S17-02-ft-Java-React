@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -26,16 +27,21 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
     }
 
     @Override
-    public Page<Specialist> getFilteredSpecialists(String districtName,
-                                                   String specialtyName,
-                                                   String profileName,
-                                                   Integer reputation,
-                                                   String clinicName,
-                                                   Integer clinicReputation,
-                                                   Double minPrice,
-                                                   Double maxPrice,
-                                                   int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+    public Page<Specialist> getFilteredSpecialists(
+            String districtName,
+            String specialtyName,
+            String profileName,
+            Integer reputation,
+            String clinicName,
+            Integer clinicReputation,
+            Double minPrice,
+            Double maxPrice,
+            int page, int size,
+            boolean isAscendant,
+            String query ) {
+        Pageable pageable = PageRequest.of( page, size,
+                isAscendant ? Sort.Direction.ASC : Sort.Direction.DESC,
+                getQueryString(query));
         Specification<Specialist> spec = Specification
                 .where(SpecialistSpecification.hasDistrictName(districtName))
                 .and(SpecialistSpecification.hasSpecialtyName(specialtyName))
@@ -45,5 +51,15 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
                 .and(SpecialistSpecification.hasClinicReputation(clinicReputation))
                 .and(SpecialistSpecification.hasRangeOfPrices(minPrice, maxPrice));
         return repo.findAll(spec, pageable);
+    }
+
+    private static String getQueryString(String query) {
+        return switch (query) {
+            case "price" -> "bookingPrice";
+            case "specialty" -> "specialty.specialtyName";
+            case "location" -> "profile.district.districtName";
+            case "clinic" -> "clinic.clinicName";
+            default -> "reputation";
+        };
     }
 }
