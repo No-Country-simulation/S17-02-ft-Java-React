@@ -5,7 +5,7 @@ export const RegisterUser = () => {
   const { form, errors, handleChange, handleSubmit } = useForm();
 
   return (
-    <div className="register-user">
+    <div className="register-user ">
       <h2>Registro de Usuarios</h2>
       {Object.keys(errors).length > 0 && (
         <ul>

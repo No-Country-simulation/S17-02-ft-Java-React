@@ -16,7 +16,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/payment" element={<PaymentGateway />} />
-        <Route
+        {/* <Route
           path="/video-call"
           element={
             <VideoCall
@@ -24,7 +24,7 @@ export const App: React.FC = () => {
               onClose={() => setIsVideoCallOpen(false)}
             />
           }
-        />
+        /> */}
         <Route path="/registerespecialist" element={<RegisterEspecialist />} />
       </Routes>
     </Router>

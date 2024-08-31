@@ -19,9 +19,9 @@ export const Navbar = () => {
         <li>
           <Link to="/login">Login</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/video-call">Video Llamada</Link>{" "}
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

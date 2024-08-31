@@ -12239,10 +12239,24 @@ header h1, header .h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   height: 100vh;
-  background-image: linear-gradient(to right, #d9d9d9 42%, #ffffff 42%, #ffffff 100%);
-  background-size: cover;
+}
+
+.register-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20rem;
+}
+
+.buttonContainer-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 2rem;
+  margin-top: 20rem;
 }
 
 .register-user {
@@ -12274,15 +12288,13 @@ header h1, header .h1 {
 }
 
 .close-btn {
-  display: block;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
   cursor: pointer;
   color: #3d3d3d;
   font-size: 2rem;
   border: none;
   background-color: transparent;
+  padding: 0;
+  line-height: 1;
 }
 
 .register-container {
@@ -12301,15 +12313,16 @@ header h1, header .h1 {
   flex-direction: column;
   align-items: flex-end;
   gap: 6.4rem;
-  align-self: stretch;
 }
 
 .input-register {
-  max-width: 45.6rem;
+  max-width: 40rem;
   width: 100%;
   height: 3rem;
   padding: 0.8rem 1.6rem;
   background-color: #efefef;
   border-radius: 0.8rem;
   border: none;
-}/*# sourceMappingURL=index.css.map */
+}
+
+/*# sourceMappingURL=index.css.map */

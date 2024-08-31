@@ -1,6 +1,8 @@
 .navbar{
     display: flex;
     justify-content: center;
+    max-width: 120rem;
+    gap: 2rem;
 }
 
 .navbar a{

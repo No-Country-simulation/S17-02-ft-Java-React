@@ -12,7 +12,7 @@ export const Login = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -35,7 +35,9 @@ export const Login = () => {
             required
           />
         </div>
-        <button type="submit">Iniciar sesión</button>
+        <div className="d-flex justify-content-end">
+        <button className=" btn btn-secondary" type="submit">Iniciar sesión</button>
+        </div>
       </form>
       <p>
         <Link to="/">Inicio</Link>

@@ -54,7 +54,7 @@ const Home: React.FC = () => {
       <Header />
       <Navbar />
       </div>
-      <div>
+      <div className="buttonContainer-modal">
 
       <button className="btn btn-secondary" onClick={() => openModal("user")}>
         {activeForm === "user"
@@ -73,12 +73,14 @@ const Home: React.FC = () => {
           <div>
 
       <Modal
-        className="d-flex justify-content-center"
+        className="register-modal"
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Registro Modal"
         >
+          <div>
         <button className="close-btn" onClick={closeModal}>X</button>
+          </div>
         {renderForm()}
       </Modal>
 
