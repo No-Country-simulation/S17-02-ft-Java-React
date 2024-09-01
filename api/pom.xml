@@ -11,8 +11,8 @@
 	<groupId>com.nocountry</groupId>
 	<artifactId>telemedicina</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>telemedicina</name>
-	<description>api de telemedicina</description>
+	<name>Telemedicina</name>
+	<description>API de telemedicina</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -76,6 +76,12 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.6.0</version>
 		</dependency>
 	</dependencies>
 

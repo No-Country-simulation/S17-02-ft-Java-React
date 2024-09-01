@@ -6,11 +6,19 @@ import {
   Nav,
 } from "react-bootstrap";
 import Modal from "react-modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
-const Header = () => {
+import { useAuth } from "../context";
+const NavBar = () => {
+  const { token, logout } = useAuth();
+  const navigate = useNavigate();
 
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    logout();
+    navigate("/");
+  };
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
 
@@ -39,8 +47,12 @@ const Header = () => {
               <Nav.Link href="#features" className="fw-bolder fs-5">Home</Nav.Link>
               <Nav.Link href="#pricing" className="fw-bolder fs-5">Acerca de</Nav.Link>
               <Nav.Link href="#deets" className="fw-bolder fs-5">Servicios</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes" className="fw-bolder fs-5">Video llamadas</Nav.Link>
-            </Nav>
+          {token?   (<>
+           <Nav.Link eventKey={2} href="#memes" className="fw-bolder fs-5">Video llamadas</Nav.Link>
+            <button onClick={handleLogout} className="btn btn-primary" >Logout</button>
+            </>):
+            <Nav.Link eventKey={2} href="/login" className="fw-bolder fs-5">Login</Nav.Link>}
+          </Nav>
           </Navbar.Collapse>
         </Container>
       <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
@@ -75,33 +87,5 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default NavBar;
 
-// import { Link } from "react-router-dom";
-
-// export const Navbar = () => {
-//   return (
-//     <nav>
-//       <ul>
-//         <li>
-//           <Link to="/">Inicio</Link>
-//         </li>
-//         <li>
-//           <Link to="#about">Acerca de</Link>
-//         </li>
-//         <li>
-//           <Link to="#services">Servicios</Link>
-//         </li>
-//         <li>
-//           <Link to="#contact">Contacto</Link>
-//         </li>
-//         <li>
-//           <Link to="/login">Login</Link>
-//         </li>
-//         <li>
-//           <Link to="/video-call">Video Llamada</Link>{" "}
-//         </li>
-//       </ul>
-//     </nav>
-//   );
-// };

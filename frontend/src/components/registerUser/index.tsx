@@ -1,76 +1,74 @@
-import React, { useState } from "react";
-
-interface FormState {
-  email: string;
-  password: string;
-}
+import React from "react";
+import axios from "axios";
+import FormInput from "./formInput";
+import useForm from "./useForm";
+import { useAuth } from "../context";
 
 export const RegisterUser = () => {
-  const [form, setForm] = useState<FormState>({
-    email: "",
-    password: "",
-  });
+  const { form, errors, handleChange } = useForm();
+  const { setToken, setRole } = useAuth();
 
-  const [errors, setErrors] = useState<string[]>([]);
+  const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  };
+    const payload = {
+      username: form.email,
+      password: form.password,
+      rolesId: [1],
+    };
 
-  const validateForm = () => {
-    const newErrors: string[] = [];
-    if (!form.email) newErrors.push("Email is required.");
-    if (!form.password) newErrors.push("Password is required.");
-    return newErrors;
-  };
+    try {
+      const response = await axios.post("/api/auth/register", payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const validationErrors = validateForm();
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors([]);
+      const { token, role } = response.data;
 
-      console.log("Form submitted:", form);
+      setToken(token);
+      setRole(role);
+
+      console.log("User registered and logged in successfully:", response.data);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error registering user:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Unexpected error:", error);
+      }
     }
   };
 
   return (
     <div>
       <h2>Registro de Usuarios</h2>
-      {errors.length > 0 && (
+      {Object.keys(errors).length > 0 && (
         <ul>
-          {errors.map((error, index) => (
-            <li key={index}>{error}</li>
+          {Object.entries(errors).map(([key, error]) => (
+            <li key={key}>{error}</li>
           ))}
         </ul>
       )}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-          />
-        </div>
+      <form onSubmit={submitForm}>
+        <FormInput
+          id="email"
+          name="Email"
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
+        <FormInput
+          id="password"
+          name="Contraseña"
+          type="password"
+          value={form.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
         <button type="submit">Regístrate</button>
       </form>
     </div>

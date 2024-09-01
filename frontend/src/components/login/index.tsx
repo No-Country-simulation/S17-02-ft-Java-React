@@ -1,18 +1,67 @@
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "../context/index.tsx";
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(true);
+  const { setToken, setRole } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("Usuario:", username);
-    console.log("Contraseña:", password);
+
+    try {
+      const response = await axios.post("/api/auth/login", {
+        username,
+        password,
+      });
+
+      console.log("Login successful:", response.data);
+
+      const { token, userResponseDTO } = response.data;
+      setToken(token);
+
+      const role = userResponseDTO.roles[0]?.roleId;
+      let roleName = "unknown";
+
+      if (role === 1) {
+        roleName = "user";
+      } else if (role === 2) {
+        roleName = "admin";
+      }
+
+      setRole(roleName);
+      console.log("User role:", roleName);
+
+      navigate("/");
+      closeModal();
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError("Login failed. Please check your credentials and try again.");
+    }
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    navigate("/");
   };
 
   return (
-    <div>
+    <Modal
+      isOpen={modalIsOpen}
+      onRequestClose={closeModal}
+      contentLabel="Login Modal"
+    >
+      <button onClick={closeModal} style={{ marginTop: "10px" }}>
+        Cerrar
+      </button>
       <h2>Iniciar sesión</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -37,9 +86,7 @@ export const Login = () => {
         </div>
         <button type="submit">Iniciar sesión</button>
       </form>
-      <p>
-        <Link to="/">Inicio</Link>
-      </p>
-    </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </Modal>
   );
 };
