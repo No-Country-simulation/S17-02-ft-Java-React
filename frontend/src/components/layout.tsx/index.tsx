@@ -1,7 +1,7 @@
 import { NavbarAdmin } from "../../componentsAdmin/navbarAdmin"
 import { Footer } from "../footer"
-import { Navbar } from "../navbar"
 import { PropsWithChildren } from "react"
+import NavBar from "../navbar/index.tsx";
 import { useAuth } from "../context/index.tsx";
 
 
@@ -10,7 +10,7 @@ const Layout = ({children} : PropsWithChildren) => {
   return (
     
     <>
-    {role === "admin" ? <NavbarAdmin /> : <Navbar />}
+    {role === "admin" ? <NavbarAdmin /> : <NavBar />}
     {children}
     <Footer />
     </>

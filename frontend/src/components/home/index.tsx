@@ -6,6 +6,12 @@ import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/index.tsx";
+import Hero from "./Hero/Hero.tsx";
+import Brands from "./Brands/Brands.tsx";
+import About from "./About/About.tsx";
+import Unete from "./Unete/Unete.tsx";
+import Services from "./Services/Services.tsx";
+import Contact from "./Contact/Contact.tsx";
 
 Modal.setAppElement("#root");
 
@@ -24,7 +30,7 @@ const REGISTRATION_TEXTS = {
 const Home: React.FC = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
-  const { token, role } = useAuth();
+  // const { token, role } = useAuth();
 
   const openModal = (form: string) => {
     setActiveForm(form);
@@ -49,8 +55,17 @@ const Home: React.FC = () => {
 
   return (
     <>
-      
-      
+       <div>
+        <Hero />
+        <Brands />
+        <About />
+        <Unete />
+        <Services />
+        <Contact />
+      </div>
+{/*       
+
+//! momentaneamente deshabilitado, para renderizar los componentes que creó Pablo Guerreño
       {!token ? (
         <>
           <button onClick={() => openModal("user")}>
@@ -80,7 +95,7 @@ const Home: React.FC = () => {
       >
         <button onClick={closeModal}>Cerrar</button>
         {renderForm()}
-      </Modal>
+      </Modal> */}
     </>
   );
 };
