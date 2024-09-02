@@ -12,13 +12,10 @@ public interface SpecialistMapper {
 
     SpecialistMapper INSTANCE = Mappers.getMapper(SpecialistMapper.class);
 
-    @Mapping(source = "clinic.clinicId",target = "clinicId")
-    @Mapping(source = "clinic.clinicName",target = "clinicName")
     @Mapping(source = "specialty.specialtyName",target = "specialtyName")
     @Mapping(source = "specialty.specialtyId",target = "specialtyId")
     SpecialistResponseDTO toSpecialistDTO(Specialist specialist);
 
-    @Mapping(source = "clinic",target = "clinic")
     @Mapping(source = "specialty",target = "specialty")
     Specialist toSpecialist(SpecialistRequestDTO dto);
 }

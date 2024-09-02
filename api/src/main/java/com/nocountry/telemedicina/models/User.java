@@ -40,10 +40,6 @@ public class User extends Auditable implements UserDetails {
     @JsonIgnore
     private Profile profile;
 
-    @OneToMany(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true)
-    @JsonIgnore
-    private List<Clinic> clinics;
-
     @OneToOne(mappedBy = "user", cascade = { CascadeType.ALL }, orphanRemoval = true)
     @JsonIgnore
     private ClinicalHistory clinicalHistory;

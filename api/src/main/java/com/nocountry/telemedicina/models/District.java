@@ -28,11 +28,7 @@ public class District extends Auditable {
     @ManyToOne
     @JoinColumn(name = "city_id",foreignKey = @ForeignKey(name = "FK_DISTRICTS_CITY"), nullable = false)
     private City city;
-
-    @OneToMany(mappedBy = "district",cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JsonIgnore
-    private List<Subsidiary>subsidiaries;
-
+    
     @OneToMany(mappedBy = "district",cascade = {CascadeType.ALL},orphanRemoval = true)
     @JsonIgnore
     private List<Profile>profiles;

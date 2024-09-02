@@ -37,10 +37,6 @@ public class Specialist extends Auditable {
     @Column(name = "reputation", nullable = false)
     private Integer reputation = 0;
 
-    @ManyToOne
-    @JoinColumn(name = "clinic_id", foreignKey = @ForeignKey(name = "FK_SPECIALISTS_CLINIC"), nullable = false)
-    private Clinic clinic;
-
     @OneToOne
     @JoinColumn(name = "profile_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_Profile"),nullable = false)
     private Profile profile;
