@@ -1,14 +1,15 @@
 package com.nocountry.telemedicina.security;
 
+import com.nocountry.telemedicina.models.User;
+import com.nocountry.telemedicina.repository.IUserRepo;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.nocountry.telemedicina.models.User;
-import com.nocountry.telemedicina.repository.IUserRepo;
-import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
+
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 
 /**
  * The type Custom user details service.

@@ -1,17 +1,14 @@
 package com.nocountry.telemedicina.controllers;
 
-import com.nocountry.telemedicina.config.mapper.UserMapper;
-import com.nocountry.telemedicina.dto.request.BookingRequestDTO;
 import com.nocountry.telemedicina.dto.request.LoginRequestDTO;
 import com.nocountry.telemedicina.dto.request.RegisterRequestDTO;
 import com.nocountry.telemedicina.dto.response.AuthResponseDTO;
-
 import com.nocountry.telemedicina.dto.response.ErrorResponseDTO;
 import com.nocountry.telemedicina.exception.ErrorResponse;
 import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.impl.AuthServiceImpl;
-
+import com.nocountry.telemedicina.services.impl.EmailService;
 import io.jsonwebtoken.security.SignatureException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -19,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +27,9 @@ public class AuthController {
 
     @Autowired
     AuthServiceImpl authService;
+
+    @Autowired
+    EmailService emailService;
 
     @Operation(summary = "Autenticación del usuario(Login)", description = "Autenticación del usuario y entrega de credenciales", tags = {})
     @ApiResponses({
@@ -54,6 +53,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         AuthResponseDTO response = authService.register(registerRequestDTO);
+        // Envio de correo de confirmacion del registro
+        emailService.registerConfirmation(registerRequestDTO.getEmail(),
+                registerRequestDTO.getUsername(), response.getToken());
         return ResponseEntity.status(201).body(response);
     }
 

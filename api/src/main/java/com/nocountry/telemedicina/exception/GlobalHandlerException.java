@@ -1,11 +1,10 @@
 package com.nocountry.telemedicina.exception;
 
+import com.nocountry.telemedicina.security.oauth2.exception.OAuth2AuthenticationProcessingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-
-import com.nocountry.telemedicina.security.oauth2.exception.OAuth2AuthenticationProcessingException;
 
 @RestControllerAdvice
 public class GlobalHandlerException {

@@ -8,5 +8,6 @@ public record ClinicResponseDTO(
         String clinicName,
         UUID userId,
         String username,
+        Integer reputation,
         List<SubsidiaryResponseDTO> subsidiaries) {
 }
