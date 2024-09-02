@@ -1,7 +1,9 @@
 package com.nocountry.telemedicina.dto.response;
 
+import java.util.UUID;
+
 public record RoleResponseDTO(
-        Long roleId,
+        UUID roleId,
         String roleName,
         String roleDescription) {
 

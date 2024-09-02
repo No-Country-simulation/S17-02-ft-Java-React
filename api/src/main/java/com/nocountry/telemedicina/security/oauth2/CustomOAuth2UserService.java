@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -73,7 +74,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user.setActive(true);
             user.setCreatedAt(LocalDateTime.now());
             user.setRoles(new ArrayList<>());
-            Role role = roleRepo.findById(1L).orElseThrow(() -> new NotFoundException("Role not found"));
+            Role role = roleRepo.findById(UUID.fromString("2326ec2c-4f97-4007-b52c-ba5561b434b9")).orElseThrow(() -> new NotFoundException("Role not found"));
             user.getRoles().add(role);
             userRepository.save(user);
             userRepository.updateCreateByWithUserId(user.getUserId());

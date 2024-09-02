@@ -1,15 +1,15 @@
 ------------------Roles-------------
-INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, 1, '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'usuario(cliente)', 'ROLE_USER');
+INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, '2326ec2c-4f97-4007-b52c-ba5561b434b9', '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'usuario(cliente)', 'ROLE_USER');
 
-INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, 2, '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'administrador de la clinica', 'ROLE_ADMIN');
+INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, 'a066e421-d5fb-48e9-a984-62c04a0b22a2', '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'administrador de la clinica', 'ROLE_ADMIN');
 
-INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, 3, '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'especialistas', 'ROLE_SPECIALIST');
+INSERT INTO roles(active, created_at, deleted_at, updated_at, role_id, create_by, delete_by, update_by, role_description, role_name) VALUES (true, '2024-08-22 14:00:00', null, null, '9c765b7d-9eec-421b-85c6-6d53bcd002da', '177b61e6-51ad-4185-894b-dc7495599cfc', null, null, 'especialistas', 'ROLE_SPECIALIST');
 
 ------------------User--------------------
 INSERT INTO users(active, created_at, deleted_at, updated_at, create_by, delete_by, update_by, user_id, password, username) VALUES (true, '2024-08-24', null, null, 'd0b4c3d8-6beb-40b7-871b-177ee66627cb', null, null, '895769e3-1828-40c6-8b97-257f82853075', '$2y$10$j8O64cfWP70WHySKmYFnbuBwIBP.XuXmlPKiTA9p56vCZUwNz7gnm', 'admin@gmail.com');
 
 -----------------User-role----------------
-INSERT INTO user_role(role_id, user_id)VALUES (2, '895769e3-1828-40c6-8b97-257f82853075');
+INSERT INTO user_role(role_id, user_id)VALUES ('2326ec2c-4f97-4007-b52c-ba5561b434b9', '895769e3-1828-40c6-8b97-257f82853075');
 
 ------- Country -------
 INSERT INTO countries(country_id, country_name) VALUES ('1', 'Argentina');

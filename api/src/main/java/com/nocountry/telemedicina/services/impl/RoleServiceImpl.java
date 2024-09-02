@@ -7,14 +7,16 @@ import com.nocountry.telemedicina.services.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
-public class RoleServiceImpl extends CRUDServiceImpl<Role, Long> implements IRoleService {
+public class RoleServiceImpl extends CRUDServiceImpl<Role, UUID> implements IRoleService {
 
     @Autowired
     private IRoleRepo repo;
 
     @Override
-    protected IGenericRepo<Role, Long> getRepo() {
+    protected IGenericRepo<Role, UUID> getRepo() {
         return repo;
     }
 }

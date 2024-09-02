@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,7 +87,7 @@ public class AuthServiceImpl {
         return new AuthResponseDTO(mapper.toUserDTO(user), token);
     }
 
-    public AuthResponseDTO registerUser(User user, List<Long> roleIds) {
+    public AuthResponseDTO registerUser(User user, List<UUID> roleIds) {
         // Registra el usuario
         User createdUser = repository.save(user);
         // Asigna los roles al usuario

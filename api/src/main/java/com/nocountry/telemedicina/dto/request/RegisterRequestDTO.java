@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class RegisterRequestDTO {
@@ -19,5 +20,5 @@ public class RegisterRequestDTO {
     private String Email;
 
     @NotBlank
-    private List<Long> rolesId;
+    private List<UUID> rolesId;
 }
