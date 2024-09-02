@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -17,15 +17,15 @@ import java.util.UUID;
 public abstract class Auditable {
     private UUID createBy;
 
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     private UUID updateBy;
 
-    private LocalDate updatedAt;
+    private LocalDateTime updatedAt;
 
     private UUID deleteBy;
 
-    private LocalDate deletedAt;
+    private LocalDateTime deletedAt;
 
     private Boolean active;
 }

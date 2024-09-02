@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nocountry.telemedicina.models.enums.DocumentType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "profiles")
-public class Profile extends Auditable{
+public class Profile extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "profile_id")
@@ -49,4 +50,8 @@ public class Profile extends Auditable{
     @OneToOne
     @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_PROFILE_USER"), nullable = false)
     private User user;
+
+    @OneToOne(mappedBy = "profile",cascade = {CascadeType.ALL},orphanRemoval = true)
+    @JsonIgnore
+    private Specialist specialist;
 }
