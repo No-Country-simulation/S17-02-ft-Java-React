@@ -62,7 +62,8 @@ public class SecurityConfig {
                         "/api/auth/check-login",
                         "/api/auth/login/oauth",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**"
+                        "/v3/api-docs/**",
+                        "/api/mercado-pago/webhook"
         };
 
         private static final String[] OTHERS_ENDPOINTS_PUBLIC = {

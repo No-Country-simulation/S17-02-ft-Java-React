@@ -3,6 +3,7 @@ package com.nocountry.telemedicina.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.nocountry.telemedicina.exception.BadRequestException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -58,11 +59,9 @@ public class MercadoPagoServiceImpl {
         }
     }
 
-    public String generatePreferenceId(List<ItemPreferenceDTO> productos, String username) {
+    public String generatePreferenceId(List<ItemPreferenceDTO> productos) {
         try {
             MercadoPagoConfig.setAccessToken(mercadoPagoTokenPro);
-
-            // TODO AGREGAR EL ID DEL SCHEDULE PARA LUEGO DE LA COMPRA CREAR BOOKING
 
             List<PreferenceItemRequest> items = productos.stream().map(producto -> PreferenceItemRequest.builder()
                     .id(producto.getId().toString())
@@ -80,8 +79,6 @@ public class MercadoPagoServiceImpl {
                     .failure("http://localhost:5173/")
                     .build();
 
-            // TODO BUSCAR AL USUARIO POR EMAIL Y AGREGARLO PAYER
-
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(items)
                     .additionalInfo("HeyDoc")
@@ -98,7 +95,7 @@ public class MercadoPagoServiceImpl {
             Preference preference = client.create(preferenceRequest);
             return preference.getId();
         } catch (MPException | MPApiException error) {
-            return error.toString();
+            throw new BadRequestException(error.getMessage());
         }
     }
 }
