@@ -15,6 +15,7 @@ public interface BookingMapper {
 
     @Mapping(source = "schedules.schedulesDay",target = "schedulesDay")
     @Mapping(source = "schedules.schedulesStart",target = "schedulesStart")
+    @Mapping(source = "schedules.specialist.bookingPrice",target = "payAmount")
     @Mapping(source = "user.userId",target = "userId")
     @Mapping(source = "user.username",target = "username")
     BookingResponseDTO toBookingDTO(Booking booking);

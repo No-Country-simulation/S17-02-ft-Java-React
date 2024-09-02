@@ -27,6 +27,7 @@ public class User extends Auditable implements UserDetails {
     @Column(name = "user_id")
     private UUID userId = UUID.randomUUID();
 
+    @Column(unique = true,nullable = false)
     private String username;
 
     private String password;
