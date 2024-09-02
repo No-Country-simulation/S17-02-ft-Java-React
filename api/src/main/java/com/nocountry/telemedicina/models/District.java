@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "districts")
-public class District extends Auditable {
+public class District {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,12 +1,12 @@
 package com.nocountry.telemedicina.models;
 
+import java.util.UUID;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.UUID;
 
 @Setter
 @Getter
@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "clinical_records")
-public class ClinicalRecord extends Auditable {
+public class ClinicalRecord extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "clinical_record_id")
