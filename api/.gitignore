@@ -34,3 +34,4 @@ build/
 .vscode/
 
 .env
+docker-compose.yml
