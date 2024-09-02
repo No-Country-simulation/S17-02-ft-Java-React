@@ -30,7 +30,6 @@ public class OpenAPIConfig {
             .contact(contact)
             .description(appDescription)
             .license(mitLicense);
-);
 
     @Bean
     public OpenAPI customizeOpenAPI() {
