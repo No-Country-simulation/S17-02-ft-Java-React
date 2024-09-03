@@ -1,61 +1,39 @@
-import { useState, useCallback } from "react";
-
-interface FormState {
-  email: string;
-  password: string;
-}
-
-interface FormErrors {
-  email?: string;
-  password?: string;
-}
+import { useState } from "react";
 
 const useForm = () => {
-  const [form, setForm] = useState<FormState>({
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
-
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prevForm) => ({
-      ...prevForm,
-      [name]: value,
-    }));
-  }, []);
-
-  const validateForm = (): FormErrors => {
-    const newErrors: FormErrors = {};
-
-    if (!form.email) newErrors.email = "Email is required.";
-    else if (!/\S+@\S+\.\S+/.test(form.email))
-      newErrors.email = "Email format is invalid.";
-
-    if (!form.password) newErrors.password = "Password is required.";
-    else if (form.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters long.";
-
-    return newErrors;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({ ...form, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      const validationErrors = validateForm();
-      if (Object.keys(validationErrors).length > 0) {
-        setErrors(validationErrors);
-      } else {
-        setErrors({});
-        console.log("Form submitted:", form);
-        // Aquí podrías hacer la llamada a tu API
-      }
-    },
-    [form]
-  );
+  const validate = () => {
+    const newErrors = { email: "", password: "" };
+    if (!form.email) newErrors.email = "Email is required";
+    if (!form.password) newErrors.password = "Password is required";
+    setErrors(newErrors);
+    return Object.values(newErrors).every((error) => error === "");
+  };
 
-  return { form, errors, handleChange, handleSubmit };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (validate()) {
+      e.preventDefault();
+    }
+  };
+
+  return {
+    form,
+    errors,
+    handleChange,
+    handleSubmit,
+  };
 };
 
 export default useForm;

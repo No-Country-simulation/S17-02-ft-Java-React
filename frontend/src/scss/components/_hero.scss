@@ -1,0 +1,29 @@
+.container-hero{
+    
+    height: 68rem;
+    padding: 3.2rem 15rem;
+}.main-hero{
+    font-size: $display-3;
+    margin-bottom: 5rem;
+}
+.subtitle-hero{
+    padding: 2rem;
+    margin-bottom:3rem; 
+}
+.btn-hero{
+    width: 17.2rem;
+    height: 15.2rem;
+    border-radius: .8rem;
+    border: none;
+    background-color: #d9d9d9;
+    color: $neutralColor-950;
+    font-size: $heading-m-3;
+    font-weight: 300;
+    line-height: .3rem;
+    transition: all .1s ease-in;
+    &:hover{
+        cursor: pointer;
+        background-color: $neutralColor-500;
+        color:$neutralColor-100;
+    }
+}
