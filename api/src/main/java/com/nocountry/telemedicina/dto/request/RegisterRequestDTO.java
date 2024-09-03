@@ -17,8 +17,5 @@ public class RegisterRequestDTO {
     private String password;
 
     @NotBlank
-    private String Email;
-
-    @NotBlank
     private List<UUID> rolesId;
 }
