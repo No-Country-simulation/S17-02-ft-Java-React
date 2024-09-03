@@ -54,8 +54,8 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         AuthResponseDTO response = authService.register(registerRequestDTO);
         // Envio de correo de confirmacion del registro
-        emailService.registerConfirmation(registerRequestDTO.getUsername(),
-                registerRequestDTO.getUsername(), response.getToken());
+//        emailService.registerConfirmation(registerRequestDTO.getUsername(),
+//                registerRequestDTO.getUsername(), response.getToken());
         return ResponseEntity.status(201).body(response);
     }
 
