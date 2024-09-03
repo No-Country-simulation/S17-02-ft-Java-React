@@ -9,7 +9,7 @@ import '../src/css/App.scss';
 import Layout from './layout/layout.tsx';
 import Home from './components/home/index.tsx';
 import MercadoPago from './components/mercadoPago/MercadoPago.tsx';
-import ProfileComponent from './components/Profile/Profile.tsx';
+import ProfileComponent from './Pages/Profile.tsx';
 
 axios.defaults.baseURL = 'https://telemedicina-v1-0.onrender.com';
 
