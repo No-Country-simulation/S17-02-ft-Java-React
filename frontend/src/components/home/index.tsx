@@ -5,7 +5,7 @@ import Modal from "react-modal";
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
-import { useAuth } from "../context.tsx";
+import { useAuth } from "../../context/context.tsx";
 
 Modal.setAppElement("#root");
 

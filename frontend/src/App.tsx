@@ -7,7 +7,7 @@ import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./componentsAdmin/registerEspecialist/index.tsx";
 import axios from "axios";
 import "../src/css/App.scss";
-import Layout from "./layout.tsx/index.tsx";
+import Layout from "./layout/layout.tsx";
 import Profile from "./components/Profile/Profile.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
