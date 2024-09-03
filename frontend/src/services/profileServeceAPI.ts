@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Profile } from '../components/interfaces/profile';
+import { Profile } from '../interfaces/profile';
 
 const API_BASE_URL = 'https://telemedicina-v1-0.onrender.com';
 

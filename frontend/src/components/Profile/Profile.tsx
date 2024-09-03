@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProfile, updateProfile } from '../../services/profileServeceAPI';
-import { Profile } from '../interfaces/profile';
+import { Profile } from '../../interfaces/profile';
 
 const ProfileComponent: React.FC = () => {
   const [profile, setProfile] = useState<Profile | null>(null);

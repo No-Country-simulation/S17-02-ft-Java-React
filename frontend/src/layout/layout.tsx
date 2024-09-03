@@ -1,8 +1,8 @@
-import { NavbarAdmin } from "../../componentsAdmin/navbarAdmin"
-import { Footer } from "../footer"
-import { Navbar } from "../navbar"
+import { NavbarAdmin } from "../componentsAdmin/navbarAdmin/index.tsx"
+import { Footer } from "../components/footer/index.tsx"
+import { Navbar } from "../components/navbar/index.tsx"
 import { PropsWithChildren } from "react"
-import { useAuth } from "../context/index.tsx";
+import { useAuth } from "../components/context.tsx";
 
 
 const Layout = ({children} : PropsWithChildren) => {
