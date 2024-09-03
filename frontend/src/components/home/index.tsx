@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-
-
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
 import { Link } from "react-router-dom";
