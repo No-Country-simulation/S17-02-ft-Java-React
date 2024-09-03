@@ -1,50 +1,49 @@
-// src/components/Profile.tsx
 import React, { useEffect, useState } from 'react';
 import { getProfile, updateProfile } from '../../services/profileServeceAPI';
-import { Profile } from '../../services/profile';
+import { Profile } from '../interfaces/profile';
 
-const Profile: React.FC = () => {
-    const [profile, setProfile] = useState<Profile | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+const ProfileComponent: React.FC = () => {
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const userId = '6097656c-e788-45cb-a41f-73d4e031ee60'; // Esto debería ser dinámico, según el usuario autenticado
+  const userId = '6097656c-e788-45cb-a41f-73d4e031ee60';
 
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const userProfile = await getProfile(userId);
-                setProfile(userProfile);
-            } catch (err) {
-                setError('Error al cargar el perfil');
-            } finally {
-            setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const userProfile = await getProfile(userId);
+        setProfile(userProfile);
+      } catch (err) {
+        setError('Error al cargar el perfil');
+      } finally {
+        setLoading(false);
+      }
+    };
 
     fetchProfile();
-    }, [userId]);
+  }, [userId]);
 
-    const handleUpdateProfile = async (event: React.FormEvent) => {
+  const handleUpdateProfile = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (!profile) return;
 
-        try {
-            const updatedProfile = await updateProfile(userId, profile);
-            setProfile(updatedProfile);
-            alert('Perfil actualizado con éxito');
-        } catch (err) {
-        setError('Error al actualizar el perfil');
-        }
-    };
+    try {
+      const updatedProfile = await updateProfile(userId, profile);
+      setProfile(updatedProfile);
+      alert('Perfil actualizado con éxito');
+    } catch (err) {
+      setError('Error al actualizar el perfil');
+    }
+  };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-        if (profile) {
-        setProfile({
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    if (profile) {
+      setProfile({
         ...profile,
         [e.target.name]: e.target.value,
-        });
+      });
     }
   };
 
@@ -142,4 +141,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+export default ProfileComponent;

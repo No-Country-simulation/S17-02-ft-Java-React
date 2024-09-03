@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { Profile } from './profile';
+import { Profile } from '../components/interfaces/profile';
 
 const API_BASE_URL = 'https://telemedicina-v1-0.onrender.com';
 
 export const getProfile = async (id: string): Promise<Profile> => {
-    const response =await axios.get<Profile>(`${API_BASE_URL}/profile/${id}`);
+    const response = await axios.get<Profile>(`${API_BASE_URL}/profile/${id}`);
     return response.data;
 };
 

@@ -12,7 +12,7 @@ export interface Role {
 export interface User {
     userId: string;
     username: string;
-    password: string; // normalmente no se incluriría la contraseña en las respuestas de la API por seguridad.
+    password: string;
     roles: Role[];
 }
 
@@ -20,8 +20,10 @@ export interface Profile {
     profileId?: string;
     profileName: string;
     profileLastname: string;
+    documentType: string;
+    documentNumber: string;
     avatarUrl: string;
-    birth: string; // fecha en ISO format
+    birth: string; // Date in ISO format
     address: string;
     district: District;
     user: User;
