@@ -35,20 +35,20 @@ public class EmailService {
 
     public void registerConfirmation(String toEmail, String name, String token) {
         sendEmail(toEmail, "Confirm register",
-                getHtmlBody("register", toEmail, name, token));
+                getHtmlBody("register", name, token));
     }
 
     public void resetPasswordConfirmation(String toEmail, String name, String token) throws MessagingException {
         sendEmail(toEmail, "Reset Password",
-                getHtmlBody("resetPassword", toEmail, name, token));
+                getHtmlBody("resetPassword", name, token));
     }
 
     public void sendTokenChangeEmail(String toEmail, String name, String token) throws MessagingException {
         sendEmail(toEmail, "Change email",
-                getHtmlBody("changeEmail", toEmail, name, token));
+                getHtmlBody("changeEmail", name, token));
     }
 
-    public String getHtmlBody(String typeMessage, String toEmail, String name, String token){
+    public String getHtmlBody(String typeMessage, String name, String token){
         if(typeMessage.equals("register")){
             return String.format(
                     "<div style=\"max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #333;\">"
