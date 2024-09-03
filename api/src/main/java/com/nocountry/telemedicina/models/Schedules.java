@@ -1,14 +1,14 @@
 package com.nocountry.telemedicina.models;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "schedules")
-public class Schedules extends Auditable{
+public class Schedules extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedules_id", nullable = false)

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "districts")
-public class District {
+public class District extends Auditable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +28,7 @@ public class District {
     @ManyToOne
     @JoinColumn(name = "city_id",foreignKey = @ForeignKey(name = "FK_DISTRICTS_CITY"), nullable = false)
     private City city;
-
-    @OneToMany(mappedBy = "district",cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @JsonIgnore
-    private List<Subsidiary>subsidiaries;
-
+    
     @OneToMany(mappedBy = "district",cascade = {CascadeType.ALL},orphanRemoval = true)
     @JsonIgnore
     private List<Profile>profiles;
