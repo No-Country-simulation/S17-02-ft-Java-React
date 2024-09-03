@@ -1,15 +1,10 @@
 import { useState } from "react";
-import {
-  Container,
-  Navbar,
-
-  Nav,
-} from "react-bootstrap";
+import { Container, Navbar, Nav } from "react-bootstrap";
 import Modal from "react-modal";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../registerUser";
 import { RegisterClinic } from "../registerClinic";
-import { useAuth } from "../context";
+import { useAuth } from "../../context/context";
 const NavBar = () => {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
