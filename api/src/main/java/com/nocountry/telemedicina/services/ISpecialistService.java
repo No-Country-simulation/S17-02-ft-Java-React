@@ -19,4 +19,6 @@ public interface ISpecialistService extends ICRUDService<Specialist, UUID> {
             int page, int size,
             boolean isAscendant,
             String query);
+
+  Spe
 }
