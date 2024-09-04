@@ -10,9 +10,10 @@ export const RegisterUser = () => {
     event.preventDefault();
 
     const payload = {
-      username: form.email,
+      username: form.email, // Assuming username and email are the same
       password: form.password,
-      rolesId: [1],
+      rolesId: ["2326ec2c-4f97-4007-b52c-ba5561b434b9"], // Example UUID; replace with actual values as needed
+      email: form.email,
     };
 
     try {
