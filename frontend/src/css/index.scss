@@ -5,6 +5,7 @@
 /*Bootstrap*/
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+@import '../scss/abstracts/typography';
 /*Base*/
 @import '../scss/base/base';
 @import '../scss/base/resets';

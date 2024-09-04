@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <div className="container-hero p-5">
         <div className="d-flex flex-column justify-content-center">
-       <h1 className=" main-hero text-center"><strong>Cuidamos de tus pacientes</strong></h1>
+       <h1 className=" main-hero text-center"> Conecta inmediatamente con los especialistas</h1>
        <h2 className="subtitle-hero text-center mx-auto fs-2 w-75">Ofrezca a sus pacientes una atención continua, permitiéndoles recibir atención médica desde cualquier punto y cumpliendo con los estándares de seguridad y privacidad más rigurosos.</h2>
         </div>
         <div className="d-flex justify-content-center flex-wrap mt-5 gap-3 gap-md-4">

@@ -221,12 +221,26 @@ body {
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
+}
+body {
   font-weight: var(--bs-body-font-weight);
+}
+body {
   line-height: var(--bs-body-line-height);
+}
+body {
   color: var(--bs-body-color);
+}
+body {
   text-align: var(--bs-body-text-align);
+}
+body {
   background-color: var(--bs-body-bg);
+}
+body {
   -webkit-text-size-adjust: 100%;
+}
+body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
@@ -540,12 +554,14 @@ legend {
   padding: 0;
   margin-bottom: 0.5rem;
   font-size: calc(1.275rem + 0.3vw);
-  line-height: inherit;
 }
 @media (min-width: 1200px) {
   legend {
     font-size: 1.5rem;
   }
+}
+legend {
+  line-height: inherit;
 }
 legend + * {
   clear: left;
@@ -619,68 +635,92 @@ progress {
 
 .display-1 {
   font-size: calc(1.625rem + 4.5vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-1 {
     font-size: 5rem;
   }
 }
+.display-1 {
+  font-weight: 300;
+}
+.display-1 {
+  line-height: 1.2;
+}
 
 .display-2 {
   font-size: calc(1.575rem + 3.9vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-2 {
     font-size: 4.5rem;
   }
 }
+.display-2 {
+  font-weight: 300;
+}
+.display-2 {
+  line-height: 1.2;
+}
 
 .display-3 {
   font-size: calc(1.525rem + 3.3vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-3 {
     font-size: 4rem;
   }
 }
+.display-3 {
+  font-weight: 300;
+}
+.display-3 {
+  line-height: 1.2;
+}
 
 .display-4 {
   font-size: calc(1.475rem + 2.7vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-4 {
     font-size: 3.5rem;
   }
 }
+.display-4 {
+  font-weight: 300;
+}
+.display-4 {
+  line-height: 1.2;
+}
 
 .display-5 {
   font-size: calc(1.425rem + 2.1vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-5 {
     font-size: 3rem;
   }
 }
+.display-5 {
+  font-weight: 300;
+}
+.display-5 {
+  line-height: 1.2;
+}
 
 .display-6 {
   font-size: calc(1.375rem + 1.5vw);
-  font-weight: 300;
-  line-height: 1.2;
 }
 @media (min-width: 1200px) {
   .display-6 {
     font-size: 2.5rem;
   }
+}
+.display-6 {
+  font-weight: 300;
+}
+.display-6 {
+  line-height: 1.2;
 }
 
 .list-unstyled {
@@ -5444,12 +5484,14 @@ textarea.form-control-lg {
 }
 .modal.fade .modal-dialog {
   transition: transform 0.3s ease-out;
-  transform: translate(0, -50px);
 }
 @media (prefers-reduced-motion: reduce) {
   .modal.fade .modal-dialog {
     transition: none;
   }
+}
+.modal.fade .modal-dialog {
+  transform: translate(0, -50px);
 }
 .modal.show .modal-dialog {
   transform: none;
@@ -11868,6 +11910,24 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../../assets/fonts/gothamrnd_light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../../assets/fonts/gothamrnd_medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../../assets/fonts/gothamrnd_bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
 /*Base*/
 html {
   font-size: 62.5%;
@@ -11876,7 +11936,7 @@ html {
 
 body {
   font-family: "Gotham Rounded", sans-serif;
-  background-color: #1ab2af;
+  background: linear-gradient(90deg, #737373 0%, #D9D9D9 100%);
   height: 100vh;
 }
 
@@ -12205,34 +12265,82 @@ template {
   flex-direction: column;
 }
 
-header h1, header .h1 {
-  font-size: 5.6rem;
-  margin: 0 auto;
-  padding: 0.5rem;
-  color: #efefef;
-}
-
 .navbar {
   display: flex;
-  justify-content: center;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: #efefef;
-}
-
-.navbar ul {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
+  margin: 0 auto;
+  justify-content: space-between;
+  max-width: 1440rem;
   gap: 2rem;
-  justify-content: center;
+  border-bottom: 0.2rem solid #d9d9d9;
 }
 
-.navbar li {
-  font-size: 3.2rem;
+.bg-body-tertiar {
+  background-color: transparent;
+  font-size: 1.8rem;
+  border-bottom: none;
+}
+
+.btn-navbar-w {
+  width: 17.2rem;
+  height: 4rem;
+  border-radius: 0.8rem;
+  border: none;
+  background-color: #ffffff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0.2rem;
+  color: #464646;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-navbar-w:hover {
+  cursor: pointer;
+  background-color: #dcdcdc;
+  color: #989898;
+}
+
+.btn-navbar-g {
+  width: 17.2rem;
+  height: 4rem;
+  border-radius: 0.8rem;
+  border: none;
+  background-color: #989898;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0.2rem;
+  color: #ffffff;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-navbar-g:hover {
+  cursor: pointer;
+  background-color: #dcdcdc;
+  color: #989898;
+}
+
+.badge {
+  display: flex;
   font-family: "Gotham Rounded", sans-serif;
+  align-items: center;
+  justify-content: center;
+  width: 17.2rem;
+  height: 4rem;
+  padding: 0.6rem 4.8rem;
+  background-color: #d9d9d9;
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: #444;
+  border-radius: 0.8rem;
+  gap: 1rem;
+  line-height: 150%;
+  letter-spacing: 0.06rem;
+  flex-shrink: 0;
+}
+
+.fw-bolder {
+  font-weight: 500;
+  font-size: 1.8rem;
+  color: #000;
 }
 
 .container-home {
@@ -12258,6 +12366,9 @@ header h1, header .h1 {
   gap: 2rem;
   margin-top: 20rem;
 }
+.buttonContainer-modal a {
+  text-decoration: none;
+}
 
 .register-user {
   display: flex;
@@ -12269,6 +12380,40 @@ header h1, header .h1 {
   align-items: center;
   gap: 2rem;
   background-color: #DDDDDD;
+}
+
+.login-container {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 6.4rem;
+  flex-direction: column;
+  width: 56.7rem;
+  height: 40.4rem;
+  padding: 8.2rem 9.5rem;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 2rem;
+  background-color: #DDDDDD;
+  border-radius: 0.8rem;
+}
+.login-container form {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2.4rem 0;
+  border-bottom: 0.1rem solid #DDDDDD;
+}
+.login-container h2, .login-container .h2 {
+  font-size: 3.2rem;
+}
+.login-container input {
+  max-width: 42.4rem;
+  width: 100%;
+  height: 3rem;
+  padding: 0.8rem 1.6rem;
+  background-color: #efefef;
+  border-radius: 0.8rem;
+  border: none;
 }
 
 .btn-secondary {
@@ -12325,4 +12470,35 @@ header h1, header .h1 {
   border: none;
 }
 
-/*# sourceMappingURL=index.css.map */
+.container-hero {
+  height: 68rem;
+  padding: 3.2rem 15rem;
+}
+
+.main-hero {
+  font-size: 6.4rem;
+  margin-bottom: 5rem;
+}
+
+.subtitle-hero {
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.btn-hero {
+  width: 17.2rem;
+  height: 15.2rem;
+  border-radius: 0.8rem;
+  border: none;
+  background-color: #d9d9d9;
+  color: #292929;
+  font-size: 2.4rem;
+  font-weight: 300;
+  line-height: 0.3rem;
+  transition: all 0.1s ease-in;
+}
+.btn-hero:hover {
+  cursor: pointer;
+  background-color: #7c7c7c;
+  color: #efefef;
+}/*# sourceMappingURL=index.css.map */

@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import FormInput from "./formInput";
 import useForm from "./useForm";
-import { useAuth } from "../context";
+import { useAuth } from "../../context/context";
 
 export const RegisterUser = () => {
   const { form, errors, handleChange } = useForm();

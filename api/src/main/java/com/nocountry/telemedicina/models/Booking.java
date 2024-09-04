@@ -1,15 +1,14 @@
 package com.nocountry.telemedicina.models;
 
-import java.util.UUID;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nocountry.telemedicina.models.enums.State;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -17,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "bookings")
-public class Booking extends Auditable{
+public class Booking extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -26,7 +25,7 @@ public class Booking extends Auditable{
     @Column(name = "booking_reason",nullable = false,length = 60)
     private String bookingReason;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "schedules_id",foreignKey = @ForeignKey(name = "FK_BOOKINGS_SCHEDULES"), nullable = false)
     private Schedules schedules;
 

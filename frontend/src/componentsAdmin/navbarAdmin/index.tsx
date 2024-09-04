@@ -1,7 +1,7 @@
 // src/components/navbarAdmin.tsx
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../components/context";
+import { useAuth } from "../../context/context";
 
 export const NavbarAdmin: React.FC = () => {
   const { token, logout } = useAuth();
