@@ -2,11 +2,9 @@ import React from "react";
 import axios from "axios";
 import FormInput from "./formInput";
 import useForm from "./useForm";
-import { useAuth } from "../../context/context";
 
 export const RegisterUser = () => {
   const { form, errors, handleChange } = useForm();
-  const { setToken, setRole } = useAuth();
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,13 +21,7 @@ export const RegisterUser = () => {
           "Content-Type": "application/json",
         },
       });
-
-      const { token, role } = response.data;
-
-      setToken(token);
-      setRole(role);
-
-      console.log("User registered and logged in successfully:", response.data);
+      console.log("User registered successfully:", response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(

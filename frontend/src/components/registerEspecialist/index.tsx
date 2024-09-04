@@ -1,4 +1,4 @@
-import { useForm } from "./userForm";
+import { useForm } from "./userForm"; // Asegúrate de ajustar esto según sea necesario
 import { Link } from "react-router-dom";
 
 type Specialty =
@@ -19,14 +19,8 @@ const specialties: Specialty[] = [
 ];
 
 export const RegisterEspecialist = () => {
-  const {
-    formData,
-    passwordVisible,
-    handleChange,
-    handleSpecialtyChange,
-    handleSubmit,
-    setPasswordVisible,
-  } = useForm(specialties);
+  const { formData, handleChange, handleSpecialtyChange, handleSubmit } =
+    useForm(specialties);
 
   return (
     <div>
@@ -102,20 +96,13 @@ export const RegisterEspecialist = () => {
         <label>
           Contraseña:
           <input
-            type={passwordVisible ? "text" : "password"}
+            type="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
             required
             aria-required="true"
           />
-          <button
-            type="button"
-            onClick={() => setPasswordVisible(!passwordVisible)}
-            aria-label={passwordVisible ? "Hide password" : "Show password"}
-          >
-            {passwordVisible ? "Hide" : "Show"}
-          </button>
         </label>
 
         <fieldset>
