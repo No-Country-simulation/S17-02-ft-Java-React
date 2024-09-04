@@ -30,7 +30,7 @@ import java.net.URI;
 import java.util.UUID;
 
 /**
- * ProfileController class handles all the operations related to profiles.
+ * The type Profile controller.
  */
 @Tag(name = "API de Perfiles", description = "Se puede crear,buscar perfil y actualizar perfil por idProfile")
 @RestController
@@ -44,11 +44,12 @@ public class ProfileController {
     @Autowired
     private ProfileMapper mapper;
 
+
     /**
-     * Finds a profile by its ID.
+     * Find by id response entity.
      *
-     * @param id the ID of the profile to find
-     * @return the found profile
+     * @param user the user
+     * @return the response entity
      */
     @Operation(summary = "Busca un Perfil por su ID", description = "Busca un Perfil.Se requiere el parametro ID del perfil", tags = {})
     @ApiResponses({
@@ -56,21 +57,17 @@ public class ProfileController {
                     @Content(schema = @Schema(implementation = ProfileResponseDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    @GetMapping("/{id}")
-    public ResponseEntity<ProfileResponseDTO> findById(
-            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
-        Profile obj = service.findById(id);
-        if (obj == null) {
-            throw new NotAuthorizedException("ID NOT FOUND: " + id);
-        } else {
-            return new ResponseEntity<>(mapper.toProfileDTO(obj), HttpStatus.OK);
-        }
+    @GetMapping("/my-profile")
+    public ResponseEntity<ProfileResponseDTO> findById(@CurrentUser UserPrincipal user) {
+        Profile obj = service.findById(user).orElseThrow();
+        return new ResponseEntity<>(mapper.toProfileDTO(obj), HttpStatus.OK);
     }
 
     /**
      * Creates a new profile.
      *
-     * @param dto the profile data to create
+     * @param dto  the profile data to create
+     * @param user the user
      * @return the created profile
      */
     @Operation(summary = "Crea un perfil", description = "Crea un Perfil.Se requiere enviar los parametros descritos a continuación", tags = {})
@@ -108,6 +105,13 @@ public class ProfileController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
+    /**
+     * Update avatar response entity.
+     *
+     * @param file          the file
+     * @param userPrincipal the user principal
+     * @return the response entity
+     */
     @PostMapping("/update-avatar")
     public ResponseEntity<?> updateAvatar(@RequestParam("file") MultipartFile file,
             @CurrentUser UserPrincipal userPrincipal) {
@@ -120,6 +124,13 @@ public class ProfileController {
         }
     }
 
+    /**
+     * Create avatar url response entity.
+     *
+     * @param file          the file
+     * @param userPrincipal the user principal
+     * @return the response entity
+     */
     @PostMapping("/create-avatar-url")
     public ResponseEntity<?> createAvatarUrl(@RequestParam("file") MultipartFile file,
             @CurrentUser UserPrincipal userPrincipal) {
