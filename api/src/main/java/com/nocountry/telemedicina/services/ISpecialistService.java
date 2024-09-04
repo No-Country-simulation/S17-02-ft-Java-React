@@ -20,5 +20,5 @@ public interface ISpecialistService extends ICRUDService<Specialist, UUID> {
             boolean isAscendant,
             String query);
 
-  Spe
+
 }
