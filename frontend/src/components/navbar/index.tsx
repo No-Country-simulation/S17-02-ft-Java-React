@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import Modal from "react-modal";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../registerUser";

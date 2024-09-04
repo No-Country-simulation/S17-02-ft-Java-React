@@ -1,9 +1,12 @@
 .container-hero{
-    
     height: 68rem;
     padding: 3.2rem 15rem;
-}.main-hero{
+    background: linear-gradient(180deg, #CEF9F4 0%, #34CDC8 100%);
+
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.10);}
+.main-hero{
     font-size: $display-3;
+    max-width: 110rem;
     margin-bottom: 5rem;
     text-transform: uppercase;
 }
