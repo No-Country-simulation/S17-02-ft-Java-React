@@ -53,7 +53,6 @@ public class ProfileRequestDTO {
 
     private DistrictResponseDTO district;
 
-    @NotBlank
     private UserResponseDTO user;
 }
 

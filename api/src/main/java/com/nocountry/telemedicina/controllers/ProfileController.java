@@ -2,13 +2,16 @@ package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.config.cloudinary.CloudinaryService;
 import com.nocountry.telemedicina.config.mapper.ProfileMapper;
+import com.nocountry.telemedicina.config.mapper.UserMapper;
 import com.nocountry.telemedicina.dto.request.ProfileRequestDTO;
 import com.nocountry.telemedicina.dto.response.ProfileResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.models.Profile;
+import com.nocountry.telemedicina.models.User;
 import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.IProfileService;
+import com.nocountry.telemedicina.services.IUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -77,8 +80,8 @@ public class ProfileController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ProfileRequestDTO dto) {
-        Profile obj = service.save(mapper.toProfile(dto));
+    public ResponseEntity<Void> save(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user) {
+        Profile obj = service.save(mapper.toProfile(dto),user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getProfileId())
                 .toUri();
         return ResponseEntity.created(location).build();
