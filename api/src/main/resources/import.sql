@@ -579,47 +579,25 @@ INSERT INTO profiles(active, birth, created_at, deleted_at, city_id, updated_at,
 
 
 --------------Specialities-------------------
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 1, ?, ?, ?, ?,'Cardiologia', 'Cardiologia');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 2, ?, ?, ?, ?,'Clinica medica', 'Clinica medica');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 3, ?, ?, ?, ?,'Nutricion', 'Nutricion');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 4, ?, ?, ?, ?,'Psicologia', 'Psicologia');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 5, ?, ?, ?, ?,'Traumatologia', 'Traumatologia');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 6, ?, ?, ?, ?,'Neurología', 'Neurología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 7, ?, ?, ?, ?,'Inmunología', 'Inmunología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 8, ?, ?, ?, ?,'Oftalmología', 'Oftalmología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 9, ?, ?, ?, ?,'Ginecología', 'Ginecología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 10, ?, ?, ?, ?,'Dermatología', 'Dermatología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 11, ?, ?, ?, ?,'Pediatría', 'Pediatría');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 12, ?, ?, ?, ?,'Deportología', 'Deportología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 13, ?, ?, ?, ?,'Cirugía General', 'Cirugía General');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 14, ?, ?, ?, ?,'Estética', 'Estética');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 15, ?, ?, ?, ?,'Gastroenterología', 'Gastroenterología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 16, ?, ?, ?, ?,'Hematología', 'Hematología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 17, ?, ?, ?, ?,'Infectología', 'Infectología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 18, ?, ?, ?, ?,'Nefrología', 'Nefrología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 19, ?, ?, ?, ?,'Neumonología', 'Neumonología');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 20, ?, ?, ?, ?,'Obstetricia', 'Obstetricia');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 21, ?, ?, ?, ?,'Psiquiatría', 'Psiquiatría');
-INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description)
-VALUES (true, ?, ?, 22, ?, ?, ?, ?,'Urología', 'Urología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 1, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Cardiologia', 'Cardiologia');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 2, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2',null, null,'Clinica medica', 'Clinica medica');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 3, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Nutricion', 'Nutricion');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 4, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Psicologia', 'Psicologia');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 5, null,'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Traumatologia', 'Traumatologia');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 6, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Neurología', 'Neurología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 7, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Inmunología', 'Inmunología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true,'2024-09-05', null, 8, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Oftalmología', 'Oftalmología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 9, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Ginecología', 'Ginecología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 10, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Dermatología', 'Dermatología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 11, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Pediatría', 'Pediatría');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 12, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Deportología', 'Deportología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 13, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Cirugía General', 'Cirugía General');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true,'2024-09-05', null, 14, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Estética', 'Estética');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 15, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Gastroenterología', 'Gastroenterología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 16, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Hematología', 'Hematología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 17, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Infectología', 'Infectología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 18, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Nefrología', 'Nefrología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 19, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Neumonología', 'Neumonología');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 20, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Obstetricia', 'Obstetricia');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 21, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Psiquiatría', 'Psiquiatría');
+INSERT INTO public.specialties(active, created_at, deleted_at, specialty_id, updated_at, create_by, delete_by, update_by, specialty_name, specialty_description) VALUES (true, '2024-09-05', null, 22, null, 'f46917b3-eb0a-4946-b243-5347fb2054a2', null, null,'Urología', 'Urología');
