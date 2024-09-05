@@ -34,9 +34,18 @@ public class Specialist extends Auditable{
     @Column(name = "booking_price", nullable = false)
     private Double bookingPrice;
 
+<<<<<<< HEAD
     @ManyToOne
     @JoinColumn(name = "clinic_id", foreignKey = @ForeignKey(name = "FK_SPECIALISTS_CLINIC"), nullable = false)
     private Clinic clinic;
+=======
+    @Column(name = "reputation", nullable = false)
+    private Integer reputation = 0;
+
+    @OneToOne
+    @JoinColumn(name = "profile_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_Profile"),nullable = false)
+    private Profile profile;
+>>>>>>> 5e5f8487634c5773f91a66eeb5e90c92024b3338
 
     @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore

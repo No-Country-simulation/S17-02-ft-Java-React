@@ -1,0 +1,14 @@
+/* Abstracts */
+@import '../scss/abstracts/variables' ;
+@import '../scss/abstracts/mixins';
+
+/*Bootstrap*/
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+/*Base*/
+@import '../scss/base/base';
+@import '../scss/base/resets';
+
+/*Components*/
+@import '../scss/components/payments'
+ 
