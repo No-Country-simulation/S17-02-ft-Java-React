@@ -45,13 +45,13 @@ export const RegisterEspecialist: React.FC = () => {
         Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
-          text: "El usuario ha sido registrado correctamente.",
+          text: "",
         });
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Error al Registrar",
-          text: "Hubo un error al registrar el usuario. Inténtalo de nuevo.",
+          text: "",
         });
       }
     },
@@ -77,7 +77,9 @@ export const RegisterEspecialist: React.FC = () => {
             aria-required="true"
           />
           {formik.touched.username && formik.errors.username ? (
-            <div style={{ color: "red" }}>{formik.errors.username}</div>
+            <div style={{ color: "red", marginTop: "0.5em" }}>
+              {formik.errors.username}
+            </div>
           ) : null}
         </label>
 
@@ -92,7 +94,9 @@ export const RegisterEspecialist: React.FC = () => {
             aria-required="true"
           />
           {formik.touched.password && formik.errors.password ? (
-            <div style={{ color: "red" }}>{formik.errors.password}</div>
+            <div style={{ color: "red", marginTop: "0.5em" }}>
+              {formik.errors.password}
+            </div>
           ) : null}
         </label>
 
@@ -107,7 +111,9 @@ export const RegisterEspecialist: React.FC = () => {
             aria-required="true"
           />
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div style={{ color: "red" }}>{formik.errors.confirmPassword}</div>
+            <div style={{ color: "red", marginTop: "0.5em" }}>
+              {formik.errors.confirmPassword}
+            </div>
           ) : null}
         </label>
 

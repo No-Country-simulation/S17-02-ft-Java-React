@@ -26,7 +26,6 @@ export const RegisterUser: React.FC = () => {
     onSubmit: async (values) => {
       const roleId = "2326ec2c-4f97-4007-b52c-ba5561b434b9";
 
-      // Validación del UUID
       const isValidUUID = (uuid: string) => {
         const regex =
           /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
@@ -62,20 +61,16 @@ export const RegisterUser: React.FC = () => {
         });
         formik.resetForm();
       } catch (error) {
+        let errorTitle = "Error Inesperado";
         if (axios.isAxiosError(error)) {
-          const errorMessage = error.response?.data?.message || error.message;
-          Swal.fire({
-            icon: "error",
-            title: "Error al Registrar",
-            text: errorMessage,
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error Inesperado",
-            text: "Hubo un error inesperado. Inténtalo de nuevo.",
-          });
+          errorTitle = "Error al Registrar";
         }
+
+        Swal.fire({
+          icon: "error",
+          title: errorTitle,
+          text: "",
+        });
       }
     },
   });

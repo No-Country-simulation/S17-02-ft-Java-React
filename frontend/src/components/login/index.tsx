@@ -29,25 +29,22 @@ export const Login: React.FC = () => {
         Swal.fire({
           icon: "success",
           title: "Éxito",
-          text: "Inicio de sesión exitoso.",
+          text: "",
         });
 
         navigate("/");
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          const errorMessage =
-            err.response?.data?.message ||
-            "Login fallido. Por favor verifica tus credenciales e intenta de nuevo.";
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: errorMessage,
+            text: "",
           });
         } else {
           Swal.fire({
             icon: "error",
             title: "Error Inesperado",
-            text: "Hubo un error inesperado. Inténtalo de nuevo.",
+            text: "",
           });
         }
       }
