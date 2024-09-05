@@ -1,19 +1,23 @@
 .container-hero{
-    height: 68rem;
+    min-height: 64rem;
     padding: 3.2rem 15rem;
     background: linear-gradient(180deg, #CEF9F4 0%, #34CDC8 100%);
-
+    width: 100%;
     box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.10);}
 .main-hero{
-    font-size: $display-3;
+    display: block;
+    font-size: $heading-m-2;
+    color: $primaryColor-ultra-dark;
     max-width: 110rem;
-    margin-bottom: 5rem;
     text-transform: uppercase;
+    ;
+};
+@media (min-width: 768px){ 
+    .main-hero{
+        font-size: $heading-d-1;
+    }
 }
-.subtitle-hero{
-    padding: 2rem;
-    margin-bottom:3rem; 
-}
+
 .btn-hero{
     width: 17.2rem;
     height: 15.2rem;
@@ -30,4 +34,55 @@
         background-color: $neutralColor-500;
         color:$neutralColor-100;
     }
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-end;
+    margin-top: 5rem;
+width: 16.2rem;
+height: 14.9rem;
+border-radius: .8rem;
+border: .2rem solid $primaryColor-active;
+background-color: $primaryColor-normal;
+transition: all .2s ease-in;
+&:hover{        
+    cursor: pointer;
+    background-color: $primaryColor-hover;
+    border: none;
+}
+
+}
+.spec-name{
+    margin: -2.9rem auto;
+    color: $primaryColor-dark-active;
+    font-size: 2rem;    
+    font-weight: 500;
+
+}
+.pediatrics{
+background-image: url(Specialists/pediatria.svg);
+background-repeat: no-repeat;
+background-position: center;
+}
+.clinics{
+   background-image: url(Specialists/medicoClinico.svg);
+   background-repeat: no-repeat;
+   background-position: center; 
+}
+.psych{
+    background-image: url(Specialists/Psychologist-bro\ 1.svg); 
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.dermat{
+    background-image: url(Specialists/Dermatologia.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.cardio{
+    background-image: url(Specialists/Cardiologist-bro\ 1.svg);
+    background-repeat: no-repeat;
+    background-position: center;    
 }
