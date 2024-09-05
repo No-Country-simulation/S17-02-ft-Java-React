@@ -9,6 +9,7 @@ import Layout from "./layout/layout.tsx";
 import Home from "./components/home/index.tsx";
 import MercadoPago from "./components/mercadoPago/MercadoPago.tsx";
 import ProfileComponent from "./Pages/Profile.tsx";
+import ClinicalHistory from "./components/clinicalhistory/ClinicalHistory.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -24,6 +25,7 @@ export const App: React.FC = () => {
           <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/prueba-mp" element={<MercadoPago />} />
           <Route path="/profile" element={<ProfileComponent />} />
+          <Route path="/clinicalhistory" element={<ClinicalHistory />} />
           <Route
             path="/registerespecialist"
             element={<RegisterEspecialist />}
