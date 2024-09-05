@@ -1,9 +1,12 @@
 package com.nocountry.telemedicina.services.impl;
 
+import com.nocountry.telemedicina.models.Profile;
 import com.nocountry.telemedicina.models.Specialist;
 import com.nocountry.telemedicina.repository.IGenericRepo;
+import com.nocountry.telemedicina.repository.IProfileRepo;
 import com.nocountry.telemedicina.repository.ISpecialistRepo;
 import com.nocountry.telemedicina.repository.specification.SpecialistSpecification;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.ISpecialistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +23,9 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
 
     @Autowired
     private ISpecialistRepo repo;
+
+    @Autowired
+    private IProfileRepo profileRepo;
 
     @Override
     protected IGenericRepo<Specialist, UUID> getRepo() {
@@ -51,6 +57,13 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
                 .and(SpecialistSpecification.hasClinicReputation(clinicReputation))
                 .and(SpecialistSpecification.hasRangeOfPrices(minPrice, maxPrice));
         return repo.findAll(spec, pageable);
+    }
+
+    @Override
+    public Specialist save(Specialist specialist, UserPrincipal userPrincipal) {
+        Profile profile = profileRepo.findByUserId(userPrincipal.getId()).orElseThrow();
+        specialist.setProfile(profile);
+        return repo.save(specialist);
     }
 
     private static String getQueryString(String query) {
