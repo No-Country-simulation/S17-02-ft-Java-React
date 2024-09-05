@@ -15,10 +15,10 @@ public interface SpecialistMapper {
     @Mapping(source = "specialty.specialtyName",target = "specialtyName")
     @Mapping(source = "specialty.specialtyId",target = "specialtyId")
     @Mapping(source = "profile.profileName",target = "specialistName")
-    @Mapping(source = "profile.profileLastName",target = "profileLastname")
+    @Mapping(source = "profile.profileLastname",target = "specialistLastname")
     SpecialistResponseDTO toSpecialistDTO(Specialist specialist);
 
     @Mapping(source = "specialty",target = "specialty")
-    @Mapping(source = "profile",target = "profiles")
+    @Mapping(source = "profile",target = "profile")
     Specialist toSpecialist(SpecialistRequestDTO dto);
 }

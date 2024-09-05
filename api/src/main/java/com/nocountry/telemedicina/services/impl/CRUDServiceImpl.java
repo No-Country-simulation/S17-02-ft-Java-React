@@ -4,13 +4,12 @@ import com.nocountry.telemedicina.models.Auditable;
 import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.services.ICRUDService;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDService<T,ID> {
 
@@ -47,12 +46,9 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
     }
 
     @Override
-    public Page<T> findAll(int page,int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        List<T> list = getRepo().findAllByActiveTrue();
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), list.size());
-        return new PageImpl<>(list.subList(start, end), pageable, list.size());
+    public Page<T> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, String sortField, @RequestParam(defaultValue = "desc") String sortOrder) {
+        Pageable pageable = PageRequest.of(page, size, getSort(sortField, sortOrder));
+        return getRepo().findAll(pageable);
     }
 
     @Transactional
@@ -63,5 +59,15 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
             t.setActive(false);
         }
         getRepo().save(t);
+    }
+
+    private Sort getSort(String sortField, String sortOrder) {
+        Sort sort = Sort.by(sortField);
+        if (sortOrder.equalsIgnoreCase("desc")) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+        return sort;
     }
 }
