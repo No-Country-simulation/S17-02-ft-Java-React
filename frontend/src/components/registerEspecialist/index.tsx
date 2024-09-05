@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useAuth } from "../../context/context.tsx";
 
 const FormField: React.FC<{
   id: string;
@@ -58,6 +59,8 @@ const handleError = (error: any, defaultMessage: string) => {
 
 export const RegisterEspecialist: React.FC = () => {
   const navigate = useNavigate();
+  const { setToken, setRole } = useAuth();
+  const roleId = "9c765b7d-9eec-421b-85c6-6d53bcd002da";
 
   const formik = useFormik({
     initialValues: {
@@ -67,19 +70,27 @@ export const RegisterEspecialist: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const requestBody = {
+      const payload = {
         username: values.username,
         password: values.password,
-        rolesId: ["9c765b7d-9eec-421b-85c6-6d53bcd002da"],
+        rolesId: [roleId],
       };
 
       try {
-        await axios.post("/api/auth/register", requestBody, {
+        await axios.post("/api/auth/register", payload, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-        await loginUser(values.username, values.password);
+        const loginResponse = await loginUser(values.username, values.password);
+        if (loginResponse) {
+          const { token, role } = loginResponse;
+          console.log("Token:", token);
+          console.log("Role:", roleId);
+
+          setToken(token);
+          setRole(role);
+        }
         Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
@@ -99,9 +110,10 @@ export const RegisterEspecialist: React.FC = () => {
         username,
         password,
       });
-      console.log("Inicio de sesión exitoso");
-      console.log("Respuesta del login:", response.data);
-      navigate("/");
+      return {
+        token: response.data.token,
+        role: response.data.roleId,
+      };
     } catch (err) {
       handleError(err, "Error al Iniciar Sesión");
       throw err;

@@ -5,6 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
+import { useAuth } from "../../context/context.tsx";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -37,6 +38,7 @@ const isValidUUID = (uuid: string): boolean => {
 
 export const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
+  const { setToken, setRole } = useAuth();
   const roleId = "2326ec2c-4f97-4007-b52c-ba5561b434b9";
 
   const formik = useFormik({
@@ -63,13 +65,21 @@ export const RegisterUser: React.FC = () => {
       };
 
       try {
+        console.log("Enviando datos de registro:", payload);
         await axios.post("/api/auth/register", payload, {
           headers: {
             "Content-Type": "application/json",
           },
         });
         console.log("Registro exitoso, procediendo a login");
-        await loginUser(values.email, values.password);
+        const loginResponse = await loginUser(values.email, values.password);
+        if (loginResponse) {
+          const { token, role } = loginResponse;
+          console.log("Token recibido:", token);
+          console.log("Rol recibido:", roleId);
+          setToken(token);
+          setRole(role);
+        }
         await Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
@@ -92,6 +102,10 @@ export const RegisterUser: React.FC = () => {
       });
       console.log("Inicio de sesión exitoso");
       console.log("Respuesta del login:", response.data);
+      return {
+        token: response.data.token,
+        role: response.data.roleId,
+      };
     } catch (err) {
       handleError(err, "Error al Iniciar Sesión");
       throw err;
