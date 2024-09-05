@@ -1,6 +1,6 @@
 package com.nocountry.telemedicina.dto.request;
 
-import com.nocountry.telemedicina.dto.response.DistrictResponseDTO;
+import com.nocountry.telemedicina.dto.response.CityResponseDTO;
 import com.nocountry.telemedicina.dto.response.UserResponseDTO;
 import com.nocountry.telemedicina.models.enums.DocumentType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,23 +23,23 @@ public class ProfileRequestDTO {
     @NotBlank
     @Min(2)
     @Max(40)
-    @Schema(example = "Carlos",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "Carlos", requiredMode = Schema.RequiredMode.REQUIRED)
     private String profileName;
 
     @NotBlank
     @Min(2)
     @Max(50)
-    @Schema(example = "Quispe",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "Quispe", requiredMode = Schema.RequiredMode.REQUIRED)
     private String profileLastname;
 
     @NotBlank
-    @Schema(example = "DNI",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "DNI", requiredMode = Schema.RequiredMode.REQUIRED)
     private DocumentType documentType;
 
     @NotBlank
     @Min(8)
     @Max(15)
-    @Schema(example = "68941345",requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(example = "68941345", requiredMode = Schema.RequiredMode.REQUIRED)
     private String documentNumber;
 
     @Schema(example = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpj2elRrHLpPcNjxMfFdLA9zSoxiCbivEvHQ&s")
@@ -51,8 +51,7 @@ public class ProfileRequestDTO {
     @Schema(example = "Urb. Los Pinos 234")
     private String address;
 
-    private DistrictResponseDTO district;
+    private CityResponseDTO city;
 
     private UserResponseDTO user;
 }
-
