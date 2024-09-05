@@ -97,6 +97,8 @@ public class SecurityConfig {
                                                 "SPECIALIST");
                                         authConfig.requestMatchers("/api/bookings/**").hasAnyRole( "ADMIN","USER",
                                                 "SPECIALIST");
+                                        authConfig.requestMatchers("/api/schedules/**").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2

@@ -43,11 +43,10 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
             Double minPrice,
             Double maxPrice,
             int page, int size,
-            boolean isAscendant,
-            String query ) {
+            String sortOrder,
+            String sortField ) {
         Pageable pageable = PageRequest.of( page, size,
-                isAscendant ? Sort.Direction.ASC : Sort.Direction.DESC,
-                getQueryString(query));
+                getSort(sortField,sortOrder));
         Specification<Specialist> spec = Specification
                 .where(SpecialistSpecification.hasDistrictName(districtName))
                 .and(SpecialistSpecification.hasSpecialtyName(specialtyName))
@@ -74,5 +73,15 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
             case "clinic" -> "clinic.clinicName";
             default -> "reputation";
         };
+    }
+
+    private Sort getSort(String sortField, String sortOrder) {
+        Sort sort = Sort.by(getQueryString(sortField));
+        if (sortOrder.equalsIgnoreCase("desc")) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+        return sort;
     }
 }

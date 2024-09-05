@@ -19,8 +19,8 @@ public interface ISpecialistService extends ICRUDService<Specialist, UUID> {
             Double minPrice,
             Double maxPrice,
             int page, int size,
-            boolean isAscendant,
-            String query);
+            String sortOrder,
+            String sortField);
 
   Specialist save(Specialist specialist,@CurrentUser UserPrincipal userPrincipal);
 }
