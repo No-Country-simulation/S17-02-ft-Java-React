@@ -6,6 +6,8 @@ import com.nocountry.telemedicina.dto.response.SchedulesResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Schedules;
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.ISchedulesService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -79,8 +81,8 @@ public class SchedulesController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody SchedulesRequestDTO dto){
-        Schedules obj = service.save(mapper.toSchedules(dto));
+    public ResponseEntity<Void> save(@RequestBody SchedulesRequestDTO dto, @CurrentUser UserPrincipal user){
+        Schedules obj = service.save(mapper.toSchedules(dto),user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getSchedulesId()).toUri();
         return ResponseEntity.created(location).build();
     }
