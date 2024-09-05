@@ -1,31 +1,61 @@
 import React from "react";
-import { useForm } from "./userForm";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
+
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .min(3, "El nombre de usuario debe tener al menos 3 caracteres")
+    .max(20, "El nombre de usuario no puede tener más de 20 caracteres")
+    .required("El nombre de usuario es obligatorio"),
+  password: Yup.string()
+    .min(8, "La contraseña debe tener al menos 8 caracteres")
+    .matches(/[a-zA-Z]/, "La contraseña debe contener letras")
+    .matches(/[0-9]/, "La contraseña debe contener números")
+    .required("La contraseña es obligatoria"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Las contraseñas deben coincidir")
+    .required("La confirmación de la contraseña es obligatoria"),
+});
 
 export const RegisterEspecialist: React.FC = () => {
-  const { formData, handleChange } = useForm();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      const requestBody = {
+        username: values.username,
+        password: values.password,
+        rolesId: ["9c765b7d-9eec-421b-85c6-6d53bcd002da"],
+      };
 
-  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const requestBody = {
-      username: formData.username,
-      password: formData.password,
-      rolesId: ["9c765b7d-9eec-421b-85c6-6d53bcd002da"],
-    };
-
-    try {
-      const response = await axios.post("/api/auth/register", requestBody, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log("Registro exitoso:", response.data);
-    } catch (error) {
-      console.error("Error al registrar el usuario:", error);
-    }
-  };
+      try {
+        await axios.post("/api/auth/register", requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        formik.resetForm();
+        Swal.fire({
+          icon: "success",
+          title: "Registro Exitoso",
+          text: "El usuario ha sido registrado correctamente.",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          title: "Error al Registrar",
+          text: "Hubo un error al registrar el usuario. Inténtalo de nuevo.",
+        });
+      }
+    },
+  });
 
   return (
     <div>
@@ -33,7 +63,7 @@ export const RegisterEspecialist: React.FC = () => {
         <Link to="/">Inicio</Link>
       </nav>
 
-      <form onSubmit={handleFormSubmit}>
+      <form onSubmit={formik.handleSubmit}>
         <h2>Registro de Usuario</h2>
 
         <label>
@@ -41,11 +71,14 @@ export const RegisterEspecialist: React.FC = () => {
           <input
             type="text"
             name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             aria-required="true"
           />
+          {formik.touched.username && formik.errors.username ? (
+            <div style={{ color: "red" }}>{formik.errors.username}</div>
+          ) : null}
         </label>
 
         <label>
@@ -53,11 +86,14 @@ export const RegisterEspecialist: React.FC = () => {
           <input
             type="password"
             name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             aria-required="true"
           />
+          {formik.touched.password && formik.errors.password ? (
+            <div style={{ color: "red" }}>{formik.errors.password}</div>
+          ) : null}
         </label>
 
         <label>
@@ -65,11 +101,14 @@ export const RegisterEspecialist: React.FC = () => {
           <input
             type="password"
             name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             aria-required="true"
           />
+          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
+            <div style={{ color: "red" }}>{formik.errors.confirmPassword}</div>
+          ) : null}
         </label>
 
         <button type="submit">Registrar Usuario</button>
