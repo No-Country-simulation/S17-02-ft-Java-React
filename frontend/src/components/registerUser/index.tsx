@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
 
 const validationSchema = Yup.object({
@@ -16,7 +17,28 @@ const validationSchema = Yup.object({
     .required("La contraseña es obligatoria"),
 });
 
+const handleError = (error: any, defaultMessage: string) => {
+  let errorTitle = defaultMessage;
+  if (axios.isAxiosError(error)) {
+    errorTitle = "Error al Registrar";
+  }
+  Swal.fire({
+    icon: "error",
+    title: errorTitle,
+    text: "",
+  });
+};
+
+const isValidUUID = (uuid: string): boolean => {
+  const regex =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+  return regex.test(uuid);
+};
+
 export const RegisterUser: React.FC = () => {
+  const navigate = useNavigate();
+  const roleId = "2326ec2c-4f97-4007-b52c-ba5561b434b9";
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -24,16 +46,8 @@ export const RegisterUser: React.FC = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const roleId = "2326ec2c-4f97-4007-b52c-ba5561b434b9";
-
-      const isValidUUID = (uuid: string) => {
-        const regex =
-          /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-        return regex.test(uuid);
-      };
-
       if (!isValidUUID(roleId)) {
-        Swal.fire({
+        await Swal.fire({
           icon: "error",
           title: "Error",
           text: "El UUID del rol no es válido.",
@@ -54,26 +68,34 @@ export const RegisterUser: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-        Swal.fire({
+        console.log("Registro exitoso, procediendo a login");
+        await loginUser(values.email, values.password);
+        await Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
           text: "El usuario ha sido registrado correctamente.",
         });
         formik.resetForm();
+        console.log("Redirigiendo a /");
+        navigate("/");
       } catch (error) {
-        let errorTitle = "Error Inesperado";
-        if (axios.isAxiosError(error)) {
-          errorTitle = "Error al Registrar";
-        }
-
-        Swal.fire({
-          icon: "error",
-          title: errorTitle,
-          text: "",
-        });
+        handleError(error, "Error Inesperado");
       }
     },
   });
+
+  const loginUser = async (username: string, password: string) => {
+    try {
+      await axios.post("/api/auth/login", {
+        username,
+        password,
+      });
+      console.log("Inicio de sesión exitoso");
+    } catch (err) {
+      handleError(err, "Error al Iniciar Sesión");
+      throw err;
+    }
+  };
 
   return (
     <div className="register-user">
@@ -93,6 +115,7 @@ export const RegisterUser: React.FC = () => {
           type="email"
           value={formik.values.email}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           error={formik.touched.email ? formik.errors.email : undefined}
         />
         <FormInput
@@ -101,6 +124,7 @@ export const RegisterUser: React.FC = () => {
           type="password"
           value={formik.values.password}
           onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
           error={formik.touched.password ? formik.errors.password : undefined}
         />
         <button className="btn btn-secondary" type="submit">

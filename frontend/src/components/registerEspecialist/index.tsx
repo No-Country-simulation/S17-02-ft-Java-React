@@ -1,9 +1,33 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+
+const FormField: React.FC<{
+  id: string;
+  type: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
+  error?: string;
+}> = ({ id, type, name, value, onChange, onBlur, error }) => (
+  <label>
+    {name}:
+    <input
+      type={type}
+      id={id}
+      name={id}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      aria-required="true"
+    />
+    {error && <div style={{ color: "red", marginTop: "0.5em" }}>{error}</div>}
+  </label>
+);
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -20,7 +44,21 @@ const validationSchema = Yup.object({
     .required("La confirmación de la contraseña es obligatoria"),
 });
 
+const handleError = (error: any, defaultMessage: string) => {
+  let errorTitle = defaultMessage;
+  if (axios.isAxiosError(error)) {
+    errorTitle = "Error al Registrar";
+  }
+  Swal.fire({
+    icon: "error",
+    title: errorTitle,
+    text: "",
+  });
+};
+
 export const RegisterEspecialist: React.FC = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -41,21 +79,30 @@ export const RegisterEspecialist: React.FC = () => {
             "Content-Type": "application/json",
           },
         });
-        formik.resetForm();
+        await loginUser(values.username, values.password);
         Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
-          text: "",
+          text: "El usuario ha sido registrado y se ha iniciado sesión correctamente.",
         });
+        formik.resetForm();
+        navigate("/");
       } catch (error) {
-        Swal.fire({
-          icon: "error",
-          title: "Error al Registrar",
-          text: "",
-        });
+        handleError(error, "Error Inesperado");
       }
     },
   });
+
+  const loginUser = async (username: string, password: string) => {
+    try {
+      await axios.post("/api/auth/login", { username, password });
+      console.log("Inicio de sesión exitoso"); // Agregado para mostrar mensaje en consola
+      navigate("/");
+    } catch (err) {
+      handleError(err, "Error al Iniciar Sesión");
+      throw err;
+    }
+  };
 
   return (
     <div>
@@ -66,56 +113,39 @@ export const RegisterEspecialist: React.FC = () => {
       <form onSubmit={formik.handleSubmit}>
         <h2>Registro de Usuario</h2>
 
-        <label>
-          Nombre de usuario:
-          <input
-            type="text"
-            name="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            aria-required="true"
-          />
-          {formik.touched.username && formik.errors.username ? (
-            <div style={{ color: "red", marginTop: "0.5em" }}>
-              {formik.errors.username}
-            </div>
-          ) : null}
-        </label>
+        <FormField
+          id="username"
+          type="text"
+          name="Nombre de usuario"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.username ? formik.errors.username : undefined}
+        />
 
-        <label>
-          Contraseña:
-          <input
-            type="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            aria-required="true"
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <div style={{ color: "red", marginTop: "0.5em" }}>
-              {formik.errors.password}
-            </div>
-          ) : null}
-        </label>
+        <FormField
+          id="password"
+          type="password"
+          name="Contraseña"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password ? formik.errors.password : undefined}
+        />
 
-        <label>
-          Confirmar contraseña:
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            aria-required="true"
-          />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div style={{ color: "red", marginTop: "0.5em" }}>
-              {formik.errors.confirmPassword}
-            </div>
-          ) : null}
-        </label>
+        <FormField
+          id="confirmPassword"
+          type="password"
+          name="Confirmar contraseña"
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.confirmPassword
+              ? formik.errors.confirmPassword
+              : undefined
+          }
+        />
 
         <button type="submit">Registrar Usuario</button>
       </form>

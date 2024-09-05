@@ -37,8 +37,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const logout = () => {
-    updateToken(null); // Limpia el token
-    updateRole(null); // Limpia el rol
+    updateToken(null);
+    updateRole(null);
   };
 
   return (
