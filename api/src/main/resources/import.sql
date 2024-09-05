@@ -16,12 +16,7 @@ INSERT INTO user_role(role_id, user_id)VALUES ('2326ec2c-4f97-4007-b52c-ba5561b4
 -----------------Profile-------------------
 INSERT INTO profiles(active, birth, created_at, deleted_at, district_id, updated_at, document_number, create_by, delete_by, profile_id, update_by, user_id, profile_name, profile_lastname, address, avatar_url, document_type) VALUES (true, '1975-06-25', '2024-08-24', null, 1, null, '81.544.670','895769e3-1828-40c6-8b97-257f82853075', null,'6097656c-e788-45cb-a41f-73d4e031ee60', null, '895769e3-1828-40c6-8b97-257f82853075', 'Susan', 'Martinez', 'Calle La Plata 259', null, 'DNI');
 
-------- Country -------
---INSERT INTO countries(country_id, country_name) VALUES ('2', 'Perú');
 INSERT INTO countries(country_id, country_name) VALUES (1, 'Argentina');
-
------- Department ------
---INSERT INTO departments(country_id, department_id, department_name) VALUES (2, 2, 'Lima');
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 1, 'Ciudad Autónoma de Buenos Aires');
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 2, 'Neuquén');
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 3, 'San Luis');
@@ -47,9 +42,7 @@ INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 2
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 23, 'La Pampa');
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 24, 'Tierra del Fuego, Antártida e Islas del Atlántico Sur');
 
------ City ------
---INSERT INTO cities(city_id, department_id, city_name) VALUES (1, 1, 'Buenos Aires');
---INSERT INTO cities(city_id, department_id, city_name) VALUES (2, 2, 'Lima Metropolitana');
+
 INSERT INTO cities(city_id, department_id, city_name) VALUES (1, 6, 'Adolfo Gonzales Chaves');
 INSERT INTO cities(city_id, department_id, city_name) VALUES (2, 30, 'Concordia');
 INSERT INTO cities(city_id, department_id, city_name) VALUES (3, 30, 'Federal');
@@ -580,6 +573,17 @@ INSERT INTO cities(city_id, department_id, city_name) VALUES (527, 70, 'Caucete'
 INSERT INTO cities(city_id, department_id, city_name) VALUES (528, 6, 'La Plata');
 INSERT INTO cities(city_id, department_id, city_name) VALUES (529, 18, 'Mercedes');
 
------ District ----
---INSERT INTO districts(city_id, district_id, district_name) VALUES (1, 1, 'La Plata');
---INSERT INTO districts(city_id, district_id, district_name) VALUES (2, 2, 'Cercado de Lima')
+
+
+------- Country -------
+--INSERT INTO countries(country_id, country_name) VALUES ('2', 'Perú');
+INSERT INTO countries(country_id, country_name) VALUES (1, 'Argentina');
+
+------ Department ------
+--INSERT INTO departments(country_id, department_id, department_name) VALUES (2, 2, 'Lima');
+--- City ------
+INSERT INTO cities(city_id, department_id, city_name) VALUES (1, 1, 'Buenos Aires');
+INSERT INTO cities(city_id, department_id, city_name) VALUES (2, 2, 'Lima Metropolitana');
+--- District ----
+INSERT INTO districts(city_id, district_id, district_name) VALUES (1, 1, 'La Plata');
+INSERT INTO districts(city_id, district_id, district_name) VALUES (2, 2, 'Cercado de Lima')

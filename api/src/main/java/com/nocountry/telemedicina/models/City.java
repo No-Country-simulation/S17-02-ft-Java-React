@@ -16,20 +16,16 @@ import java.util.List;
 @Entity
 @Table(name = "cities")
 public class City extends Auditable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "city_id")
     private Long cityId;
 
-    @Column(name = "city_name",length = 25, nullable = false)
+    @Column(name = "city_name", length = 25, nullable = false)
     private String cityName;
 
     @ManyToOne
-    @JoinColumn(name = "department_id",foreignKey = @ForeignKey(name = "FK_CITIES_DEPARTMENT"), nullable = false)
+    @JoinColumn(name = "department_id", foreignKey = @ForeignKey(name = "FK_CITIES_DEPARTMENT"), nullable = false)
     private Department department;
-
-    @OneToMany(mappedBy = "city",cascade = {CascadeType.ALL},orphanRemoval = true)
-    @JsonIgnore
-    private List<District> districts;
 }

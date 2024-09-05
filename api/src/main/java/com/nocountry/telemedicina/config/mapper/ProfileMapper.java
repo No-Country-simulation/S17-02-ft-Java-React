@@ -12,12 +12,12 @@ public interface ProfileMapper {
 
     ProfileMapper INSTANCE = Mappers.getMapper(ProfileMapper.class);
 
-    @Mapping(source = "user.username",target = "email")
-    @Mapping(source = "user.userId",target = "userId")
-    @Mapping(source = "district.districtName",target = "districtName")
+    @Mapping(source = "user.username", target = "email")
+    @Mapping(source = "user.userId", target = "userId")
+    @Mapping(source = "city.cityName", target = "cityName")
     ProfileResponseDTO toProfileDTO(Profile profile);
 
-    @Mapping(source = "user",target = "user")
-    @Mapping(source = "district",target = "district")
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "city", target = "city")
     Profile toProfile(ProfileRequestDTO profileDTO);
 }
