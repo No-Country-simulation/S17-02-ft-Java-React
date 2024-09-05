@@ -5,7 +5,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-// Esquema de Validación con Yup
 const validationSchema = Yup.object({
   username: Yup.string().required("El nombre de usuario es obligatorio"),
   password: Yup.string().required("La contraseña es obligatoria"),
@@ -22,7 +21,6 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        // Realizar la solicitud POST
         await axios.post("/api/auth/login", {
           username: values.username,
           password: values.password,
