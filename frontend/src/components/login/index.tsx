@@ -19,12 +19,7 @@ export const Login = () => {
 
       console.log("Login successful:", response.data);
 
-      // If your login API returns a token or some other data, you can use it here.
-      // Example:
-      // const { token } = response.data;
-      // localStorage.setItem('token', token);
-
-      navigate("/"); // Navigate to the home page or any other page after successful login
+      navigate("/");
     } catch (err) {
       console.error("Login failed:", err);
       setError("Login failed. Please check your credentials and try again.");

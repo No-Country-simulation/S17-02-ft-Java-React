@@ -1,4 +1,4 @@
-import { useForm } from "./userForm"; // Asegúrate de ajustar esto según sea necesario
+import { useForm } from "./userForm";
 import { Link } from "react-router-dom";
 
 type Specialty =
