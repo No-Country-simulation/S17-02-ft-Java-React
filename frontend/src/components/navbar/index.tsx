@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Navbar, Nav } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
 import Modal from "react-modal";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterUser } from "../registerUser";
@@ -32,38 +32,34 @@ const NavBar = () => {
 
 
   return (
-    <header className="header-section p-4">
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-        <Container className="container d-flex mx-auto w-50">
-          <Navbar.Brand href="#home">Hey Doctor!</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mx-auto">
-              <Nav.Link href="#features" className="fw-bolder fs-5">Home</Nav.Link>
-              <Nav.Link href="#pricing" className="fw-bolder fs-5">Acerca de</Nav.Link>
-              <Nav.Link href="#deets" className="fw-bolder fs-5">Servicios</Nav.Link>
-          {token?   (<>
-           <Nav.Link eventKey={2} href="#memes" className="fw-bolder fs-5">Video llamadas</Nav.Link>
-            <button onClick={handleLogout} className="btn btn-primary" >Logout</button>
-            </>):
-            <Nav.Link eventKey={2} href="/login" className="fw-bolder fs-5">Login</Nav.Link>}
-          </Nav>
-          </Navbar.Collapse>
-        </Container>
+    <header className="navbar p-4">
+      <nav  className="bg-body-tertiar">
+        
+          <button className="badge" >HeyDoc!</button>
+          
+            <div className="d-flex gap-2">
+            <Link to="/registerespecialist">
+        <button className="btn-navbar-prof">soy profesional</button>
+      </Link>  
+          {token?   <>
+           <Nav.Link eventKey={2} href="#memes" className="fw-bolder fs-3">Video llamadas</Nav.Link>
+            <button onClick={handleLogout} className="btn btn-secondary" >Logout</button>
+            </> :"" }
+              
+          
       <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-      <button className="btn btn-primary" onClick={() => openModal("user")}>
+      <button className="btn-navbar-pct" onClick={() => openModal("user")}>
         {activeForm === "user"
-          ? "Cerrar Registro de Usuario"
-          : "Registro de Usuario"}
+          ? "Cerrar"
+          : "Soy paciente"}
       </button>
-      <button className="btn btn-primary" onClick={() => openModal("clinic")}>
+          </div>
+      {/* <button className="btn btn-primary" onClick={() => openModal("clinic")}>
         {activeForm === "clinic"
           ? "Cerrar Registro de Clínica"
           : "Registro de Clínica"}
-      </button>
-      <Link to="/registerespecialist">
-        <button className="btn btn-primary">Registro de Especialista</button>
-      </Link>
+      </button> */}
+      
 
       <Modal
         isOpen={modalIsOpen}
@@ -77,7 +73,7 @@ const NavBar = () => {
 
       
     </div>
-      </Navbar>
+      </nav>
     </header>
   );
 };

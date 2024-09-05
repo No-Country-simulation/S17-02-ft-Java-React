@@ -5,10 +5,11 @@ export const RegisterClinic = () => {
   const { formData, handleChange, handleSubmit } = useForm();
 
   return (
-    <div>
+    <div className="register-user">
       <h1>Registro de Clínica</h1>
       <form onSubmit={handleSubmit}>
         <FormInput
+          
           id="nombre"
           label="Nombre de la Clínica"
           type="text"
@@ -40,7 +41,7 @@ export const RegisterClinic = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Registrar Clínica</button>
+        <button className="btn btn-secondary" type="submit">Registrar Clínica</button>
       </form>
     </div>
   );

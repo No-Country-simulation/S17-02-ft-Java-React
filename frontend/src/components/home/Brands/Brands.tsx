@@ -9,7 +9,7 @@ import Vithas from "../../../assets/images/Brands/marcaVithas.png";
 
 const Brands = () => {
   return (
-    <section className="mt-5 container p-5 mx-auto">
+    <div className="container-fluid  mt-5 p-5 mx-auto">
       <div className="row mb-5">
         <h2 className="title text-center">Nuestras marcas</h2>
       </div>
@@ -30,7 +30,7 @@ const Brands = () => {
           <img src={Vithas} className="w-75 h-auto img-fluid" alt="Vithas" />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

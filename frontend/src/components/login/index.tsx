@@ -50,9 +50,11 @@ export const Login = () => {
             required
           />
         </div>
-        <button type="submit">Iniciar sesión</button>
+        <div className="d-flex justify-content-end">
+        <button className=" btn btn-secondary" type="submit">Iniciar sesión</button>
+        </div>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
+  </div>
   );
 };

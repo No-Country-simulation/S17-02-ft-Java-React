@@ -34,9 +34,9 @@ export const RegisterUser = () => {
       }
     }
   };
-
+console.log(errors)
   return (
-    <div>
+    <div className="register-user ">
       <h2>Registro de Usuarios</h2>
       {Object.keys(errors).length > 0 && (
         <ul>
@@ -62,7 +62,7 @@ export const RegisterUser = () => {
           onChange={handleChange}
           error={errors.password}
         />
-        <button type="submit">Regístrate</button>
+        <button className="btn btn-secondary" type="submit">Regístrate</button>
       </form>
     </div>
   );

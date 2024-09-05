@@ -1,26 +1,8 @@
 import { useForm } from "./userForm";
 import { Link } from "react-router-dom";
 
-type Specialty =
-  | "Cardiología"
-  | "Neurología"
-  | "Pediatría"
-  | "Dermatología"
-  | "Ginecología"
-  | "Oftalmología";
-
-const specialties: Specialty[] = [
-  "Cardiología",
-  "Neurología",
-  "Pediatría",
-  "Dermatología",
-  "Ginecología",
-  "Oftalmología",
-];
-
 export const RegisterEspecialist = () => {
-  const { formData, handleChange, handleSpecialtyChange, handleSubmit } =
-    useForm(specialties);
+  const { formData, handleChange, handleSubmit } = useForm();
 
   return (
     <div>
@@ -29,57 +11,7 @@ export const RegisterEspecialist = () => {
       </nav>
 
       <form onSubmit={handleSubmit}>
-        <h2>Registro de Médico</h2>
-
-        <label>
-          Nombre completo:
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            aria-required="true"
-          />
-        </label>
-
-        <label>
-          Número de licencia:
-          <input
-            type="text"
-            name="licenseNumber"
-            value={formData.licenseNumber}
-            onChange={handleChange}
-            required
-            aria-required="true"
-          />
-        </label>
-
-        <label>
-          Correo electrónico:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            aria-required="true"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-            title="Please enter a valid email address"
-          />
-        </label>
-
-        <label>
-          Teléfono:
-          <input
-            type="tel"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            pattern="\d{10}"
-            title="Please enter a 10-digit phone number"
-          />
-        </label>
+        <h2>Registro de Usuario</h2>
 
         <label>
           Nombre de usuario:
@@ -105,22 +37,19 @@ export const RegisterEspecialist = () => {
           />
         </label>
 
-        <fieldset>
-          <legend>Especialidades:</legend>
-          {specialties.map((specialty) => (
-            <label key={specialty}>
-              <input
-                type="checkbox"
-                value={specialty}
-                checked={formData.selectedSpecialties.includes(specialty)}
-                onChange={handleSpecialtyChange}
-              />
-              {specialty}
-            </label>
-          ))}
-        </fieldset>
+        <label>
+          Confirmar contraseña:
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            aria-required="true"
+          />
+        </label>
 
-        <button type="submit">Registrar Médico</button>
+        <button type="submit">Registrar Usuario</button>
       </form>
     </div>
   );

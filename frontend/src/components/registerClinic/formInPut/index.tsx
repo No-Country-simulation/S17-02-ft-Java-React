@@ -21,6 +21,7 @@ const FormInput: React.FC<FormInputProps> = ({
     <div>
       <label htmlFor={id}>{label}:</label>
       <input
+        className="input-register"
         type={type}
         id={id}
         name={id}

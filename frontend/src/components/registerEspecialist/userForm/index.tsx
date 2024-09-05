@@ -1,32 +1,16 @@
 import { useState, ChangeEvent, FormEvent, useCallback } from "react";
 
-export type Specialty =
-  | "Cardiología"
-  | "Neurología"
-  | "Pediatría"
-  | "Dermatología"
-  | "Ginecología"
-  | "Oftalmología";
-
 interface FormData {
-  name: string;
-  licenseNumber: string;
-  email: string;
-  phone: string;
   username: string;
   password: string;
-  selectedSpecialties: Specialty[];
+  confirmPassword: string;
 }
 
-export const useForm = (specialties: Specialty[]) => {
+export const useForm = () => {
   const [formData, setFormData] = useState<FormData>({
-    name: "",
-    licenseNumber: "",
-    email: "",
-    phone: "",
     username: "",
     password: "",
-    selectedSpecialties: [],
+    confirmPassword: "",
   });
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
 
@@ -38,28 +22,15 @@ export const useForm = (specialties: Specialty[]) => {
     }));
   }, []);
 
-  const handleSpecialtyChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { value, checked } = e.target;
-      if (specialties.includes(value as Specialty)) {
-        setFormData((prevData) => {
-          const selectedSpecialties = checked
-            ? [...prevData.selectedSpecialties, value as Specialty]
-            : prevData.selectedSpecialties.filter(
-                (specialty) => specialty !== (value as Specialty)
-              );
-
-          return { ...prevData, selectedSpecialties };
-        });
-      }
-    },
-    [specialties]
-  );
-
   const handleSubmit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (formData.password !== formData.confirmPassword) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
       console.log("Datos del formulario:", formData);
+      // Aquí podrías realizar la lógica adicional para enviar los datos
     },
     [formData]
   );
@@ -68,7 +39,6 @@ export const useForm = (specialties: Specialty[]) => {
     formData,
     passwordVisible,
     handleChange,
-    handleSpecialtyChange,
     handleSubmit,
     setPasswordVisible,
   };

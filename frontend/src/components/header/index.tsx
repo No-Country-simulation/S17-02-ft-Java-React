@@ -1,7 +1,7 @@
 export const Header = () => {
   return (
-    <header>
-      <h1>HEY DOCTOR!!!!</h1>
+    <header className="header d-flex justify-content-center">
+      <p className="badge">HeyDoc!</p>
     </header>
   );
 };
