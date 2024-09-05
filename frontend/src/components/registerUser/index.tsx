@@ -73,7 +73,7 @@ export const RegisterUser: React.FC = () => {
         await Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
-          text: "El usuario ha sido registrado correctamente.",
+          text: "El usuario ha sido registrado correctamente y está ahora logueado.",
         });
         formik.resetForm();
         console.log("Redirigiendo a /");
@@ -86,11 +86,12 @@ export const RegisterUser: React.FC = () => {
 
   const loginUser = async (username: string, password: string) => {
     try {
-      await axios.post("/api/auth/login", {
+      const response = await axios.post("/api/auth/login", {
         username,
         password,
       });
       console.log("Inicio de sesión exitoso");
+      console.log("Respuesta del login:", response.data);
     } catch (err) {
       handleError(err, "Error al Iniciar Sesión");
       throw err;

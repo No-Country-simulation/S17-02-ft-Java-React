@@ -95,8 +95,12 @@ export const RegisterEspecialist: React.FC = () => {
 
   const loginUser = async (username: string, password: string) => {
     try {
-      await axios.post("/api/auth/login", { username, password });
-      console.log("Inicio de sesión exitoso"); // Agregado para mostrar mensaje en consola
+      const response = await axios.post("/api/auth/login", {
+        username,
+        password,
+      });
+      console.log("Inicio de sesión exitoso");
+      console.log("Respuesta del login:", response.data);
       navigate("/");
     } catch (err) {
       handleError(err, "Error al Iniciar Sesión");
