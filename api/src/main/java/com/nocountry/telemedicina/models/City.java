@@ -22,10 +22,14 @@ public class City extends Auditable {
     @Column(name = "city_id")
     private Long cityId;
 
-    @Column(name = "city_name", length = 25, nullable = false)
+    @Column(name = "city_name", length = 70, nullable = false)
     private String cityName;
 
     @ManyToOne
     @JoinColumn(name = "department_id", foreignKey = @ForeignKey(name = "FK_CITIES_DEPARTMENT"), nullable = false)
     private Department department;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "city", cascade = { CascadeType.ALL }, orphanRemoval = true)
+    private List<Profile> profiles;
 }

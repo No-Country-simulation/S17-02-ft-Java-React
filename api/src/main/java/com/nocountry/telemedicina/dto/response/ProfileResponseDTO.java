@@ -14,7 +14,7 @@ public record ProfileResponseDTO(
         String avatarUrl,
         LocalDate birth,
         String address,
-        String districtName,
+        String cityName,
         String email,
         String userId ) {
 }
