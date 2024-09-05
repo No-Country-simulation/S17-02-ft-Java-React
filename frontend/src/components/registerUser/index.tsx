@@ -2,19 +2,18 @@ import React from "react";
 import axios from "axios";
 import FormInput from "./formInput";
 import useForm from "./useForm";
-import { useAuth } from "../../context/context";
 
 export const RegisterUser = () => {
   const { form, errors, handleChange } = useForm();
-  const { setToken, setRole } = useAuth();
 
   const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const payload = {
-      username: form.email,
+      username: form.email, // Assuming username and email are the same
       password: form.password,
-      rolesId: [1],
+      rolesId: ["2326ec2c-4f97-4007-b52c-ba5561b434b9"], // Example UUID; replace with actual values as needed
+      email: form.email,
     };
 
     try {
@@ -23,13 +22,7 @@ export const RegisterUser = () => {
           "Content-Type": "application/json",
         },
       });
-
-      const { token, role } = response.data;
-
-      setToken(token);
-      setRole(role);
-
-      console.log("User registered and logged in successfully:", response.data);
+      console.log("User registered successfully:", response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(

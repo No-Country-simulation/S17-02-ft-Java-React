@@ -14,7 +14,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-       <div>
+      <div>
         <Hero />
         <Brands />
         <About />
@@ -22,7 +22,7 @@ const Home: React.FC = () => {
         <Services />
         <Contact />
       </div>
-{/*       
+      {/*       
 
 //! momentaneamente deshabilitado, para renderizar los componentes que creó Pablo Guerreño
       {!token ? (
