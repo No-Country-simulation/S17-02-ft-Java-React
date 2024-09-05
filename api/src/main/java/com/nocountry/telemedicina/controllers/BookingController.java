@@ -6,6 +6,8 @@ import com.nocountry.telemedicina.dto.response.BookingResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Booking;
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.IBookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -77,8 +79,8 @@ public class BookingController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody BookingRequestDTO dto){
-        Booking obj = service.save(mapper.toBooking(dto));
+    public ResponseEntity<Void> save(@RequestBody BookingRequestDTO dto, @CurrentUser UserPrincipal user){
+        Booking obj = service.save(mapper.toBooking(dto),user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getBookingId()).toUri();
         return ResponseEntity.created(location).build();
     }
@@ -166,10 +168,10 @@ public class BookingController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/user/{id}")
-    public ResponseEntity<List<BookingResponseDTO>> findAllByUserId(@RequestParam("id")UUID id,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,@RequestParam(defaultValue = "schedulesDay")String sortField,@RequestParam(defaultValue = "asc") String sortOrder){
+    public ResponseEntity<List<BookingResponseDTO>> findAllByUserId(@CurrentUser UserPrincipal user, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay")String sortField, @RequestParam(defaultValue = "asc") String sortOrder){
         try {
 
-            List<BookingResponseDTO> list = service.findAllByUserId(id,page,size,sortField,sortOrder).stream().map(p -> mapper.toBookingDTO(p)).collect(Collectors.toList());
+            List<BookingResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toBookingDTO(p)).collect(Collectors.toList());
             return new ResponseEntity<>(list, HttpStatus.OK);
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener reservas", e);
