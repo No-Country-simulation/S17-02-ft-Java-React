@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.config.mapper;
 
+import com.nocountry.telemedicina.dto.request.CityRequestDTO;
 import com.nocountry.telemedicina.dto.response.CityResponseDTO;
 import com.nocountry.telemedicina.models.City;
 import org.mapstruct.Mapper;
@@ -11,10 +12,8 @@ public interface CityMapper {
 
     CityMapper INSTANCE = Mappers.getMapper(CityMapper.class);
 
-    @Mapping(source = "department.departmentId", target = "departmentId")
-    @Mapping(source = "department.departmentName", target = "departmentName")
     CityResponseDTO toDepartmentDTO(City city);
 
     @Mapping(source = "department",target = "department")
-    City toCity(CityResponseDTO cityResponseDTO);
+    City toCity(CityRequestDTO cityResponseDTO);
 }

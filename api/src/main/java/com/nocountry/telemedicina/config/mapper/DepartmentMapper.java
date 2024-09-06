@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.config.mapper;
 
+import com.nocountry.telemedicina.dto.request.DepartmentRequestDTO;
 import com.nocountry.telemedicina.dto.response.DepartmentResponseDTO;
 import com.nocountry.telemedicina.models.Department;
 import org.mapstruct.Mapper;
@@ -11,5 +12,5 @@ public interface DepartmentMapper {
 
     DepartmentResponseDTO toDepartmentDTO(Department department);
 
-    Department toDepartment(DepartmentResponseDTO departmentResponseDTO);
+    Department toDepartment(DepartmentRequestDTO departmentResponseDTO);
 }

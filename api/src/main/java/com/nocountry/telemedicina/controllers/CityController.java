@@ -62,7 +62,7 @@ public class CityController {
      * @return the list of cities by department name
      */
     @Operation(
-            summary = "Lista todos las Ciudades por Departamentp",
+            summary = "Lista todos las Ciudades por Departamento",
             description = "Lista todos las ciudades inscritas por departamento en la aplicación",
             tags = { })
     @ApiResponses({
