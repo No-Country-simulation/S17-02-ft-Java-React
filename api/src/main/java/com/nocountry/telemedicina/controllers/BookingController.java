@@ -168,7 +168,7 @@ public class BookingController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/user")
-    public ResponseEntity<Page<BookingResponseDTO>> findAllByUserId(@CurrentUser UserPrincipal user, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay")String sortField, @RequestParam(defaultValue = "asc") String sortOrder){
+    public ResponseEntity<Page<BookingResponseDTO>> findAllByUserId(@CurrentUser UserPrincipal user, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedules_day")String sortField, @RequestParam(defaultValue = "asc") String sortOrder){
         try {
 
             List<BookingResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toBookingDTO(p)).collect(Collectors.toList());

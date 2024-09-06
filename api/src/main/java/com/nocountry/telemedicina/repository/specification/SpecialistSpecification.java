@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 public class SpecialistSpecification {
 
-    public static Specification<Specialist> hasDistrictName(String districtName){
+    public static Specification<Specialist> hasDistrictName(String cityName){
         return ((root, query, criteriaBuilder) ->
-                districtName != null ? criteriaBuilder
-                        .like(root.get("profile.district.districtName"),"%"+districtName+"%") : null);
+                cityName != null ? criteriaBuilder
+                        .like(root.get("profile.city.cityName"),"%"+cityName+"%") : null);
     }
 
     public static Specification<Specialist> hasSpecialtyName(String specialtyName) {

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 
 public interface ISchedulesRepo extends IGenericRepo<Schedules, Long> {
-    @Query(value = "SELECT *\n" +
+    @Query(value = "SELECT sc.active, sc.schedules_day, sc.schedules_duration, sc.schedules_end, sc.schedules_repeat, sc.schedules_rest, sc.schedules_start, sc.created_at, sc.deleted_at, sc.schedules_id, sc.updated_at, sc.create_by, sc.delete_by, sc.specialist_id, sc.update_by\n" +
             "\tFROM schedules sc\n" +
             "\tINNER JOIN specialists s\n" +
             "\tON s.specialist_id=sc.specialist_id\n" +
