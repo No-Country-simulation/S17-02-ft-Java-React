@@ -1,60 +1,113 @@
-import { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/context.tsx";
 
-export const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+const validationSchema = Yup.object({
+  username: Yup.string().required("El nombre de usuario es obligatorio"),
+  password: Yup.string().required("La contraseña es obligatoria"),
+});
+
+const TextField: React.FC<{
+  id: string;
+  name: string;
+  type: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  error?: string;
+}> = ({ id, name, type, value, onChange, onBlur, error }) => (
+  <div className="form-group">
+    <label htmlFor={id}>
+      {name === "username" ? "Nombre de usuario" : "Contraseña"}:
+    </label>
+    <input
+      type={type}
+      id={id}
+      name={name}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      className={`form-control ${error ? "is-invalid" : ""}`}
+      required
+    />
+    {error && <p className="error-text">{error}</p>}
+  </div>
+);
+
+export const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { setToken, setRole } = useAuth();
 
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const response = await axios.post("/api/auth/login", values);
+        const { token, role } = response.data;
 
-    try {
-      const response = await axios.post("/api/auth/login", {
-        username,
-        password,
-      });
+        setToken(token);
+        setRole(role);
 
-      console.log("Login successful:", response.data);
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Has iniciado sesión correctamente.",
+        });
 
-      navigate("/");
-    } catch (err) {
-      console.error("Login failed:", err);
-      setError("Login failed. Please check your credentials and try again.");
-    }
-  };
+        navigate("/");
+      } catch (err) {
+        const errorMessage = axios.isAxiosError(err)
+          ? "Error al iniciar sesión. Por favor, intenta nuevamente."
+          : "Error inesperado. Por favor, intenta nuevamente.";
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: errorMessage,
+        });
+      }
+    },
+  });
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
+    <div className="login-container">
+      <nav>
+        <Link to="/">Cerrar</Link>
+      </nav>
       <h2>Iniciar sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Nombre de usuario:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          id="username"
+          name="username"
+          type="text"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.username ? formik.errors.username : undefined}
+        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password ? formik.errors.password : undefined}
+        />
         <div className="d-flex justify-content-end">
-        <button className=" btn btn-secondary" type="submit">Iniciar sesión</button>
+          <button className="btn btn-secondary" type="submit">
+            Iniciar sesión
+          </button>
         </div>
       </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-  </div>
+    </div>
   );
 };

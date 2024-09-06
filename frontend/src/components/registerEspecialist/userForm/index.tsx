@@ -30,7 +30,6 @@ export const useForm = () => {
         return;
       }
       console.log("Datos del formulario:", formData);
-      // Aquí podrías realizar la lógica adicional para enviar los datos
     },
     [formData]
   );

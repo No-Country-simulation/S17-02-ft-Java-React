@@ -1,19 +1,15 @@
-import { NavbarAdmin } from "../componentsAdmin/navbarAdmin/index.tsx";
-import { Footer } from "../components/footer"
-import { PropsWithChildren } from "react"
+import { Footer } from "../components/footer";
+import { PropsWithChildren } from "react";
 import NavBar from "../components/navbar";
-import { useAuth } from "../context/context.tsx";
 
-
-const Layout = ({children} : PropsWithChildren) => {
-  const { role } = useAuth();
+const Layout = ({ children }: PropsWithChildren) => {
   return (
-    
     <>
-    {role === "admin" ? <NavbarAdmin /> : <NavBar />}
-    {children}
-    <Footer />
+      <NavBar />
+      {children}
+      <Footer />
     </>
-  )
-}
+  );
+};
+
 export default Layout;
