@@ -69,8 +69,7 @@ public class SpecialistServiceImpl extends CRUDServiceImpl<Specialist, UUID> imp
         return switch (query) {
             case "price" -> "bookingPrice";
             case "specialty" -> "specialty.specialtyName";
-            case "location" -> "profile.district.districtName";
-            case "clinic" -> "clinic.clinicName";
+            case "location" -> "profile.city.cityName";
             default -> "reputation";
         };
     }
