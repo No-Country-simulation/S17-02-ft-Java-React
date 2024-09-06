@@ -6,6 +6,10 @@ const NavbarPacientes: React.FC = () => {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
 
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     logout();
@@ -15,7 +19,9 @@ const NavbarPacientes: React.FC = () => {
   return (
     <header className="navbar p-4">
       <nav className="bg-body-tertiar">
-        <button className="badge">HeyDoc!</button>
+        <button className="badge" onClick={handleHomeClick}>
+          HeyDoc!
+        </button>
 
         <div className="d-flex gap-2">
           <div className="d-flex flex-column flex-md-row justify-content-center gap-4">

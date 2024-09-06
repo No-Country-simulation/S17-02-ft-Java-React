@@ -11,10 +11,16 @@ const NavBar = () => {
     navigate("/");
   };
 
+  const handleHomeRedirect = () => {
+    navigate("/");
+  };
+
   return (
     <header className="navbar p-4">
       <nav className="bg-body-tertiar">
-        <button className="badge">HeyDoc!</button>
+        <button className="badge" onClick={handleHomeRedirect}>
+          HeyDoc!
+        </button>
 
         <div className="d-flex gap-2">
           {!token ? (
