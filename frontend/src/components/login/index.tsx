@@ -10,6 +10,33 @@ const validationSchema = Yup.object({
   password: Yup.string().required("La contraseña es obligatoria"),
 });
 
+const TextField: React.FC<{
+  id: string;
+  name: string;
+  type: string;
+  value: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+  onBlur: React.FocusEventHandler<HTMLInputElement>;
+  error?: string;
+}> = ({ id, name, type, value, onChange, onBlur, error }) => (
+  <div className="form-group">
+    <label htmlFor={id}>
+      {name === "username" ? "Nombre de usuario" : "Contraseña"}:
+    </label>
+    <input
+      type={type}
+      id={id}
+      name={name}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      className={`form-control ${error ? "is-invalid" : ""}`}
+      required
+    />
+    {error && <p className="error-text">{error}</p>}
+  </div>
+);
+
 export const Login: React.FC = () => {
   const navigate = useNavigate();
 
@@ -21,70 +48,49 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post("/api/auth/login", {
-          username: values.username,
-          password: values.password,
-        });
-
+        await axios.post("/api/auth/login", values);
         Swal.fire({
           icon: "success",
           title: "Éxito",
-          text: "",
+          text: "Has iniciado sesión correctamente.",
         });
-
         navigate("/");
       } catch (err) {
-        if (axios.isAxiosError(err)) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "",
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error Inesperado",
-            text: "",
-          });
-        }
+        const errorMessage = axios.isAxiosError(err)
+          ? "Error al iniciar sesión. Por favor, intenta nuevamente."
+          : "Error inesperado. Por favor, intenta nuevamente.";
+
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: errorMessage,
+        });
       }
     },
   });
 
   return (
-    <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
+    <div className="login-container">
       <h2>Iniciar sesión</h2>
       <form onSubmit={formik.handleSubmit}>
-        <div>
-          <label htmlFor="username">Nombre de usuario:</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            required
-          />
-          {formik.touched.username && formik.errors.username ? (
-            <p style={{ color: "red" }}>{formik.errors.username}</p>
-          ) : null}
-        </div>
-        <div>
-          <label htmlFor="password">Contraseña:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            required
-          />
-          {formik.touched.password && formik.errors.password ? (
-            <p style={{ color: "red" }}>{formik.errors.password}</p>
-          ) : null}
-        </div>
+        <TextField
+          id="username"
+          name="username"
+          type="text"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.username ? formik.errors.username : undefined}
+        />
+        <TextField
+          id="password"
+          name="password"
+          type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.password ? formik.errors.password : undefined}
+        />
         <div className="d-flex justify-content-end">
           <button className="btn btn-secondary" type="submit">
             Iniciar sesión

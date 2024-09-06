@@ -7,20 +7,19 @@ import Swal from "sweetalert2";
 import { useAuth } from "../../context/context.tsx";
 
 const FormField: React.FC<{
-  id: string;
-  type: string;
   name: string;
+  type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   error?: string;
-}> = ({ id, type, name, value, onChange, onBlur, error }) => (
+}> = ({ name, type, value, onChange, onBlur, error }) => (
   <label>
     {name}:
     <input
       type={type}
-      id={id}
-      name={id}
+      id={name}
+      name={name}
       value={value}
       onChange={onChange}
       onBlur={onBlur}
@@ -46,15 +45,29 @@ const validationSchema = Yup.object({
 });
 
 const handleError = (error: any, defaultMessage: string) => {
-  let errorTitle = defaultMessage;
-  if (axios.isAxiosError(error)) {
-    errorTitle = "Error al Registrar";
-  }
+  const errorMessage = axios.isAxiosError(error)
+    ? "Error al Registrar"
+    : defaultMessage;
   Swal.fire({
     icon: "error",
-    title: errorTitle,
-    text: "",
+    title: errorMessage,
   });
+};
+
+const loginUser = async (username: string, password: string) => {
+  try {
+    const response = await axios.post("/api/auth/login", {
+      username,
+      password,
+    });
+    return {
+      token: response.data.token,
+      role: response.data.roleId,
+    };
+  } catch (err) {
+    handleError(err, "Error al Iniciar Sesión");
+    throw err;
+  }
 };
 
 export const RegisterEspecialist: React.FC = () => {
@@ -83,14 +96,11 @@ export const RegisterEspecialist: React.FC = () => {
           },
         });
         const loginResponse = await loginUser(values.username, values.password);
-        if (loginResponse) {
-          const { token, role } = loginResponse;
-          console.log("Token:", token);
-          console.log("Role:", roleId);
+        const { token, role } = loginResponse;
 
-          setToken(token);
-          setRole(role);
-        }
+        setToken(token);
+        setRole(role);
+
         Swal.fire({
           icon: "success",
           title: "Registro Exitoso",
@@ -104,21 +114,8 @@ export const RegisterEspecialist: React.FC = () => {
     },
   });
 
-  const loginUser = async (username: string, password: string) => {
-    try {
-      const response = await axios.post("/api/auth/login", {
-        username,
-        password,
-      });
-      return {
-        token: response.data.token,
-        role: response.data.roleId,
-      };
-    } catch (err) {
-      handleError(err, "Error al Iniciar Sesión");
-      throw err;
-    }
-  };
+  const { values, handleChange, handleBlur, handleSubmit, errors, touched } =
+    formik;
 
   return (
     <div>
@@ -126,41 +123,34 @@ export const RegisterEspecialist: React.FC = () => {
         <Link to="/">Inicio</Link>
       </nav>
 
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h2>Registro de Usuario</h2>
 
         <FormField
-          id="username"
+          name="username"
           type="text"
-          name="Nombre de usuario"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.username ? formik.errors.username : undefined}
+          value={values.username}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.username ? errors.username : undefined}
         />
 
         <FormField
-          id="password"
+          name="password"
           type="password"
-          name="Contraseña"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.password ? formik.errors.password : undefined}
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.password ? errors.password : undefined}
         />
 
         <FormField
-          id="confirmPassword"
+          name="confirmPassword"
           type="password"
-          name="Confirmar contraseña"
-          value={formik.values.confirmPassword}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.confirmPassword
-              ? formik.errors.confirmPassword
-              : undefined
-          }
+          value={values.confirmPassword}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.confirmPassword ? errors.confirmPassword : undefined}
         />
 
         <button type="submit">Registrar Usuario</button>
