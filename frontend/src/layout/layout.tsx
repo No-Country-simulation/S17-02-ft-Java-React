@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { Footer } from "../components/footer";
 import NavBar from "../components/navbar";
-import NavbarPacientes from "../components/navbarPacientes/index.tsx"; // Asegúrate de que la ruta sea correcta
-import NavbarEspecialista from "../components/navbarEspecialist/navbarEspecialist.tsx"; // Asegúrate de que la ruta sea correcta
+import NavbarPacientes from "../components/patientsNavbar/index.tsx"; // Asegúrate de que la ruta sea correcta
+import NavbarEspecialista from "../components/specialistsNavbar/index.tsx"; // Asegúrate de que la ruta sea correcta
 import { useAuth } from "../context/context.tsx";
 import { PropsWithChildren } from "react";
 
