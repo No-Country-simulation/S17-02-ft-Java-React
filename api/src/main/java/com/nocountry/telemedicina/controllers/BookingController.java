@@ -167,12 +167,13 @@ public class BookingController {
             @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =BookingResponseDTO.class),mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    @GetMapping("/user/{id}")
-    public ResponseEntity<List<BookingResponseDTO>> findAllByUserId(@CurrentUser UserPrincipal user, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay")String sortField, @RequestParam(defaultValue = "asc") String sortOrder){
+    @GetMapping("/user")
+    public ResponseEntity<Page<BookingResponseDTO>> findAllByUserId(@CurrentUser UserPrincipal user, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay")String sortField, @RequestParam(defaultValue = "asc") String sortOrder){
         try {
 
             List<BookingResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toBookingDTO(p)).collect(Collectors.toList());
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            Page<BookingResponseDTO>listResponse= new PageImpl<>(list);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener reservas", e);
         }

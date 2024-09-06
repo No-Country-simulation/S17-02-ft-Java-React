@@ -159,4 +159,24 @@ public class SchedulesController {
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @Operation(
+            summary = "Lista todos los Turnos de forma paginada",
+            description = "Lista todos los turnos inscritos en la aplicación",
+            tags = { })
+    @ApiResponses({
+            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @GetMapping("/user")
+    public ResponseEntity<Page<SchedulesResponseDTO>> findAllByUser(@CurrentUser UserPrincipal user,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
+        try {
+
+            List<SchedulesResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
+            Page<SchedulesResponseDTO>listResponse = new PageImpl<>(list);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
+        }catch (Exception e) {
+            throw new RuntimeException("Error al obtener los turnos", e);
+        }
+    }
 }
