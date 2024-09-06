@@ -161,15 +161,15 @@ public class SchedulesController {
     }
 
     @Operation(
-            summary = "Lista todos los Turnos de forma paginada",
-            description = "Lista todos los turnos inscritos en la aplicación",
+            summary = "Lista todos los Turnos de un especialista de forma paginada",
+            description = "Lista todos los turnos inscritos de un especialista en la aplicación",
             tags = { })
     @ApiResponses({
             @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesResponseDTO.class),mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/user")
-    public ResponseEntity<Page<SchedulesResponseDTO>> findAllByUser(@CurrentUser UserPrincipal user,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
+    public ResponseEntity<Page<SchedulesResponseDTO>> findAllByUser(@CurrentUser UserPrincipal user,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedules_day") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
         try {
 
             List<SchedulesResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
