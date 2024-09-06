@@ -21,7 +21,7 @@ const NavBar = () => {
           <Link to="/registerespecialist">
             <button className="btn-navbar-prof">Soy profesional</button>
           </Link>
-          {token && (
+          {token ? (
             <>
               <Nav.Link eventKey={2} href="#memes" className="fw-bolder fs-3">
                 Video llamadas
@@ -30,13 +30,18 @@ const NavBar = () => {
                 Logout
               </button>
             </>
+          ) : (
+            <>
+              <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
+                <Link to="/registeruser">
+                  <button className="btn-navbar-pct">Soy paciente</button>
+                </Link>
+              </div>
+              <Link to="/login">
+                <button className="btn-navbar-prof">Login</button>
+              </Link>
+            </>
           )}
-
-          <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-            <Link to="/registeruser">
-              <button className="btn-navbar-pct">Soy paciente</button>
-            </Link>
-          </div>
         </div>
       </nav>
     </header>

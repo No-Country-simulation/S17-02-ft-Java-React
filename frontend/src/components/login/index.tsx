@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx";
 
 const validationSchema = Yup.object({
@@ -79,6 +79,9 @@ export const Login: React.FC = () => {
 
   return (
     <div className="login-container">
+      <nav>
+        <Link to="/">Cerrar</Link>
+      </nav>
       <h2>Iniciar sesión</h2>
       <form onSubmit={formik.handleSubmit}>
         <TextField
