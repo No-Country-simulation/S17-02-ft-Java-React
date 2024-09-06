@@ -99,6 +99,12 @@ public class SecurityConfig {
                                                 "SPECIALIST");
                                         authConfig.requestMatchers("/api/schedules/**").hasAnyRole( "ADMIN",
                                                 "SPECIALIST");
+                                        authConfig.requestMatchers("/api/payments/**").hasAnyRole( "ADMIN","USER",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinicalHistory-histories").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinical-records").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2
