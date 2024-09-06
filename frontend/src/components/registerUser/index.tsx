@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
 import { useAuth } from "../../context/context";
 
+// Actualización del esquema de validación
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Debe ser un correo electrónico válido")
@@ -16,6 +17,9 @@ const validationSchema = Yup.object({
     .matches(/[a-zA-Z]/, "La contraseña debe contener letras")
     .matches(/[0-9]/, "La contraseña debe contener números")
     .required("La contraseña es obligatoria"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Las contraseñas deben coincidir")
+    .required("La confirmación de la contraseña es obligatoria"),
 });
 
 const handleError = (error: any, defaultMessage: string) => {
@@ -100,7 +104,7 @@ export const RegisterUser: React.FC = () => {
   );
 
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: { email: "", password: "", confirmPassword: "" },
     validationSchema,
     onSubmit,
   });
@@ -112,10 +116,15 @@ export const RegisterUser: React.FC = () => {
       </nav>
       <h2>Registro de Pacientes</h2>
 
-      {formik.errors.email || formik.errors.password ? (
+      {formik.errors.email ||
+      formik.errors.password ||
+      formik.errors.confirmPassword ? (
         <ul>
           {formik.errors.email && <li>{formik.errors.email}</li>}
           {formik.errors.password && <li>{formik.errors.password}</li>}
+          {formik.errors.confirmPassword && (
+            <li>{formik.errors.confirmPassword}</li>
+          )}
         </ul>
       ) : null}
 
@@ -138,8 +147,21 @@ export const RegisterUser: React.FC = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.password ? formik.errors.password : undefined}
         />
+        <FormInput
+          id="confirmPassword"
+          name="Confirmar Contraseña"
+          type="password"
+          value={formik.values.confirmPassword}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.confirmPassword
+              ? formik.errors.confirmPassword
+              : undefined
+          }
+        />
         <button className="btn btn-secondary" type="submit">
-          Regístrate
+          Regístrar Paciente
         </button>
       </form>
     </div>

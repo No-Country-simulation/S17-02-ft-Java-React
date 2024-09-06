@@ -153,7 +153,7 @@ export const RegisterEspecialist: React.FC = () => {
           error={touched.confirmPassword ? errors.confirmPassword : undefined}
         />
 
-        <button type="submit">Registrar Usuario</button>
+        <button type="submit">Registrar Profesional</button>
       </form>
     </div>
   );
