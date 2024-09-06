@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/context.tsx";
 
 const validationSchema = Yup.object({
   username: Yup.string().required("El nombre de usuario es obligatorio"),
@@ -39,6 +40,7 @@ const TextField: React.FC<{
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { setToken, setRole } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -48,12 +50,18 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        await axios.post("/api/auth/login", values);
+        const response = await axios.post("/api/auth/login", values);
+        const { token, role } = response.data;
+
+        setToken(token);
+        setRole(role);
+
         Swal.fire({
           icon: "success",
           title: "Éxito",
           text: "Has iniciado sesión correctamente.",
         });
+
         navigate("/");
       } catch (err) {
         const errorMessage = axios.isAxiosError(err)
