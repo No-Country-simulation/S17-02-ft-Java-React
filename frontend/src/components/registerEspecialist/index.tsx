@@ -6,6 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/context.tsx";
 
+// Updated FormField component with styling
 const FormField: React.FC<{
   name: string;
   type: string;
@@ -14,19 +15,27 @@ const FormField: React.FC<{
   onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   error?: string;
 }> = ({ name, type, value, onChange, onBlur, error }) => (
-  <label>
-    {name}:
-    <input
-      type={type}
-      id={name}
-      name={name}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      aria-required="true"
-    />
+  <div style={{ marginBottom: "1em" }}>
+    <label style={{ display: "block", marginBottom: "0.5em" }}>
+      {name}:
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        aria-required="true"
+        style={{
+          display: "block",
+          width: "100%",
+          padding: "0.5em",
+          boxSizing: "border-box",
+        }}
+      />
+    </label>
     {error && <div style={{ color: "red", marginTop: "0.5em" }}>{error}</div>}
-  </label>
+  </div>
 );
 
 const validationSchema = Yup.object({
@@ -120,12 +129,15 @@ export const RegisterEspecialist: React.FC = () => {
     formik;
 
   return (
-    <div>
-      <nav>
+    <div style={{ maxWidth: "500px", margin: "0 auto", padding: "1em" }}>
+      <nav style={{ marginBottom: "1em" }}>
         <Link to="/">Cerrar</Link>
       </nav>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <h2>Registro de Profesionales</h2>
 
         <FormField
@@ -155,7 +167,19 @@ export const RegisterEspecialist: React.FC = () => {
           error={touched.confirmPassword ? errors.confirmPassword : undefined}
         />
 
-        <button type="submit">Registrar Profesional</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#6c757d",
+            color: "#fff",
+            border: "none",
+            padding: "0.5em 1em",
+            cursor: "pointer",
+            marginTop: "1em",
+          }}
+        >
+          Registrar Profesional
+        </button>
       </form>
     </div>
   );
