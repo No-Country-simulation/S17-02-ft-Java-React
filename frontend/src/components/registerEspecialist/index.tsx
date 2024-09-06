@@ -72,7 +72,7 @@ const loginUser = async (username: string, password: string) => {
 
 export const RegisterEspecialist: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken, setRole } = useAuth();
+  const { setToken, setRole, setRoleId } = useAuth();
   const roleId = "9c765b7d-9eec-421b-85c6-6d53bcd002da";
 
   const formik = useFormik({
@@ -100,6 +100,8 @@ export const RegisterEspecialist: React.FC = () => {
 
         setToken(token);
         setRole(role);
+        setRoleId(roleId); // Guarda roleId en el contexto
+        console.log("Role ID guardado en el contexto:", roleId); // Log de roleId
 
         Swal.fire({
           icon: "success",

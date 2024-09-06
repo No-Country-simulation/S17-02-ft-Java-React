@@ -56,7 +56,7 @@ const loginUser = async (username: string, password: string) => {
 
 export const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken, setRole } = useAuth();
+  const { setToken, setRole, setRoleId } = useAuth();
 
   const onSubmit = useCallback(
     async (values: { email: string; password: string }) => {
@@ -86,6 +86,8 @@ export const RegisterUser: React.FC = () => {
           const { token, role } = loginResponse;
           setToken(token);
           setRole(role);
+          setRoleId(roleId); // Guarda roleId en el contexto
+          console.log("Role ID guardado en el contexto:", roleId); // Log de roleId
         }
 
         await Swal.fire({
@@ -99,7 +101,7 @@ export const RegisterUser: React.FC = () => {
         handleError(error, "Error Inesperado");
       }
     },
-    [navigate, setToken, setRole]
+    [navigate, setToken, setRole, setRoleId]
   );
 
   const formik = useFormik({

@@ -40,7 +40,7 @@ const TextField: React.FC<{
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken, setRole } = useAuth();
+  const { setToken, setRole, setRoleId } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -50,11 +50,27 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await axios.post("/api/auth/login", values);
-        const { token, role } = response.data;
+        const response = await axios.post("/api/auth/login", {
+          username: values.username,
+          password: values.password,
+        });
 
-        setToken(token);
-        setRole(role);
+        // Desestructurar la respuesta para obtener userResponseDTO y token
+        const { userResponseDTO, token } = response.data;
+        const { roles } = userResponseDTO;
+
+        // Mostrar en consola la información deseada
+        console.log("User Response DTO:", userResponseDTO);
+        console.log("Token:", token);
+
+        // Suponiendo que deseas guardar el role y roleId en el contexto
+        if (roles && roles.length > 0) {
+          const { roleId, roleName } = roles[0]; // Usar el primer rol como ejemplo
+          setToken(token);
+          setRole(roleName);
+          setRoleId(roleId);
+          console.log("Role ID:", roleId);
+        }
 
         Swal.fire({
           icon: "success",
