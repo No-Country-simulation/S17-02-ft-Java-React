@@ -18,30 +18,30 @@ INSERT INTO user_role(role_id, user_id)VALUES ('2326ec2c-4f97-4007-b52c-ba5561b4
 INSERT INTO countries(country_id, country_name) VALUES (1, 'Argentina');
 
 -- Provincias
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 1, 'Ciudad Autonoma de Buenos Aires');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 2, 'Neuquen');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 3, 'San Luis');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 4, 'Santa Fe');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 5, 'La Rioja');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 6, 'Catamarca');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 7, 'Tucuman');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 8, 'Chaco');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 9, 'Formosa');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 10, 'Santa Cruz');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 11, 'Chubut');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 12, 'Mendoza');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 13, 'Entre Ríos');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 14, 'San Juan');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 15, 'Jujuy');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 16, 'Santiago del Estero');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 17, 'Río Negro');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 2, 'Ciudad Autónoma de Buenos Aires');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 58, 'Neuquén');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 74, 'San Luis');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 82, 'Santa Fe');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 46, 'La Rioja');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 10, 'Catamarca');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 90, 'Tucumán');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 22, 'Chaco');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 34, 'Formosa');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 78, 'Santa Cruz');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 26, 'Chubut');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 50, 'Mendoza');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 30, 'Entre Ríos');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 70, 'San Juan');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 38, 'Jujuy');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 86, 'Santiago del Estero');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 62, 'Río Negro');
 INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 18, 'Corrientes');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 19, 'Misiones');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 20, 'Salta');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 21, 'Córdoba');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 22, 'Buenos Aires');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 23, 'La Pampa');
-INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 24, 'Tierra del Fuego, Antartida e Islas del Atlantico Sur');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 54, 'Misiones');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 66, 'Salta');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 14, 'Córdoba');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 6, 'Buenos Aires');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 42, 'La Pampa');
+INSERT INTO departments(country_id, department_id, department_name) VALUES (1, 94, 'Tierra del Fuego, Antártida e Islas del Atlántico Sur');
 
 
 INSERT INTO cities(city_id, department_id, city_name) VALUES (1, 6, 'Adolfo Gonzales Chaves');
