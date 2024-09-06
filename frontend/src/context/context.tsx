@@ -13,11 +13,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  // Obtener el token y rol del localStorage al inicializar el estado
   const [token, setToken] = useState<string | null>(
     localStorage.getItem("token")
   );
   const [role, setRole] = useState<string | null>(localStorage.getItem("role"));
 
+  // Actualizar el token y sincronizar con localStorage
   const updateToken = (newToken: string | null) => {
     setToken(newToken);
     if (newToken) {
@@ -27,6 +29,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  // Actualizar el rol y sincronizar con localStorage
   const updateRole = (newRole: string | null) => {
     setRole(newRole);
     if (newRole) {
@@ -36,6 +39,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  // Manejar el cierre de sesión
   const logout = () => {
     updateToken(null);
     updateRole(null);
@@ -56,6 +60,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// Hook para usar el contexto de autenticación
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {

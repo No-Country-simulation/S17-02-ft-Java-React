@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
 import { useAuth } from "../../context/context";
 
-// Actualización del esquema de validación
 const validationSchema = Yup.object({
   email: Yup.string()
     .email("Debe ser un correo electrónico válido")
