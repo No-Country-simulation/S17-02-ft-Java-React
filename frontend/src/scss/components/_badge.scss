@@ -1,0 +1,23 @@
+.badge{
+    display: flex;
+    font-family: $font-primary;
+    align-items: center;
+    justify-content: center;
+    width: 17.2rem;
+    height: 4rem;
+    padding: .6rem 4.8rem;
+    background-color: #d9d9d9;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: #444;
+    border: none;
+    border-radius: .8rem;
+    gap:1rem;
+    line-height:150%;
+    flex-shrink: 0;
+}
+.fw-bolder{
+    font-weight: 400;
+    font-size: 1.8rem;
+    color:#000;
+}

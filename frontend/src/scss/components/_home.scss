@@ -1,0 +1,26 @@
+.container-home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:space-evenly;
+    height: 100vh;
+}
+.register-modal{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20rem;
+}
+.buttonContainer-modal{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 2rem;
+    margin-top: 20rem;
+    &{
+        a{
+            text-decoration: none;
+        }
+    }
+}

@@ -3,12 +3,24 @@
 @import '../scss/abstracts/mixins';
 
 /*Bootstrap*/
-@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
+@import '../scss/abstracts/typography';
 /*Base*/
 @import '../scss/base/base';
 @import '../scss/base/resets';
 
 /*Components*/
-@import '../scss/components/payments'
+@import '../scss/components/payments';
+@import '../scss/components/header';
+@import '../scss/components/footer';
+@import '../scss/components/navbar';
+@import '../scss/components/badge';
+@import '../scss/components/home';
+@import '../scss/components/register';
+@import '../scss/components/login';
+@import '../scss/components/buttonRegister';
+@import '../scss/components/register-specialist';
+@import '../scss/components/hero';
+
  

@@ -6,6 +6,7 @@ interface FormInputProps {
   type: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement, Element>) => void; // Agregado
   error?: string;
 }
 
@@ -15,13 +16,23 @@ const FormInput: React.FC<FormInputProps> = ({
   type,
   value,
   onChange,
+  onBlur, // Desestructurado
   error,
 }) => {
   return (
     <div>
       <label htmlFor={id}>{name}:</label>
-      <input type={type} id={id} name={id} value={value} onChange={onChange} />
-      {error && <p>{error}</p>}
+      <input
+        className="input-register"
+        type={type}
+        id={id}
+        name={id}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur} // Aplicado
+      />
+      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+      {/* Opcional: Estilo de error */}
     </div>
   );
 };
