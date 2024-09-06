@@ -16,7 +16,9 @@
     "frontend": "file:",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",
+    "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
     "sass": "^1.77.8"
