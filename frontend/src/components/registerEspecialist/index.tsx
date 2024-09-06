@@ -100,8 +100,8 @@ export const RegisterEspecialist: React.FC = () => {
 
         setToken(token);
         setRole(role);
-        setRoleId(roleId); // Guarda roleId en el contexto
-        console.log("Role ID guardado en el contexto:", roleId); // Log de roleId
+        setRoleId(roleId);
+        console.log("Role ID guardado en el contexto:", roleId);
 
         Swal.fire({
           icon: "success",

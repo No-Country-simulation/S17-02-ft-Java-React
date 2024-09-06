@@ -86,8 +86,8 @@ export const RegisterUser: React.FC = () => {
           const { token, role } = loginResponse;
           setToken(token);
           setRole(role);
-          setRoleId(roleId); // Guarda roleId en el contexto
-          console.log("Role ID guardado en el contexto:", roleId); // Log de roleId
+          setRoleId(roleId);
+          console.log("Role ID guardado en el contexto:", roleId);
         }
 
         await Swal.fire({
