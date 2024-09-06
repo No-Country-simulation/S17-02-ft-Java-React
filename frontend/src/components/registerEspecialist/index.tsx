@@ -120,11 +120,11 @@ export const RegisterEspecialist: React.FC = () => {
   return (
     <div>
       <nav>
-        <Link to="/">Inicio</Link>
+        <Link to="/">Cerrar</Link>
       </nav>
 
       <form onSubmit={handleSubmit}>
-        <h2>Registro de Usuario</h2>
+        <h2>Registro de Profesionales</h2>
 
         <FormField
           name="username"

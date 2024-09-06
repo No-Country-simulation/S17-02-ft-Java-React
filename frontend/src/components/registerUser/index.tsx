@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
 import { useAuth } from "../../context/context";
 
@@ -107,7 +107,10 @@ export const RegisterUser: React.FC = () => {
 
   return (
     <div className="register-user">
-      <h2>Registro de Usuarios</h2>
+      <nav>
+        <Link to="/">Cerrar</Link>
+      </nav>
+      <h2>Registro de Pacientes</h2>
 
       {formik.errors.email || formik.errors.password ? (
         <ul>

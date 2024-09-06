@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Login } from "./components/login/index.tsx";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
+import { RegisterUser } from "./components/registerUser/index.tsx";
 import axios from "axios";
 import "../src/css/App.scss";
 import Layout from "./layout/layout.tsx";
@@ -12,9 +13,7 @@ import ProfileComponent from "./Pages/Profile.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
-export const App: React.FC = () => {
-  const [] = useState(false);
-
+const App: React.FC = () => {
   return (
     <Router>
       <Layout>
@@ -28,6 +27,7 @@ export const App: React.FC = () => {
             path="/registerespecialist"
             element={<RegisterEspecialist />}
           />
+          <Route path="/registeruser" element={<RegisterUser />} />
         </Routes>
       </Layout>
     </Router>
