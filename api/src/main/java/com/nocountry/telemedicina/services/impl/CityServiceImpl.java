@@ -7,6 +7,8 @@ import com.nocountry.telemedicina.services.ICityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CityServiceImpl extends CRUDServiceImpl<City, Long> implements ICityService {
@@ -17,5 +19,10 @@ public class CityServiceImpl extends CRUDServiceImpl<City, Long> implements ICit
     @Override
     protected IGenericRepo<City, Long> getRepo() {
         return repo;
+    }
+
+    @Override
+    public List<City> findAll() {
+        return repo.findAll();
     }
 }
