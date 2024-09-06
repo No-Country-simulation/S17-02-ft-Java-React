@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Login } from "./components/login/index.tsx";
@@ -10,6 +12,8 @@ import Layout from "./layout/layout.tsx";
 import Home from "./components/home/index.tsx";
 import MercadoPago from "./components/mercadoPago/MercadoPago.tsx";
 import ProfileComponent from "./Pages/Profile.tsx";
+import Booking from './Pages/booking.tsx';
+
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -23,6 +27,7 @@ const App: React.FC = () => {
           <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/prueba-mp" element={<MercadoPago />} />
           <Route path="/profile" element={<ProfileComponent />} />
+           <Route path='/reservas' element={<Booking />} />
           <Route
             path="/registerespecialist"
             element={<RegisterEspecialist />}
