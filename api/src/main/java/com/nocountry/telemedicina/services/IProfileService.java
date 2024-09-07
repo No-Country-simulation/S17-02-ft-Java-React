@@ -14,4 +14,5 @@ public interface IProfileService extends ICRUDService<Profile, UUID> {
     Profile save(Profile profile, @CurrentUser UserPrincipal user);
 
     Optional<Profile> findById(@CurrentUser UserPrincipal user);
+
 }

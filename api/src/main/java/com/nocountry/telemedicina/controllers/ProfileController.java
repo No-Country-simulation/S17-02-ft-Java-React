@@ -79,8 +79,6 @@ public class ProfileController {
     @PostMapping
     public ResponseEntity<Profile> save(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user) {
         Profile obj = service.save(mapper.toProfile(dto),user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getProfileId())
-                .toUri();
         return ResponseEntity.status(201).body(obj);
     }
 
@@ -88,26 +86,18 @@ public class ProfileController {
      * Updates a profile by its ID.
      *
      * @param dto the profile data to update
-     * @param id  the ID of the profile to update
      * @return the updated profile
      */
     @Operation(summary = "Actualiza datos de un Perfil por ID", description = "Actualiza los datos de un Perfil.Se envia los atributos a actualizar del perfil y el ID del Perfil", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = {
-                    @Content(schema = @Schema(implementation = ProfileRequestDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(implementation = ProfileRequestDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,
-//            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
-//        Profile obj = service.updateById(id, mapper.toProfile(dto));
-//        return new ResponseEntity<>(obj, HttpStatus.OK);
-//    }
-    @PutMapping("/update/")
-    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user ) {
+    @PutMapping("/update-profile")
+    public ResponseEntity<ProfileResponseDTO> update(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user ) {
         Profile obj = service.updateById(user.getId(), mapper.toProfile(dto));
-        return new ResponseEntity<>(obj, HttpStatus.OK);
+        ProfileResponseDTO profileResponseDTO = mapper.toProfileDTO(obj);
+        return ResponseEntity.status(200).body(profileResponseDTO);
     }
 
     /**

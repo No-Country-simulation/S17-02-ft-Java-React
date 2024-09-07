@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface IProfileRepo extends IGenericRepo<Profile, UUID> {
     @Query(value = "SELECT * FROM profiles p WHERE p.user_id=:userId", nativeQuery = true)
     Optional<Profile> findByUserId(@Param("userId") UUID userId);
+
 }

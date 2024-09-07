@@ -10,4 +10,5 @@ public interface ICRUDService<T,ID> {
     T updateById(ID id, T t);
     void deleteById(ID id);
     Page<T> findAll(int page, int size, String sortField, String sortOrder);
+
 }

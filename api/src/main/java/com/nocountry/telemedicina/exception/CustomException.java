@@ -7,9 +7,11 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class CustomException extends RuntimeException {
     private Integer statusCode;
-    private String message;
+    public CustomException(Integer statusCode,String message) {
+        super(message);
+        this.statusCode = statusCode;
+    }
 }
