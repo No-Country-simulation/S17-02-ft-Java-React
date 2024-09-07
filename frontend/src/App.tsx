@@ -4,6 +4,7 @@ import { Login } from "./components/login/index.tsx";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
 import { RegisterUser } from "./components/registerUser/index.tsx";
+import ProfileSesion from "./components/profileSesion/index.tsx";
 import axios from "axios";
 import "../src/css/App.scss";
 import Layout from "./layout/layout.tsx";
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             element={<RegisterEspecialist />}
           />
           <Route path="/registeruser" element={<RegisterUser />} />
+          <Route path="/profilesesion" element={<ProfileSesion />} />
         </Routes>
       </Layout>
     </Router>

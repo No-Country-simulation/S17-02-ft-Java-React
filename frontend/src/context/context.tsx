@@ -10,9 +10,13 @@ interface AuthContextType {
   token: string | null;
   role: string | null;
   roleId: string | null;
+  username: string | null;
+  password: string | null;
   setToken: (token: string | null) => void;
   setRole: (role: string | null) => void;
   setRoleId: (roleId: string | null) => void;
+  setUsername: (username: string | null) => void;
+  setPassword: (password: string | null) => void;
   logout: () => void;
 }
 
@@ -30,6 +34,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [roleId, setRoleIdState] = useState<string | null>(
     localStorage.getItem("roleId") || null
   );
+  const [username, setUsernameState] = useState<string | null>(
+    localStorage.getItem("username") || null
+  );
+  const [password, setPasswordState] = useState<string | null>(
+    localStorage.getItem("password") || null
+  );
 
   const setToken = (token: string | null) => {
     localStorage.setItem("token", token || "");
@@ -46,24 +56,52 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setRoleIdState(roleId);
   };
 
+  const setUsername = (username: string | null) => {
+    localStorage.setItem("username", username || "");
+    setUsernameState(username);
+  };
+
+  const setPassword = (password: string | null) => {
+    localStorage.setItem("password", password || "");
+    setPasswordState(password);
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("roleId");
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
     setTokenState(null);
     setRoleState(null);
     setRoleIdState(null);
+    setUsernameState(null);
+    setPasswordState(null);
   };
 
   useEffect(() => {
     setTokenState(localStorage.getItem("token") || null);
     setRoleState(localStorage.getItem("role") || null);
     setRoleIdState(localStorage.getItem("roleId") || null);
+    setUsernameState(localStorage.getItem("username") || null);
+    setPasswordState(localStorage.getItem("password") || null);
   }, []);
 
   return (
     <AuthContext.Provider
-      value={{ token, role, roleId, setToken, setRole, setRoleId, logout }}
+      value={{
+        token,
+        role,
+        roleId,
+        username,
+        password,
+        setToken,
+        setRole,
+        setRoleId,
+        setUsername,
+        setPassword,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -6,7 +6,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useAuth } from "../../context/context.tsx";
 
-// Updated FormField component with styling
 const FormField: React.FC<{
   name: string;
   type: string;
@@ -81,7 +80,7 @@ const loginUser = async (username: string, password: string) => {
 
 export const RegisterEspecialist: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken, setRole, setRoleId } = useAuth();
+  const { setToken, setRole, setRoleId, setUsername, setPassword } = useAuth();
   const roleId = "9c765b7d-9eec-421b-85c6-6d53bcd002da";
 
   const formik = useFormik({
@@ -110,7 +109,8 @@ export const RegisterEspecialist: React.FC = () => {
         setToken(token);
         setRole(role);
         setRoleId(roleId);
-        console.log("Role ID guardado en el contexto:", roleId);
+        setUsername(values.username);
+        setPassword(values.password);
 
         Swal.fire({
           icon: "success",
@@ -118,7 +118,7 @@ export const RegisterEspecialist: React.FC = () => {
           text: "El usuario ha sido registrado y se ha iniciado sesión correctamente.",
         });
         formik.resetForm();
-        navigate("/");
+        navigate("/profilesesion");
       } catch (error) {
         handleError(error, "Error Inesperado");
       }
