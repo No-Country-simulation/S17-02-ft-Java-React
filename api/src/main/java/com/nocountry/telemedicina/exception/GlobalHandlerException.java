@@ -83,14 +83,16 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handlerValidationExceptions(MethodArgumentNotValidException ex,
+    public ResponseEntity<Map<String, Object>> handlerValidationExceptions(MethodArgumentNotValidException ex,
             WebRequest request) {
-        Map<String, String> errors = new HashMap<>();
+        Map<String, Object> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = (error instanceof FieldError) ? ((FieldError) error).getField() : error.getObjectName();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
+        errors.put("statusCode",400);
+        errors.put("details",request.getDescription(false));
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 

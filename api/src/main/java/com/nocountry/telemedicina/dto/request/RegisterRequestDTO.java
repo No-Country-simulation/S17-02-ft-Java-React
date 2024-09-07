@@ -2,6 +2,7 @@ package com.nocountry.telemedicina.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -12,7 +13,6 @@ import java.util.UUID;
 @Getter
 public class RegisterRequestDTO {
     @NotBlank
-    @UniqueElements
     @Email
     private String username;
 
@@ -20,6 +20,6 @@ public class RegisterRequestDTO {
     @Size(min = 8)
     private String password;
 
-    @NotBlank
+    @NotEmpty
     private List<UUID> rolesId;
 }

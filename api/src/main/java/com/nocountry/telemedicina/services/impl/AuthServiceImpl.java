@@ -6,6 +6,7 @@ import com.nocountry.telemedicina.dto.request.RegisterRequestDTO;
 import com.nocountry.telemedicina.dto.response.AuthResponseDTO;
 import com.nocountry.telemedicina.exception.BadRequestException;
 import com.nocountry.telemedicina.exception.InvalidCredentialsException;
+import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Role;
 import com.nocountry.telemedicina.models.User;
 import com.nocountry.telemedicina.repository.IRoleRepo;
@@ -96,7 +97,8 @@ public class AuthServiceImpl {
         createdUser.setCreateBy(createdUser.getUserId());
         // Asigna los roles al usuario
         List<Role> roles = roleIds.stream()
-                .map(roleId -> roleRepo.findById(roleId).orElseThrow())
+                .map(roleId -> roleRepo.findById(roleId)
+                        .orElseThrow(() -> new NotFoundException(String.format("Role not found with id: %s", roleId))))
                 .collect(Collectors.toList());
         createdUser.setRoles(roles);
         repository.save(createdUser);
