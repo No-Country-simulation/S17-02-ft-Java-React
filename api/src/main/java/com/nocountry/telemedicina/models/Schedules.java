@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Setter
@@ -38,7 +39,23 @@ public class Schedules extends Auditable {
     @Column(name = "schedules_rest", nullable = false)
     private Integer schedulesRest;
 
-
     @Column(name = "days")
     private String days;
+
+
+    public List<EnumDay> getDays() {
+        if (this.days == null || this.days.isEmpty()) {
+            return List.of();
+        }
+        return Arrays.stream(this.days.split(","))
+                .map(day -> {
+                    try {
+                        return EnumDay.valueOf(day);
+                    } catch (IllegalArgumentException e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
 }
