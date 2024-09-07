@@ -27,6 +27,7 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, Long> imple
 
     @Autowired
     private ISpecialistRepo specialistRepo;
+
     @Override
     protected IGenericRepo<Schedules, Long> getRepo() {
         return repo;
@@ -39,21 +40,21 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, Long> imple
     }
 
     @Override
-    public Page<Schedules> findAllByUserId(UserPrincipal user,int page,int size, String sortField, String sortOrder) {
+    public Page<Schedules> findAllByUserId(UserPrincipal user, int page, int size, String sortField, String sortOrder) {
         Pageable pageable = PageRequest.of(page, size, getSort(sortField, sortOrder));
-        return repo.findAllByUserId(user.getId(),pageable);
+        return repo.findAllByUserId(user.getId(), pageable);
     }
 
     @Override
     public List<Schedules> saveAll(Schedules schedules) {
-        long dias = ChronoUnit.DAYS.between(schedules.getSchedulesDay(),schedules.getSchedulesDayEnd());
+        long dias = ChronoUnit.DAYS.between(schedules.getSchedulesDay(), schedules.getSchedulesDayEnd());
         LocalDate diaActual = schedules.getSchedulesDay();
-        long rango = ChronoUnit.MINUTES.between(schedules.getSchedulesStart(),schedules.getSchedulesEnd());
-        long atencionCantidad = rango/(schedules.getSchedulesDuration()+schedules.getSchedulesRest());
-        for (int i=0;i<dias;i++){//rango de dias
+        long rango = ChronoUnit.MINUTES.between(schedules.getSchedulesStart(), schedules.getSchedulesEnd());
+        long atencionCantidad = rango / (schedules.getSchedulesDuration() + schedules.getSchedulesRest());
+        for (int i = 0; i < dias; i++) {// rango de dias
             schedules.setSchedulesDay(diaActual);
             diaActual = diaActual.plusDays(1);
-            schedules.
+
         }
 
         return List.of();

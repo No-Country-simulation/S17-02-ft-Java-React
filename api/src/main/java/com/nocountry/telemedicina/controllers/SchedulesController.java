@@ -16,6 +16,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,20 +50,19 @@ public class SchedulesController {
      * @param id the ID of the schedules to find
      * @return the found schedules
      */
-    @Operation(
-            summary = "Busca un Turno por su ID",
-            description = "Busca un Turno.Se requiere el parametro ID del turno",
-            tags = { })
+    @Operation(summary = "Busca un Turno por su ID", description = "Busca un Turno.Se requiere el parametro ID del turno", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation = SchedulesResponseDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesResponseDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/{id}")
-    public ResponseEntity<SchedulesResponseDTO> findById(@PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id){
+    public ResponseEntity<SchedulesResponseDTO> findById(
+            @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
         Schedules obj = service.findById(id);
-        if(obj == null){
+        if (obj == null) {
             throw new NotAuthorizedException("ID NOT FOUND: " + id);
-        }else {
+        } else {
             return new ResponseEntity<>(mapper.toSchedulesDTO(obj), HttpStatus.OK);
         }
     }
@@ -72,18 +73,17 @@ public class SchedulesController {
      * @param dto the schedules data to create
      * @return the created schedules
      */
-    @Operation(
-            summary = "Crea un turno",
-            description = "Crea un Turno.Se requiere enviar los parametros descritos a continuación",
-            tags = { })
+    @Operation(summary = "Crea un turno", description = "Crea un Turno.Se requiere enviar los parametros descritos a continuación", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation = SchedulesRequestDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesRequestDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody SchedulesRequestDTO dto, @CurrentUser UserPrincipal user){
-        Schedules obj = service.save(mapper.toSchedules(dto),user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getSchedulesId()).toUri();
+    public ResponseEntity<Void> save(@Valid @RequestBody SchedulesRequestDTO dto, @CurrentUser UserPrincipal user) {
+        Schedules obj = service.save(mapper.toSchedules(dto), user);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(obj.getSchedulesId()).toUri();
         return ResponseEntity.created(location).build();
     }
 
@@ -91,21 +91,20 @@ public class SchedulesController {
      * Updates a schedules by its ID.
      *
      * @param dto the schedules data to update
-     * @param id the ID of the schedules to update
+     * @param id  the ID of the schedules to update
      * @return the updated schedules
      */
-    @Operation(
-            summary = "Actualiza datos de un Turno por ID",
-            description = "Actualiza los datos de un Turno.Se envia los atributos a actualizar del turno y el ID del Turno",
-            tags = { })
+    @Operation(summary = "Actualiza datos de un Turno por ID", description = "Actualiza los datos de un Turno.Se envia los atributos a actualizar del turno y el ID del Turno", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesRequestDTO.class),mediaType = "application/json")} ),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesRequestDTO.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Schedules> update(@RequestBody SchedulesRequestDTO dto,@PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id){
-        Schedules obj = service.updateById(id,mapper.toSchedules(dto));
+    public ResponseEntity<Schedules> update(@RequestBody SchedulesRequestDTO dto,
+            @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
+        Schedules obj = service.updateById(id, mapper.toSchedules(dto));
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
@@ -116,22 +115,23 @@ public class SchedulesController {
      * @param size the page size
      * @return the list of schedules
      */
-    @Operation(
-            summary = "Lista todos los Turnos de forma paginada",
-            description = "Lista todos los turnos inscritos en la aplicación",
-            tags = { })
+    @Operation(summary = "Lista todos los Turnos de forma paginada", description = "Lista todos los turnos inscritos en la aplicación", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesResponseDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
-    public ResponseEntity<Page<SchedulesResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
+    public ResponseEntity<Page<SchedulesResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedulesDay") String sortField,
+            @RequestParam(defaultValue = "desc") String sortOrder) {
         try {
 
-            List<SchedulesResponseDTO> list = service.findAll(page,size,sortField,sortOrder).stream().map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
-            Page<SchedulesResponseDTO>listResponse = new PageImpl<>(list);
+            List<SchedulesResponseDTO> list = service.findAll(page, size, sortField, sortOrder).stream()
+                    .map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
+            Page<SchedulesResponseDTO> listResponse = new PageImpl<>(list);
             return new ResponseEntity<>(listResponse, HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Error al obtener los turnos", e);
         }
     }
@@ -142,40 +142,40 @@ public class SchedulesController {
      * @param id the ID of the schedules to delete
      * @return the deleted schedules
      */
-    @Operation(
-            summary = "Elimina una Turno por ID",
-            description = "Elimina una Turno.Se requiere el parametro ID de la turno",
-            tags = { })
+    @Operation(summary = "Elimina una Turno por ID", description = "Elimina una Turno.Se requiere el parametro ID de la turno", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesResponseDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") @Parameter(example = "") Long id){
+    public ResponseEntity<Void> delete(@PathVariable("id") @Parameter(example = "") Long id) {
         Schedules obj = service.findById(id);
-        if(obj == null){
+        if (obj == null) {
             throw new NotFoundException("ID NOT FOUND: " + id);
         }
         service.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @Operation(
-            summary = "Lista todos los Turnos de un especialista de forma paginada",
-            description = "Lista todos los turnos inscritos de un especialista en la aplicación",
-            tags = { })
+    @Operation(summary = "Lista todos los Turnos de un especialista de forma paginada", description = "Lista todos los turnos inscritos de un especialista en la aplicación", tags = {})
     @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SchedulesResponseDTO.class),mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = SchedulesResponseDTO.class), mediaType = "application/json") }),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/user")
-    public ResponseEntity<Page<SchedulesResponseDTO>> findAllByUser(@CurrentUser UserPrincipal user,@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "schedules_day") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
+    public ResponseEntity<Page<SchedulesResponseDTO>> findAllByUser(@CurrentUser UserPrincipal user,
+            @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "schedules_day") String sortField,
+            @RequestParam(defaultValue = "desc") String sortOrder) {
         try {
 
-            List<SchedulesResponseDTO> list = service.findAllByUserId(user,page,size,sortField,sortOrder).stream().map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
-            Page<SchedulesResponseDTO>listResponse = new PageImpl<>(list);
+            List<SchedulesResponseDTO> list = service.findAllByUserId(user, page, size, sortField, sortOrder).stream()
+                    .map(p -> mapper.toSchedulesDTO(p)).collect(Collectors.toList());
+            Page<SchedulesResponseDTO> listResponse = new PageImpl<>(list);
             return new ResponseEntity<>(listResponse, HttpStatus.OK);
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException("Error al obtener los turnos", e);
         }
     }

@@ -12,6 +12,8 @@ import com.nocountry.telemedicina.dto.request.ItemPreferenceDTO;
 import com.nocountry.telemedicina.dto.request.PaymentInfoDTO;
 import com.nocountry.telemedicina.dto.request.WebHookDTO;
 import com.nocountry.telemedicina.services.impl.MercadoPagoServiceImpl;
+
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -27,7 +29,7 @@ public class MercadoPagoController {
     }
 
     @PostMapping("/generate-preference")
-    public String postMethodName(@RequestBody ItemPreferenceDTO item) {
+    public String postMethodName(@Valid @RequestBody ItemPreferenceDTO item) {
         List<ItemPreferenceDTO> items = Arrays.asList(item);
         return mercadoPagoServiceImpl.generatePreferenceId(items);
     }
