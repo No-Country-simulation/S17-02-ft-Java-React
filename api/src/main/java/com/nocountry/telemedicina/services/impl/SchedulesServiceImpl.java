@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -41,48 +43,33 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> 
     }
 
     @Override
-    public Page<ScheduleConfig> findAllByUserId(UserPrincipal user, int page, int size, String sortField, String sortOrder) {
+    public Page<ScheduleConfig> findAllByUserId(UserPrincipal user, int page, int size, String sortField,
+            String sortOrder) {
         Pageable pageable = PageRequest.of(page, size, getSort(sortField, sortOrder));
         return repo.findAllByUserId(user.getId(), pageable);
     }
 
+    @Override
+    public void saveAll(ScheduleConfig schedules) {
 
-
-        @Override
-        public void saveAll(ScheduleConfig schedules) {
-
-            List<EnumDay> days = schedules.getDays();
-            List<LocalDate> workingDays = generateWorkingDays(schedules.getSchedulesDayStart(),schedules.getSchedulesDayEnd(),days);
-            long rangeBeforeRest = ChronoUnit.MINUTES.between(schedules.getSchedulesStart(), schedules.getSchedulesStartRest());
-            long rangeAfterRest = ChronoUnit.MINUTES.between(schedules.getSchedulesEndRest(), schedules.getSchedulesEnd());
-            long bookingsquantityBeforeRest = rangeBeforeRest / (schedules.getSchedulesDuration() + schedules.getSchedulesRest());
-            long bookingsquantityAfterRest = rangeBeforeRest / (schedules.getSchedulesDuration() + schedules.getSchedulesRest());
-
-        }
-
-//            for (int i = 0; i < dias; i++) {
-//                schedules.setSchedulesDay(diaActual);
-//                diaActual = diaActual.plusDays(1);
-//            }
-
-    private Sort getSort(String sortField, String sortOrder) {
-        Sort sort = Sort.by(sortField);
-        if (sortOrder.equalsIgnoreCase("desc")) {
-            sort = sort.descending();
-        } else {
-            sort = sort.ascending();
-        }
-        return sort;
+        List<EnumDay> days = schedules.getDays();
+        List<LocalDate> workingDays = generateWorkingDays(schedules.getSchedulesDayStart(),
+                schedules.getSchedulesDayEnd(), days);
+        List<LocalTime> workingHours = generateWorkingHours(
+                schedules.getSchedulesStart(),
+                schedules.getSchedulesStartRest(),
+                schedules.getSchedulesEndRest(),
+                schedules.getSchedulesEnd(),
+                schedules.getSchedulesDuration(),
+                schedules.getSchedulesRest());
     }
 
 
-
-    private List<LocalDate> generateWorkingDays(LocalDate schedulesDay,LocalDate schedulesDayEnd, List<EnumDay> daysToInclude) {
+    private List<LocalDate> generateWorkingDays(LocalDate schedulesDay, LocalDate schedulesDayEnd,
+            List<EnumDay> daysToInclude) {
         List<LocalDate> filteredDays = new ArrayList<>();
         LocalDate current = schedulesDay;
-
         Set<DayOfWeek> dayOfWeeksToInclude = new HashSet<>();
-
         for (EnumDay day : daysToInclude) {
             dayOfWeeksToInclude.add(DayOfWeek.valueOf(day.name()));
         }
@@ -95,12 +82,35 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> 
         return filteredDays;
     }
 
-    private static List<EnumDay> convertStringToEnumDayList(String daysString) {
-        // Divide la cadena en partes usando la coma como delimitador
-        String[] dayStrings = daysString.split(",");
-        return Arrays.stream(dayStrings)
-                .map(String::trim)
-                .map(EnumDay::valueOf)
-                .collect(Collectors.toList());
+    private List<LocalTime> generateWorkingHours(LocalTime start, LocalTime startRest,
+                                                     LocalTime endRest, LocalTime end, Integer duration, Integer rest) {
+        Integer totalTime = duration + rest;
+        List<LocalTime> workingHours = new ArrayList<>();
+
+        generateIntervals(workingHours,start,startRest,totalTime);
+        generateIntervals(workingHours,endRest,end,totalTime);
+
+        return workingHours;
     }
+
+    private Sort getSort(String sortField, String sortOrder) {
+        Sort sort = Sort.by(sortField);
+        if (sortOrder.equalsIgnoreCase("desc")) {
+            sort = sort.descending();
+        } else {
+            sort = sort.ascending();
+        }
+        return sort;
+    }
+
+    private static void generateIntervals(List<LocalTime> workingHours, LocalTime start, LocalTime end,
+            Integer duration) {
+        LocalTime current = start;
+
+        while (current.plusMinutes(duration).isBefore(end) || current.plusMinutes(duration).equals(end)) {
+            workingHours.add(current);
+            current = current.plusMinutes(duration);
+        }
+    }
+
 }

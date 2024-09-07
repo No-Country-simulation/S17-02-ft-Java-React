@@ -36,10 +36,10 @@ public class ScheduleConfig extends Auditable {
     @Column(name = "schedules_end", nullable = false)   
     private LocalTime schedulesEnd;
 
-    @Column(name = "schedules_start_rest")
+    @Column(name = "schedules_start_rest", nullable = false)
     private LocalTime schedulesStartRest;
 
-    @Column(name = "schedules_end_rest")
+    @Column(name = "schedules_end_rest", nullable = false)
     private LocalTime schedulesEndRest;
 
     @Column(name = "schedules_rest", nullable = false)
