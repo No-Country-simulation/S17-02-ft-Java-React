@@ -1,6 +1,8 @@
 package com.nocountry.telemedicina.dto.request;
 
+import com.nocountry.telemedicina.config.customValidate.ValidEnumDay;
 import com.nocountry.telemedicina.dto.response.SpecialistResponseDTO;
+import com.nocountry.telemedicina.models.enums.EnumDay;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +11,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,23 +20,24 @@ import java.time.LocalTime;
 public class SchedulesRequestDTO {
 
     @NotBlank
-    LocalDate schedulesDay;
+    private LocalDate schedulesDay;
+
 
     @NotBlank
-    Integer schedulesDuration;
+    private LocalTime schedulesStart;
 
     @NotBlank
-    LocalTime schedulesStart;
+    private LocalTime schedulesEnd;
 
     @NotBlank
-    LocalTime schedulesEnd;
+    private Integer schedulesDuration;
 
     @NotBlank
-    Integer schedulesRest;
+    private Integer schedulesRest;
 
     @NotBlank
-    Boolean schedulesRepeat;
+    private SpecialistResponseDTO specialist;
 
-    @NotBlank
-    SpecialistResponseDTO specialist;
+    @ValidEnumDay
+    private List<EnumDay> days;
 }
