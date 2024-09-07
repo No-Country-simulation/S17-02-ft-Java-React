@@ -6,6 +6,8 @@ import com.nocountry.telemedicina.dto.response.SpecialistResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Specialist;
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.ISpecialistService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,6 +19,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,8 +84,8 @@ public class SpecialistController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) } ),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody SpecialistRequestDTO dto){
-        Specialist obj = service.save(mapper.toSpecialist(dto));
+    public ResponseEntity<Void> save(@RequestBody SpecialistRequestDTO dto, @CurrentUser UserPrincipal user){
+        Specialist obj = service.save(mapper.toSpecialist(dto),user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getSpecialistId()).toUri();
         return ResponseEntity.created(location).build();
     }
@@ -108,31 +112,6 @@ public class SpecialistController {
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
-    /**
-     * Lists all specialist in a paginated manner.
-     *
-     * @param page the page number
-     * @param size the page size
-     * @return the list of specialist
-     */
-    @Operation(
-            summary = "Lista todos los Especialistas de forma paginada",
-            description = "Lista todos los especialistas inscritos en la aplicación",
-            tags = { })
-    @ApiResponses({
-            @ApiResponse(responseCode = "200",content= {@Content(schema = @Schema(implementation =SpecialistResponseDTO.class),mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    @GetMapping
-    public ResponseEntity<List<SpecialistResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-        try {
-
-            List<SpecialistResponseDTO> list = service.findAll(page,size).stream().map(p -> mapper.toSpecialistDTO(p)).collect(Collectors.toList());
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        }catch (Exception e) {
-            throw new RuntimeException("Error al obtener los especialistas", e);
-        }
-    }
 
     /**
      * Deletes a specialist by its ID.
@@ -173,8 +152,8 @@ public class SpecialistController {
             @ApiResponse(responseCode = "200",content= {@Content(array = @ArraySchema(schema = @Schema(implementation = SpecialistResponseDTO.class)),mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-    @GetMapping("/filtered")
-    public ResponseEntity<List<SpecialistResponseDTO>> findAllByFilters (
+    @GetMapping
+    public ResponseEntity<Page<SpecialistResponseDTO>> findAllByFilters (
             @RequestParam(required = false) String districtName,
             @RequestParam(required = false) String specialtyName,
             @RequestParam(required = false) String profileName,
@@ -185,7 +164,7 @@ public class SpecialistController {
             @RequestParam(required = false) Double maxPrice,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(required = false, defaultValue = "true") boolean isAscendant,
+            @RequestParam(required = false, defaultValue = "asc") String sortOrder,
             @Parameter(
                     in = ParameterIn.QUERY,
                     description = "Campo por el cual ordenar",
@@ -193,15 +172,16 @@ public class SpecialistController {
                     allowableValues = {"reputation", "price", "specialty", "location","clinic"}),
                     example = "reputation"
             )
-            @RequestParam(required = false, defaultValue = "reputation") String query ){
+            @RequestParam(required = false, defaultValue = "reputation") String sortField ){
         try {
             List<SpecialistResponseDTO> list = service
                     .getFilteredSpecialists(
                             districtName, specialtyName, profileName,
                             reputation, clinicName, clinicReputation,
-                            minPrice, maxPrice, page,size, isAscendant, query).stream()
+                            minPrice, maxPrice, page,size, sortOrder, sortField).stream()
                     .map(p -> mapper.toSpecialistDTO(p)).collect(Collectors.toList());
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            Page<SpecialistResponseDTO> listResponse = new PageImpl<>(list);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener los especialistas", e);
         }

@@ -22,7 +22,7 @@ public class OpenAPIConfig {
     private String appDescription;
     @Value("${application-version}")
     private String appVersion;
-    Contact contact = new Contact().name("s16-02-ft-java-react") .url("https://github.com/No-Country-simulation/S17-02-ft-Java-React");
+    Contact contact = new Contact().name("s17-02-ft-java-react") .url("https://github.com/No-Country-simulation/S17-02-ft-Java-React");
     License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
 
     private final Info customInfo = new Info().title("TeleMedicina")

@@ -68,7 +68,8 @@ public class SecurityConfig {
         private static final String[] OTHERS_ENDPOINTS_PUBLIC = {
                         "/api/specialist",
                         "/api/schedules",
-                        "/api/clinics"
+                        "/api/clinics",
+                        "/api/specialty"
         };
 
         /**
@@ -91,6 +92,18 @@ public class SecurityConfig {
                                                         "SPECIALIST");
                                         authConfig.requestMatchers("/api/profiles/**").hasAnyRole("USER", "ADMIN",
                                                         "SPECIALIST");
+                                        authConfig.requestMatchers("/api/specialist/**").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/bookings/**").hasAnyRole( "ADMIN","USER",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/schedules/**").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/payments/**").hasAnyRole( "ADMIN","USER",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinicalHistory-histories").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinical-records").hasAnyRole( "ADMIN",
+                                                "SPECIALIST");
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2

@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.models;
 
+import com.nocountry.telemedicina.models.enums.Week;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class Schedules extends Auditable {
     private Long schedulesId;
     @Column(name = "schedules_day", nullable = false)
     private LocalDate schedulesDay;
+    @Column(name = "schedules_day_end")
+    private LocalDate schedulesDayEnd;
     @Column(name = "schedules_duration", nullable = false)
     private Integer schedulesDuration;
     @Column(name = "schedules_start", nullable = false)
@@ -33,6 +36,11 @@ public class Schedules extends Auditable {
     private Integer schedulesRest;
     @Column(name = "schedules_repeat", nullable = false)
     private Boolean schedulesRepeat;
+
+    @ElementCollection
+    @CollectionTable(name = "weeks", joinColumns = @JoinColumn(name = "week_day"))
+    @Column(name = "week")
+    private List<Week>week;
 
     @ManyToOne
     @JoinColumn(name = "specialist_id",foreignKey = @ForeignKey(name = "FK_SCHEDULES_SPECIALIST"), nullable = false)

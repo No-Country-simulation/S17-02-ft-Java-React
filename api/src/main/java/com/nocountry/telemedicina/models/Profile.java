@@ -44,8 +44,8 @@ public class Profile extends Auditable {
     private String address;
 
     @ManyToOne
-    @JoinColumn(name = "district_id", foreignKey = @ForeignKey(name = "FK_PROFILES_DISTRICT"), nullable = false)
-    private District district;
+    @JoinColumn(name = "city_id", foreignKey = @ForeignKey(name = "FK_PROFILES_CITY"), nullable = false)
+    private City city;
 
     @OneToOne
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_PROFILE_USER"), nullable = false)

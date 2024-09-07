@@ -1,4 +1,5 @@
 package com.nocountry.telemedicina.dto.request;
+import com.nocountry.telemedicina.dto.response.RoleResponseDTO;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,5 @@ public class UserRequestDTO {
     private String password;
 
     @NotBlank
-    private List<RoleRequestDTO> roles;
+    private List<RoleResponseDTO> roles;
 }
