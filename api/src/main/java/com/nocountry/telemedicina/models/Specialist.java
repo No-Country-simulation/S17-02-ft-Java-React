@@ -43,7 +43,11 @@ public class Specialist extends Auditable {
 
     @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore
-    private List<Schedules> schedules;
+    private List<ScheduleConfig> schedulesConfig;
+
+    @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
+    private List<Schedule> schedules;
 
     @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore

@@ -2,7 +2,7 @@ package com.nocountry.telemedicina.config.mapper;
 
 import com.nocountry.telemedicina.dto.request.SchedulesRequestDTO;
 import com.nocountry.telemedicina.dto.response.SchedulesResponseDTO;
-import com.nocountry.telemedicina.models.Schedules;
+import com.nocountry.telemedicina.models.ScheduleConfig;
 import com.nocountry.telemedicina.models.enums.EnumDay;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface SchedulesMapper {
-    SchedulesMapper INSTANCE = Mappers.getMapper(SchedulesMapper.class);
+public interface SchedulesConfigMapper {
+    SchedulesConfigMapper INSTANCE = Mappers.getMapper(SchedulesConfigMapper.class);
     @Mapping(source = "specialist.specialistId", target = "specialistId")
     @Mapping(source = "specialist.profile.profileName",target = "specialistName")
-    SchedulesResponseDTO toSchedulesDTO(Schedules schedules);
+    SchedulesResponseDTO toSchedulesDTO(ScheduleConfig scheduleConfig);
     @Mapping(source = "specialist",target = "specialist")
     @Mapping(source = "specialist.days",target = "specialist.days",qualifiedByName = "convertDays")
-    Schedules toSchedules(SchedulesRequestDTO dto);
+    ScheduleConfig toSchedules(SchedulesRequestDTO dto);
 
     @Named("convertDays")
     default String convertDaysToString(List<EnumDay> days) {

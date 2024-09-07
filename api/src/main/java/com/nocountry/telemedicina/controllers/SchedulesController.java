@@ -1,11 +1,11 @@
 package com.nocountry.telemedicina.controllers;
 
-import com.nocountry.telemedicina.config.mapper.SchedulesMapper;
+import com.nocountry.telemedicina.config.mapper.SchedulesConfigMapper;
 import com.nocountry.telemedicina.dto.request.SchedulesRequestDTO;
 import com.nocountry.telemedicina.dto.response.SchedulesResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
-import com.nocountry.telemedicina.models.Schedules;
+import com.nocountry.telemedicina.models.ScheduleConfig;
 import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.ISchedulesService;
@@ -42,7 +42,7 @@ public class SchedulesController {
     private ISchedulesService service;
 
     @Autowired
-    private SchedulesMapper mapper;
+    private SchedulesConfigMapper mapper;
 
     /**
      * Finds a schedules by its ID.
@@ -59,7 +59,7 @@ public class SchedulesController {
     @GetMapping("/{id}")
     public ResponseEntity<SchedulesResponseDTO> findById(
             @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
-        Schedules obj = service.findById(id);
+        ScheduleConfig obj = service.findById(id);
         if (obj == null) {
             throw new NotAuthorizedException("ID NOT FOUND: " + id);
         } else {
@@ -81,7 +81,7 @@ public class SchedulesController {
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
     public ResponseEntity<Void> save(@Valid @RequestBody SchedulesRequestDTO dto, @CurrentUser UserPrincipal user) {
-        Schedules obj = service.save(mapper.toSchedules(dto), user);
+        ScheduleConfig obj = service.save(mapper.toSchedules(dto), user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(obj.getSchedulesId()).toUri();
         return ResponseEntity.created(location).build();
@@ -102,9 +102,9 @@ public class SchedulesController {
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Schedules> update(@RequestBody SchedulesRequestDTO dto,
-            @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
-        Schedules obj = service.updateById(id, mapper.toSchedules(dto));
+    public ResponseEntity<ScheduleConfig> update(@RequestBody SchedulesRequestDTO dto,
+                                                 @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
+        ScheduleConfig obj = service.updateById(id, mapper.toSchedules(dto));
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
@@ -150,7 +150,7 @@ public class SchedulesController {
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") @Parameter(example = "") Long id) {
-        Schedules obj = service.findById(id);
+        ScheduleConfig obj = service.findById(id);
         if (obj == null) {
             throw new NotFoundException("ID NOT FOUND: " + id);
         }

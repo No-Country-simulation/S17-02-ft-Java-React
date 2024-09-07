@@ -1,7 +1,6 @@
 package com.nocountry.telemedicina.models;
 
 import com.nocountry.telemedicina.models.enums.EnumDay;
-import com.nocountry.telemedicina.models.enums.Week;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,12 +19,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "schedules")
-public class Schedules extends Auditable {
+@Table(name = "schedules_config")
+public class ScheduleConfig extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedules_id", nullable = false)
-    private Long schedulesId;
+    private Long schedulesConfigId;
     @Column(name = "schedules_day", nullable = false)
     private LocalDate schedulesDay;
     @Column(name = "schedules_day_end")
@@ -41,7 +40,12 @@ public class Schedules extends Auditable {
 
     @Column(name = "days")
     private String days;
+    @ManyToOne
+    @JoinColumn(name = "specialist_id",foreignKey = @ForeignKey(name = "FK_SCHEDULES_SPECIALIST"), nullable = false)
+    private Specialist specialist;
 
+    @OneToMany(mappedBy = "schedules",cascade = {CascadeType.ALL},orphanRemoval = true)
+    private List<Booking> bookings;
 
     public List<EnumDay> getDays() {
         if (this.days == null || this.days.isEmpty()) {
