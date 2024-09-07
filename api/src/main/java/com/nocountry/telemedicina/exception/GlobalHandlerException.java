@@ -73,6 +73,13 @@ public class GlobalHandlerException {
                 ex.getMessage());
         return ResponseEntity.status(errorResponse.getStatusCode()).body(errorResponse);
     }
+    @ExceptionHandler(CustomException.class)
+    public ResponseEntity<ErrorResponse> invalidCredentialsException(CustomException ex,
+            WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(request.getDescription(false), ex.getStatusCode(),
+                ex.getMessage());
+        return ResponseEntity.status(errorResponse.getStatusCode()).body(errorResponse);
+    }
 
     @ExceptionHandler(OAuth2AuthenticationProcessingException.class)
     public ResponseEntity<ErrorResponse> oAuth2AuthenticationProcessingException(

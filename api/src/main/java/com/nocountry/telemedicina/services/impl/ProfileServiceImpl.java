@@ -1,5 +1,7 @@
 package com.nocountry.telemedicina.services.impl;
 
+import com.nocountry.telemedicina.exception.CustomException;
+import com.nocountry.telemedicina.exception.InternalServerException;
 import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Profile;
 import com.nocountry.telemedicina.models.User;
@@ -28,8 +30,6 @@ public class ProfileServiceImpl extends CRUDServiceImpl<Profile, UUID> implement
         return repo;
     }
 
-
-
     @Override
     @Transactional
     public Boolean updateAvatar(UUID userId, String result) {
@@ -39,12 +39,26 @@ public class ProfileServiceImpl extends CRUDServiceImpl<Profile, UUID> implement
         repo.save(profile);
         return true;
     }
-
+    @Transactional
     @Override
     public Profile save(Profile profile, UserPrincipal user) {
-        User userNew = userRepo.findById(user.getId()).orElseThrow();
+        User userNew = userRepo.findById(user.getId()).orElseThrow(() -> new NotFoundException(String.format("Perfil no encontrado con el id: %s",user.getId())));
         profile.setUser(userNew);
         return repo.save(profile);
+    }
+
+    @Transactional
+    @Override
+    public Profile updateById(UUID userId, Profile profile) {
+       try {
+           Profile profile1 =  repo.findByUserId(userId).orElseThrow(() -> new NotFoundException(String.format("Perfil no encontrado con el id: %s",userId)));
+           profile.setProfileId(profile1.getProfileId());
+           repo.save(profile);
+           return profile;
+       }catch (Exception ex) {
+           // en caso de un error al persistir la data o al buscarla en la db enviar un custom exception
+           throw new CustomException(500,ex.getMessage());
+       }
     }
 
     @Override

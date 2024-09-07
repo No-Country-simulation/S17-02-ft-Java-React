@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.services.impl;
 
+import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Auditable;
 import com.nocountry.telemedicina.repository.IGenericRepo;
 import com.nocountry.telemedicina.services.ICRUDService;
@@ -21,16 +22,13 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
         if(!t.getActive()) {
             t.setActive(true);
         }
-        t.setCreatedAt(LocalDateTime.now());
-        // Function for set user who created
-        //t.setCreateBy();
         return getRepo().save(t);
     }
 
     @Transactional
     @Override
     public T updateById(ID id, T t) {
-        T old_t = getRepo().findById(id).orElseThrow();
+        T old_t = getRepo().findById(id).orElseThrow(() -> new NotFoundException(String.format("Data no encontrada con el id: %s",id)) );
         old_t = t;
         if(t.getActive()){
             old_t.setUpdatedAt(LocalDateTime.now());
@@ -54,7 +52,7 @@ public abstract class CRUDServiceImpl<T extends Auditable,ID> implements ICRUDSe
     @Transactional
     @Override
     public void deleteById(ID id) {
-        T t = getRepo().findById(id).orElseThrow();
+        T t = getRepo().findById(id).orElseThrow(() -> new NotFoundException(String.format("Data no encontrada con el id: %s",id)));
         if(t.getActive()) {
             t.setActive(false);
         }

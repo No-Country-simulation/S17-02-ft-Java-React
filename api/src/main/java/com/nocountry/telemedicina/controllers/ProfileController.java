@@ -77,11 +77,11 @@ public class ProfileController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user) {
+    public ResponseEntity<Profile> save(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user) {
         Profile obj = service.save(mapper.toProfile(dto),user);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getProfileId())
                 .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(201).body(obj);
     }
 
     /**
@@ -98,10 +98,15 @@ public class ProfileController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,
-            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
-        Profile obj = service.updateById(id, mapper.toProfile(dto));
+//    @PutMapping("/update/{id}")
+//    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,
+//            @PathVariable("id") @Parameter(name = "id", description = "ID del Perfil", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
+//        Profile obj = service.updateById(id, mapper.toProfile(dto));
+//        return new ResponseEntity<>(obj, HttpStatus.OK);
+//    }
+    @PutMapping("/update/")
+    public ResponseEntity<Profile> update(@RequestBody ProfileRequestDTO dto,@CurrentUser UserPrincipal user ) {
+        Profile obj = service.updateById(user.getId(), mapper.toProfile(dto));
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 

@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CustomException extends RuntimeException {
     private Integer statusCode;
+    private String message;
 }
