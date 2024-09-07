@@ -45,7 +45,7 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, Long> imple
         return repo.findAllByUserId(user.getId(), pageable);
     }
 
-    @Override
+/*    @Override
     public List<Schedules> saveAll(Schedules schedules) {
         long dias = ChronoUnit.DAYS.between(schedules.getSchedulesDay(), schedules.getSchedulesDayEnd());
         LocalDate diaActual = schedules.getSchedulesDay();
@@ -59,7 +59,7 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<Schedules, Long> imple
 
         return List.of();
     }
-
+*/
     private Sort getSort(String sortField, String sortOrder) {
         Sort sort = Sort.by(sortField);
         if (sortOrder.equalsIgnoreCase("desc")) {
