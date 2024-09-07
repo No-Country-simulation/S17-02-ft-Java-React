@@ -40,6 +40,7 @@ public class Schedules extends Auditable {
     @ElementCollection
     @CollectionTable(name = "weeks", joinColumns = @JoinColumn(name = "week_day"))
     @Column(name = "week")
+    @Enumerated(EnumType.STRING)
     private List<Week>week;
 
     @ManyToOne
