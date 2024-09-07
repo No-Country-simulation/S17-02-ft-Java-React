@@ -14,19 +14,27 @@ const FormField: React.FC<{
   onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => void;
   error?: string;
 }> = ({ name, type, value, onChange, onBlur, error }) => (
-  <label>
-    {name}:
-    <input
-      type={type}
-      id={name}
-      name={name}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      aria-required="true"
-    />
+  <div style={{ marginBottom: "1em" }}>
+    <label style={{ display: "block", marginBottom: "0.5em" }}>
+      {name}:
+      <input
+        type={type}
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        aria-required="true"
+        style={{
+          display: "block",
+          width: "100%",
+          padding: "0.5em",
+          boxSizing: "border-box",
+        }}
+      />
+    </label>
     {error && <div style={{ color: "red", marginTop: "0.5em" }}>{error}</div>}
-  </label>
+  </div>
 );
 
 const validationSchema = Yup.object({
@@ -72,7 +80,7 @@ const loginUser = async (username: string, password: string) => {
 
 export const RegisterEspecialist: React.FC = () => {
   const navigate = useNavigate();
-  const { setToken, setRole, setRoleId } = useAuth();
+  const { setToken, setRole, setRoleId, setUsername, setPassword } = useAuth();
   const roleId = "9c765b7d-9eec-421b-85c6-6d53bcd002da";
 
   const formik = useFormik({
@@ -101,7 +109,8 @@ export const RegisterEspecialist: React.FC = () => {
         setToken(token);
         setRole(role);
         setRoleId(roleId);
-        console.log("Role ID guardado en el contexto:", roleId);
+        setUsername(values.username);
+        setPassword(values.password);
 
         Swal.fire({
           icon: "success",
@@ -109,7 +118,7 @@ export const RegisterEspecialist: React.FC = () => {
           text: "El usuario ha sido registrado y se ha iniciado sesión correctamente.",
         });
         formik.resetForm();
-        navigate("/");
+        navigate("/profilesesion");
       } catch (error) {
         handleError(error, "Error Inesperado");
       }
@@ -120,12 +129,15 @@ export const RegisterEspecialist: React.FC = () => {
     formik;
 
   return (
-    <div>
-      <nav>
+    <div style={{ maxWidth: "500px", margin: "0 auto", padding: "1em" }}>
+      <nav style={{ marginBottom: "1em" }}>
         <Link to="/">Cerrar</Link>
       </nav>
 
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column" }}
+      >
         <h2>Registro de Profesionales</h2>
 
         <FormField
@@ -155,7 +167,19 @@ export const RegisterEspecialist: React.FC = () => {
           error={touched.confirmPassword ? errors.confirmPassword : undefined}
         />
 
-        <button type="submit">Registrar Profesional</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#6c757d",
+            color: "#fff",
+            border: "none",
+            padding: "0.5em 1em",
+            cursor: "pointer",
+            marginTop: "1em",
+          }}
+        >
+          Registrar Profesional
+        </button>
       </form>
     </div>
   );
