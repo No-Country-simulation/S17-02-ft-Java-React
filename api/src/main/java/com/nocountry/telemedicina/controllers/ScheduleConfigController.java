@@ -8,7 +8,8 @@ import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.ScheduleConfig;
 import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
-import com.nocountry.telemedicina.services.ISchedulesService;
+import com.nocountry.telemedicina.services.ISchedulesConfigService;
+import com.nocountry.telemedicina.services.ISchedulesConfigService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,13 +32,13 @@ import java.util.stream.Collectors;
 /**
  * SchedulesController class handles all the operations related to schedules.
  */
-@Tag(name = "API de Turnos de Atención", description = "Se puede crear,buscar,eliminar y actualizar turnos de atención")
+@Tag(name = "API de Configuracion de horarios", description = "Se puede crear, buscar o eliminar las configuraciones")
 @RestController
 @RequestMapping("/api/schedules")
-public class SchedulesController {
+public class ScheduleConfigController {
 
         @Autowired
-        private ISchedulesService service;
+        private ISchedulesConfigService service;
 
         @Autowired
         private SchedulesConfigMapper mapper;

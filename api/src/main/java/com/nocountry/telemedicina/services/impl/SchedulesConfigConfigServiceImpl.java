@@ -12,12 +12,11 @@ import com.nocountry.telemedicina.repository.IScheduleConfigRepo;
 import com.nocountry.telemedicina.repository.IScheduleRepo;
 import com.nocountry.telemedicina.repository.ISpecialistRepo;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
-import com.nocountry.telemedicina.services.ISchedulesService;
+import com.nocountry.telemedicina.services.ISchedulesConfigService;
 
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +29,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Service
-public class SchedulesServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> implements ISchedulesService {
+public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> implements ISchedulesConfigService {
 
     @Autowired
     private IScheduleConfigRepo scheduleConfigRepository;
