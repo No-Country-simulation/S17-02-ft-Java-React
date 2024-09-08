@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
@@ -69,6 +70,7 @@ public class SecurityConfig {
         private static final String[] OTHERS_ENDPOINTS_PUBLIC = {
                         "/api/specialist",
                         "/api/schedules",
+                        "/api/schedule/**",
                         "/api/clinics",
                         "/api/specialty"
         };
@@ -84,7 +86,7 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                                .csrf(crsf -> crsf.disable())
+                                .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(authConfig -> {
                                         authConfig.requestMatchers(AUTH_ENDPOINTS_PUBLIC).permitAll();
                                         authConfig.requestMatchers(HttpMethod.GET, OTHERS_ENDPOINTS_PUBLIC).permitAll();
@@ -93,18 +95,20 @@ public class SecurityConfig {
                                                         "SPECIALIST");
                                         authConfig.requestMatchers("/api/profiles/**").hasAnyRole("USER", "ADMIN",
                                                         "SPECIALIST");
-                                        authConfig.requestMatchers("/api/specialist/**").hasAnyRole( "ADMIN",
-                                                "SPECIALIST");
-                                        authConfig.requestMatchers("/api/bookings/**").hasAnyRole( "ADMIN","USER",
-                                                "SPECIALIST");
-                                        authConfig.requestMatchers("/api/schedules/**").hasAnyRole( "ADMIN",
-                                                "SPECIALIST");
-                                        authConfig.requestMatchers("/api/payments/**").hasAnyRole( "ADMIN","USER",
-                                                "SPECIALIST");
-                                        authConfig.requestMatchers("/api/clinicalHistory-histories").hasAnyRole( "ADMIN",
-                                                "SPECIALIST");
-                                        authConfig.requestMatchers("/api/clinical-records").hasAnyRole( "ADMIN",
-                                                "SPECIALIST");
+                                        authConfig.requestMatchers("/api/specialist/**").hasAnyRole("ADMIN",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/bookings/**").hasAnyRole("ADMIN", "USER",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/schedules/**").hasAnyRole("ADMIN",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/schedule/**").hasAnyRole("ADMIN",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/payments/**").hasAnyRole("ADMIN", "USER",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinicalHistory-histories").hasAnyRole("ADMIN",
+                                                        "SPECIALIST");
+                                        authConfig.requestMatchers("/api/clinical-records").hasAnyRole("ADMIN",
+                                                        "SPECIALIST");
                                         authConfig.anyRequest().denyAll();
                                 })
                                 .oauth2Login(oauth2 -> oauth2
