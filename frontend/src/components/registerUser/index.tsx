@@ -1,58 +1,16 @@
 import React, { useCallback } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { validationSchema } from "./validation";
+import { loginUser } from "./loginUser";
+import { isValidUUID } from "../registerUser/validation/uuidUtils";
+import { handleError } from "./handleError";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import FormInput from "./formInput";
 import { useAuth } from "../../context/context";
 
-const validationSchema = Yup.object({
-  email: Yup.string()
-    .email("Debe ser un correo electrónico válido")
-    .required("El correo electrónico es obligatorio"),
-  password: Yup.string()
-    .min(8, "La contraseña debe tener al menos 8 caracteres")
-    .matches(/[a-zA-Z]/, "La contraseña debe contener letras")
-    .matches(/[0-9]/, "La contraseña debe contener números")
-    .required("La contraseña es obligatoria"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Las contraseñas deben coincidir")
-    .required("La confirmación de la contraseña es obligatoria"),
-});
-
-const handleError = (error: any, defaultMessage: string) => {
-  let errorTitle = defaultMessage;
-  if (axios.isAxiosError(error)) {
-    errorTitle = "Error al Registrar";
-  }
-  Swal.fire({
-    icon: "error",
-    title: errorTitle,
-    text: "",
-  });
-};
-
-const isValidUUID = (uuid: string): boolean => {
-  const regex =
-    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-  return regex.test(uuid);
-};
-
 const roleId = "2326ec2c-4f97-4007-b52c-ba5561b434b9";
-
-const loginUser = async (username: string, password: string) => {
-  try {
-    const response = await axios.post("/api/auth/login", {
-      username,
-      password,
-    });
-    return { token: response.data.token, role: response.data.roleId };
-  } catch (err) {
-    handleError(err, "Error al Iniciar Sesión");
-    throw err;
-  }
-};
 
 export const RegisterUser: React.FC = () => {
   const navigate = useNavigate();
@@ -87,7 +45,6 @@ export const RegisterUser: React.FC = () => {
           setToken(token);
           setRole(role);
           setRoleId(roleId);
-          console.log("Role ID guardado en el contexto:", roleId);
         }
 
         await Swal.fire({
@@ -115,9 +72,9 @@ export const RegisterUser: React.FC = () => {
       <nav>
         <Link to="/">Cerrar</Link>
       </nav>
-      <h2>Registro de Pacientes</h2>
+      <h2>Bienvenido</h2>
 
-      {formik.errors.email ||
+      {/* {formik.errors.email ||
       formik.errors.password ||
       formik.errors.confirmPassword ? (
         <ul>
@@ -127,7 +84,7 @@ export const RegisterUser: React.FC = () => {
             <li>{formik.errors.confirmPassword}</li>
           )}
         </ul>
-      ) : null}
+      ) : null} */}
 
       <form onSubmit={formik.handleSubmit}>
         <FormInput
@@ -161,9 +118,11 @@ export const RegisterUser: React.FC = () => {
               : undefined
           }
         />
-        <button className="btn btn-secondary" type="submit">
-          Regístrar Paciente
+        <div className="button-container">
+        <button className="btn-register-user" type="submit">
+          Continuar
         </button>
+        </div>
       </form>
     </div>
   );

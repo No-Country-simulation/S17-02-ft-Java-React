@@ -32,7 +32,7 @@ const NavBar = () => {
               </Link>
               <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
                 <Link to="/registeruser">
-                  <button className="btn-navbar-pct">Registro pacientes</button>
+                  <button className="btn-navbar-pct" type="button" data-toggle="modal" data-target="#patient-register">Registro pacientes</button>
                 </Link>
                 <Link to="/login">
                   <button className="btn-navbar-prof">Login</button>

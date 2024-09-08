@@ -20,18 +20,18 @@ const FormInput: React.FC<FormInputProps> = ({
   error,
 }) => {
   return (
-    <div>
-      <label htmlFor={id}>{name}:</label>
+    <div className="input-container">
       <input
-        className="input-register"
+        className={error? "input-register-error":"input-register-pct"}
         type={type}
         id={id}
         name={id}
         value={value}
         onChange={onChange}
         onBlur={onBlur} // Aplicado
+        placeholder={name}
       />
-      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+      {error && <div className="error-message-pct">{error}</div>}{" "}
       {/* Opcional: Estilo de error */}
     </div>
   );
