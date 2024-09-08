@@ -1,6 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx"; // Ajusta la ruta según sea necesario
+import InputField from "../profileSesion/inputField";
+import FileInputWithPreview from "../profileSesion/fileInput";
+import FormButtons from "../profileSesion/formButtons";
 
 interface FormData {
   nombre: string;
@@ -13,13 +16,7 @@ interface FormData {
 }
 
 const Formulario: React.FC = () => {
-  const { token, roleId, username, password } = useAuth(); // Obtén roleId, token, username y password del contexto
-
-  // Muestra los valores en la consola para verificación
-  console.log("Token:", token);
-  console.log("Username:", username);
-  console.log("Password:", password);
-
+  const { token, roleId, username, password } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
     apellido: "",
@@ -30,7 +27,7 @@ const Formulario: React.FC = () => {
     ciudad: "",
   });
 
-  const navigate = useNavigate(); // Hook para la navegación
+  const navigate = useNavigate();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,31 +54,15 @@ const Formulario: React.FC = () => {
       return;
     }
 
-    // Construye el cuerpo de la solicitud según el formato proporcionado
     const requestBody = {
       profileName: formData.nombre,
       profileLastname: formData.apellido,
       documentType: formData.tipoDocumento,
-      documentNumber: "", // Puedes agregar un campo en el formulario si es necesario
-      avatarUrl: formData.imagen || "", // Utiliza la URL de la imagen o una cadena vacía
+      avatarUrl: formData.imagen || "",
       birth: formData.fechaNacimiento,
       address: formData.direccion,
-      city: {
-        cityId: 0, // Ajusta según sea necesario
-        cityName: formData.ciudad,
-      },
-      user: {
-        userId: roleId,
-        username: username,
-        password: password,
-        roles: [
-          {
-            roleId,
-            roleName: "", // Puedes agregar un campo en el formulario si es necesario
-            roleDescription: "", // Puedes agregar un campo en el formulario si es necesario
-          },
-        ],
-      },
+      city: { cityId: 0, cityName: formData.ciudad },
+      user: { userId: roleId, username, password, roles: [{ roleId }] },
     };
 
     try {
@@ -89,99 +70,41 @@ const Formulario: React.FC = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Incluye el token en el encabezado
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) {
-        throw new Error("Error en la solicitud");
-      }
+      if (!response.ok) throw new Error("Error en la solicitud");
 
       const data = await response.json();
-      console.log("Perfil creado con éxito:", data); // Muestra la respuesta del servidor en la consola
-      navigate("/"); // Redirige a la ruta principal después de enviar el formulario
+      console.log("Perfil creado con éxito:", data);
+      navigate("/");
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
     }
   };
 
   const handleSkip = () => {
-    navigate("/"); // Redirige a la ruta principal
+    navigate("/");
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nombre:</label>
-        <input
-          type="text"
-          name="nombre"
-          value={formData.nombre}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Apellido:</label>
-        <input
-          type="text"
-          name="apellido"
-          value={formData.apellido}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Tipo de Documento:</label>
-        <input
-          type="text"
-          name="tipoDocumento"
-          value={formData.tipoDocumento}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Imagen:</label>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        {formData.imagen && (
-          <img
-            src={formData.imagen}
-            alt="Vista previa"
-            style={{ width: "100px", height: "100px" }}
-          />
-        )}
-      </div>
-      <div>
-        <label>Fecha de Nacimiento:</label>
-        <input
-          type="date"
-          name="fechaNacimiento"
-          value={formData.fechaNacimiento}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Dirección:</label>
-        <input
-          type="text"
-          name="direccion"
-          value={formData.direccion}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Ciudad:</label>
-        <input
-          type="text"
-          name="ciudad"
-          value={formData.ciudad}
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit">Guardar</button>
-      <button type="button" onClick={handleSkip}>
-        Omitir
-      </button>
+   <>
+   <form onSubmit={handleSubmit} className="form-profile">
+      <h3>Información personal</h3>
+      <InputField label="Nombre" type="text" name="nombre" value={formData.nombre} onChange={handleChange} />
+      <InputField label="Apellido" type="text" name="apellido" value={formData.apellido} onChange={handleChange} />
+      <InputField label="Tipo de Documento" type="text" name="tipoDocumento" value={formData.tipoDocumento} onChange={handleChange} />
+      <FileInputWithPreview onFileChange={handleFileChange} imageUrl={formData.imagen} />
+      <InputField label="Fecha de Nacimiento" type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} />
+      <InputField label="Dirección" type="text" name="direccion" value={formData.direccion} onChange={handleChange} />
+      <InputField label="Ciudad" type="text" name="ciudad" value={formData.ciudad} onChange={handleChange} />
     </form>
+      <div className="container-fluid form-buttons-cont">
+      <FormButtons onSkip={handleSkip} />
+      </div>
+   </>
   );
 };
 
