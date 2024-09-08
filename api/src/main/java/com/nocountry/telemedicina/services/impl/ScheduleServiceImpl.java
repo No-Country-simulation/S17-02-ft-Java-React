@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.nocountry.telemedicina.exception.CustomException;
+import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Schedule;
 import com.nocountry.telemedicina.repository.IScheduleRepo;
 import com.nocountry.telemedicina.services.IScheduleService;
@@ -40,6 +41,12 @@ public class ScheduleServiceImpl implements IScheduleService {
 
             throw new CustomException(500, e.getMessage());
         }
+    }
+
+    @Override
+    public Schedule findScheduleById(UUID scheduleId) {
+        return scheduleRepo.findById(scheduleId)
+                .orElseThrow(() -> new NotFoundException(String.format("Schedule with id: %s, not found", scheduleId)));
     }
 
 }

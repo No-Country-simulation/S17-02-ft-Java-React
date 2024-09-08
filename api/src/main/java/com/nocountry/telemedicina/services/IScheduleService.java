@@ -11,4 +11,5 @@ public interface IScheduleService {
 
     List<Schedule> findSchedulesBySpecialist(UUID specialistId);
 
+    Schedule findScheduleById(UUID scheduleId);
 }

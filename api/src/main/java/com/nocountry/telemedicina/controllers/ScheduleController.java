@@ -25,7 +25,7 @@ public class ScheduleController {
     @Autowired
     IScheduleService scheduleService;
 
-    @GetMapping
+    @GetMapping("/date")
     public ResponseEntity<List<Schedule>> findschedulesByDate(
             @RequestParam(name = "day", required = true) LocalDate day,
             @RequestParam("specialistId") UUID specialistId) {
@@ -35,13 +35,20 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedules);
     }
 
-    @GetMapping
+    @GetMapping("/specialist")
     public ResponseEntity<List<Schedule>> findschedulesBySpecialistId(
             @RequestParam("specialistId") UUID specialistId) {
 
         List<Schedule> schedules = scheduleService.findSchedulesBySpecialist(specialistId);
 
         return ResponseEntity.ok().body(schedules);
+    }
+
+    @GetMapping("/schedule-id")
+    public ResponseEntity<Schedule> getMethodName(@RequestParam("scheduleId") UUID scheduleId) {
+
+        Schedule schedule = scheduleService.findScheduleById(scheduleId);
+        return ResponseEntity.ok().body(schedule);
     }
 
 }
