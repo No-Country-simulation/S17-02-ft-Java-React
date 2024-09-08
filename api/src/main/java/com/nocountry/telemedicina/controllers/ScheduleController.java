@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.controllers;
 
+import com.nocountry.telemedicina.dto.response.ScheduleResponseDTO;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,28 +27,28 @@ public class ScheduleController {
     IScheduleService scheduleService;
 
     @GetMapping("/date")
-    public ResponseEntity<List<Schedule>> findschedulesByDate(
+    public ResponseEntity<List<ScheduleResponseDTO>> findschedulesByDate(
             @RequestParam(name = "day", required = true) LocalDate day,
             @RequestParam("specialistId") UUID specialistId) {
 
-        List<Schedule> schedules = scheduleService.findSchedulesByDate(day, specialistId);
+        List<ScheduleResponseDTO> schedules = scheduleService.findSchedulesByDate(day, specialistId);
 
         return ResponseEntity.ok().body(schedules);
     }
 
     @GetMapping("/specialist")
-    public ResponseEntity<List<Schedule>> findschedulesBySpecialistId(
+    public ResponseEntity<List<ScheduleResponseDTO>> findschedulesBySpecialistId(
             @RequestParam("specialistId") UUID specialistId) {
 
-        List<Schedule> schedules = scheduleService.findSchedulesBySpecialist(specialistId);
+        List<ScheduleResponseDTO> schedules = scheduleService.findSchedulesBySpecialist(specialistId);
 
         return ResponseEntity.ok().body(schedules);
     }
 
     @GetMapping("/schedule-id")
-    public ResponseEntity<Schedule> getMethodName(@RequestParam("scheduleId") UUID scheduleId) {
+    public ResponseEntity<ScheduleResponseDTO> getMethodName(@RequestParam("scheduleId") UUID scheduleId) {
 
-        Schedule schedule = scheduleService.findScheduleById(scheduleId);
+        ScheduleResponseDTO schedule = scheduleService.findScheduleById(scheduleId);
         return ResponseEntity.ok().body(schedule);
     }
 

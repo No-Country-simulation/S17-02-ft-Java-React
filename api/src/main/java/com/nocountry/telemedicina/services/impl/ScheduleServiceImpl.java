@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
+import com.nocountry.telemedicina.config.mapper.ScheduleMapper;
+import com.nocountry.telemedicina.dto.response.ScheduleResponseDTO;
 import org.springframework.stereotype.Service;
 
 import com.nocountry.telemedicina.exception.CustomException;
@@ -18,35 +20,38 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     IScheduleRepo scheduleRepo;
 
-    public ScheduleServiceImpl(IScheduleRepo scheduleRepo) {
+    ScheduleMapper scheduleMapper;
+
+    public ScheduleServiceImpl(IScheduleRepo scheduleRepo, ScheduleMapper scheduleMapper) {
         this.scheduleRepo = scheduleRepo;
+        this.scheduleMapper = scheduleMapper;
     }
 
     @Override
-    public List<Schedule> findSchedulesByDate(LocalDate date, UUID specialistId) {
+    public List<ScheduleResponseDTO> findSchedulesByDate(LocalDate date, UUID specialistId) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = date.format(formatter);
         try {
-            return scheduleRepo.findSchedulesByDate(formattedDate, specialistId);
+            return scheduleMapper.toScheduleResponseDTOList(scheduleRepo.findSchedulesByDate(formattedDate, specialistId));
         } catch (Exception e) {
             throw new CustomException(500, e.getMessage());
         }
     }
 
     @Override
-    public List<Schedule> findSchedulesBySpecialist(UUID specialistId) {
+    public List<ScheduleResponseDTO> findSchedulesBySpecialist(UUID specialistId) {
         try {
-            return scheduleRepo.findSchedulesBySpecialistId(specialistId);
+            return scheduleMapper.toScheduleResponseDTOList(scheduleRepo.findSchedulesBySpecialistId(specialistId));
         } catch (Exception e) {
-
             throw new CustomException(500, e.getMessage());
         }
     }
 
     @Override
-    public Schedule findScheduleById(UUID scheduleId) {
-        return scheduleRepo.findById(scheduleId)
+    public ScheduleResponseDTO findScheduleById(UUID scheduleId) {
+        Schedule schedule =  scheduleRepo.findById(scheduleId)
                 .orElseThrow(() -> new NotFoundException(String.format("Schedule with id: %s, not found", scheduleId)));
+        return scheduleMapper.toScheduleResponseDTO(schedule);
     }
 
 }
