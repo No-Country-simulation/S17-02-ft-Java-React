@@ -34,6 +34,7 @@ public class Schedule extends Auditable {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
+    @ManyToOne
     @JoinColumn(name = "specialist_id", foreignKey = @ForeignKey(name = "FK_SCHEDULE_SPECIALIST"), nullable = false)
     private Specialist specialist;
 
