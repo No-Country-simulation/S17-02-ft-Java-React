@@ -29,10 +29,8 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     public List<ScheduleResponseDTO> findSchedulesByDate(LocalDate date, UUID specialistId) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = date.format(formatter);
         try {
-            return scheduleMapper.toScheduleResponseDTOList(scheduleRepo.findSchedulesByDate(formattedDate, specialistId));
+            return scheduleMapper.toScheduleResponseDTOList(scheduleRepo.findSchedulesByDate(date, specialistId));
         } catch (Exception e) {
             throw new CustomException(500, e.getMessage());
         }
