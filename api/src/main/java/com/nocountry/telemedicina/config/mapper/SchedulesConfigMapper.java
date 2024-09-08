@@ -1,7 +1,7 @@
 package com.nocountry.telemedicina.config.mapper;
 
 import com.nocountry.telemedicina.dto.request.SchedulesRequestDTO;
-import com.nocountry.telemedicina.dto.response.SchedulesResponseDTO;
+import com.nocountry.telemedicina.dto.response.SchedulesConfigResponseDTO;
 import com.nocountry.telemedicina.models.ScheduleConfig;
 import com.nocountry.telemedicina.models.enums.EnumDay;
 import org.mapstruct.Mapper;
@@ -17,9 +17,11 @@ public interface SchedulesConfigMapper {
     SchedulesConfigMapper INSTANCE = Mappers.getMapper(SchedulesConfigMapper.class);
     @Mapping(source = "specialist.specialistId", target = "specialistId")
     @Mapping(source = "specialist.profile.profileName",target = "specialistName")
-    SchedulesResponseDTO toSchedulesDTO(ScheduleConfig scheduleConfig);
-    @Mapping(source = "specialist",target = "specialist")
-    @Mapping(source = "specialist.days",target = "specialist.days",qualifiedByName = "convertDays")
+    SchedulesConfigResponseDTO toSchedulesDTO(ScheduleConfig scheduleConfig);
+
+
+
+    @Mapping(source = "days",target = "days",qualifiedByName = "convertDays")
     ScheduleConfig toSchedules(SchedulesRequestDTO dto);
 
     @Named("convertDays")

@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.services.impl;
 
+import com.nocountry.telemedicina.exception.BadRequestException;
 import com.nocountry.telemedicina.exception.CustomException;
 import com.nocountry.telemedicina.exception.NotFoundException;
 import com.nocountry.telemedicina.models.Schedule;
@@ -12,6 +13,9 @@ import com.nocountry.telemedicina.repository.IScheduleRepo;
 import com.nocountry.telemedicina.repository.ISpecialistRepo;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import com.nocountry.telemedicina.services.ISchedulesService;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
@@ -43,52 +47,76 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> 
     }
 
     @Override
-    public ScheduleConfig save(ScheduleConfig scheduleConfig, UserPrincipal user) {
-        Specialist specialist = specialistRepo.findByUserId(user.getId()).orElseThrow(() -> new NotFoundException(String.format("Specialist not found with id: %s",user.getId())));
-        try{
-            scheduleConfig.setSpecialist(specialist);
-            return scheduleConfigRepository.save(scheduleConfig);
-        }catch (Exception exception) {
-            throw new CustomException(500,exception.getMessage());
-        }
-    }
-
-    @Override
     public Page<ScheduleConfig> findAllByUserId(UserPrincipal user, int page, int size, String sortField,
             String sortOrder) {
         Pageable pageable = PageRequest.of(page, size, getSort(sortField, sortOrder));
         return scheduleConfigRepository.findAllByUserId(user.getId(), pageable);
     }
 
+    @Transactional
     @Override
-    public void createSchedules(ScheduleConfig schedules,UUID userId) {
-        int totalTime = schedules.getSchedulesDuration() + schedules.getSchedulesRest();
-        Specialist specialist = specialistRepo.findByUserId(userId).orElseThrow(() -> new NotFoundException(String.format("Specialist not found with id: %s",userId)));
-        Set<LocalDate> workingDays = generateWorkingDays(schedules.getSchedulesDayStart(),
-                schedules.getSchedulesDayEnd(), schedules.getDays());
-        Set<LocalTime> workingHours = generateWorkingHours(
-                schedules.getSchedulesStart(),
-                schedules.getSchedulesStartRest(),
-                schedules.getSchedulesEndRest(),
-                schedules.getSchedulesEnd(),
-                schedules.getSchedulesDuration(),
-                schedules.getSchedulesRest());
-
-        for(LocalDate day : workingDays) {
-            for(LocalTime hour: workingHours) {
-                Schedule schedule = new Schedule();
-                schedule.setDate(day);
-                schedule.setActive(true);
-                schedule.setCreateBy(userId);
-                schedule.setSpecialist(specialist);
-                schedule.setStartTime(hour);
-                schedule.setEndTime(hour.plusMinutes(totalTime));
+    public ScheduleConfig save(ScheduleConfig scheduleConfig, UserPrincipal user) {
+        Specialist specialist = specialistRepo.findByUserId(user.getId()).orElseThrow(
+                () -> new NotFoundException(String.format("Specialist not found with id: %s", user.getId())));
+        Optional<ScheduleConfig> scheduleActiveOptional = scheduleConfigRepository
+                .findActiveBySpecialistId(specialist.getSpecialistId());
+        if (scheduleActiveOptional.isPresent()) {
+            ScheduleConfig scheduleActived = scheduleActiveOptional.get();
+            if (scheduleActived.getSchedulesDayEnd().isAfter(LocalDate.now())) {
+                throw new BadRequestException(
+                        "There are already configured schedules, if you want to create a new configuration please delete the previous configuration.");
+            } else {
+                scheduleActived.setActive(false);
+                scheduleRepo.DeleteScheduleByScheduleConfigId(scheduleActived.getSchedulesConfigId());
             }
+        }
+        try {
+            scheduleConfig.setSpecialist(specialist);
+            ScheduleConfig newSchedule = scheduleConfigRepository.save(scheduleConfig);
+            createSchedules(newSchedule, user.getId());
+            return newSchedule;
+        } catch (Exception exception) {
+            throw new CustomException(500, exception.getMessage());
         }
     }
 
+    @Override
+    public void createSchedules(ScheduleConfig scheduleConfig, UUID userId) {
+        int totalTime = scheduleConfig.getSchedulesDuration() + scheduleConfig.getSchedulesRest();
+        Specialist specialist = specialistRepo.findByUserId(userId)
+                .orElseThrow(() -> new NotFoundException(String.format("Specialist not found with id: %s", userId)));
+        Set<LocalDate> workingDays = generateWorkingDays(scheduleConfig.getSchedulesDayStart(),
+                scheduleConfig.getSchedulesDayEnd(), scheduleConfig.getDays());
+        Set<LocalTime> workingHours = generateWorkingHours(
+                scheduleConfig.getSchedulesStart(),
+                scheduleConfig.getSchedulesStartRest(),
+                scheduleConfig.getSchedulesEndRest(),
+                scheduleConfig.getSchedulesEnd(),
+                scheduleConfig.getSchedulesDuration(),
+                scheduleConfig.getSchedulesRest());
 
-    private Set<LocalDate> generateWorkingDays(LocalDate schedulesDay, LocalDate schedulesDayEnd, List<EnumDay> daysToInclude) {
+        try {
+            for (LocalDate day : workingDays) {
+                for (LocalTime hour : workingHours) {
+                    Schedule schedule = new Schedule();
+                    schedule.setDate(day);
+                    schedule.setActive(true);
+                    schedule.setCreateBy(userId);
+                    schedule.setSpecialist(specialist);
+                    schedule.setStartTime(hour);
+                    schedule.setEndTime(hour.plusMinutes(totalTime));
+                    schedule.setScheduleConfig(scheduleConfig);
+                    scheduleRepo.save(schedule);
+                }
+            }
+        } catch (Exception ex) {
+            throw new CustomException(500, ex.getMessage());
+        }
+
+    }
+
+    private Set<LocalDate> generateWorkingDays(LocalDate schedulesDay, LocalDate schedulesDayEnd,
+            List<EnumDay> daysToInclude) {
         Set<LocalDate> filteredDays = new HashSet<>();
         LocalDate current = schedulesDay;
         Set<DayOfWeek> dayOfWeeksToInclude = new HashSet<>();
@@ -105,12 +133,12 @@ public class SchedulesServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> 
     }
 
     private Set<LocalTime> generateWorkingHours(LocalTime start, LocalTime startRest,
-                                                     LocalTime endRest, LocalTime end, Integer duration, Integer rest) {
+            LocalTime endRest, LocalTime end, Integer duration, Integer rest) {
         Integer totalTime = duration + rest;
         Set<LocalTime> workingHours = new HashSet<>();
 
-        generateIntervals(workingHours,start,startRest,totalTime);
-        generateIntervals(workingHours,endRest,end,totalTime);
+        generateIntervals(workingHours, start, startRest, totalTime);
+        generateIntervals(workingHours, endRest, end, totalTime);
 
         return workingHours;
     }

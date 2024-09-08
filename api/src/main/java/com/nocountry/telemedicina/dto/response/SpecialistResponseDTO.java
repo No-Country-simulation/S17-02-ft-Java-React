@@ -14,5 +14,5 @@ public record SpecialistResponseDTO(
         String specialistName,
         String specialistLastname,
         Integer reputation,
-        List<SchedulesResponseDTO> schedules) {
+        List<SchedulesConfigResponseDTO> schedules) {
 }

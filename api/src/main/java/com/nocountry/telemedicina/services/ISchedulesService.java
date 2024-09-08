@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.services;
 
+import com.nocountry.telemedicina.models.Schedule;
 import com.nocountry.telemedicina.models.ScheduleConfig;
 import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
 import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;

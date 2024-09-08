@@ -4,14 +4,16 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-public record SchedulesResponseDTO(
-        Long schedulesId,
-        LocalDate schedulesDay,
-        Integer schedulesDuration,
+public record SchedulesConfigResponseDTO(
+        Long schedulesConfigId,
+        LocalDate schedulesDayStart,
+        LocalDate schedulesDayEnd,
         LocalTime schedulesStart,
         LocalTime schedulesEnd,
+        LocalTime schedulesStartRest,
+        LocalTime schedulesEndRest,
+        Integer schedulesDuration,
         Integer schedulesRest,
-        Boolean schedulesRepeat,
         UUID specialistId,
         String specialistName) {
 }

@@ -27,7 +27,7 @@ public class Booking extends Auditable {
 
     @OneToOne
     @JoinColumn(name = "schedules_id",foreignKey = @ForeignKey(name = "FK_BOOKINGS_SCHEDULES"), nullable = false)
-    private ScheduleConfig scheduleConfig;
+    private Schedule schedule;
 
     @ManyToOne
     @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "FK_BOOKINGS_USER"), nullable = false)

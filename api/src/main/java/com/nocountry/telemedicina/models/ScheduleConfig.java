@@ -1,5 +1,6 @@
 package com.nocountry.telemedicina.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nocountry.telemedicina.models.enums.EnumDay;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,11 +30,9 @@ public class ScheduleConfig extends Auditable {
     private LocalDate schedulesDayStart;
     @Column(name = "schedules_day_end")
     private LocalDate schedulesDayEnd;
-    @Column(name = "schedules_duration", nullable = false)
-    private Integer schedulesDuration;
     @Column(name = "schedules_start", nullable = false)
     private LocalTime schedulesStart;
-    @Column(name = "schedules_end", nullable = false)   
+    @Column(name = "schedules_end", nullable = false)
     private LocalTime schedulesEnd;
 
     @Column(name = "schedules_start_rest", nullable = false)
@@ -42,23 +41,26 @@ public class ScheduleConfig extends Auditable {
     @Column(name = "schedules_end_rest", nullable = false)
     private LocalTime schedulesEndRest;
 
+    @Column(name = "schedules_duration", nullable = false)
+    private Integer schedulesDuration;
     @Column(name = "schedules_rest", nullable = false)
     private Integer schedulesRest;
 
     @Column(name = "days")
     private String days;
     @ManyToOne
-    @JoinColumn(name = "specialist_id",foreignKey = @ForeignKey(name = "FK_SCHEDULES_SPECIALIST"), nullable = false)
+    @JoinColumn(name = "specialist_id", foreignKey = @ForeignKey(name = "FK_SCHEDULES_SPECIALIST"), nullable = false)
     private Specialist specialist;
 
-    @OneToMany(mappedBy = "schedules",cascade = {CascadeType.ALL},orphanRemoval = true)
-    private List<Booking> bookings;
+    @OneToMany(mappedBy = "scheduleConfig", cascade = { CascadeType.ALL }, orphanRemoval = true)
+    @JsonIgnore
+    private List<Schedule> schedules;
 
     public List<EnumDay> getDays() {
         if (this.days == null || this.days.isEmpty()) {
             return List.of();
         }
-        return Arrays.stream(this.days.split(","))
+        return Arrays.stream(this.days.split(", "))
                 .map(day -> {
                     try {
                         return EnumDay.valueOf(day);
