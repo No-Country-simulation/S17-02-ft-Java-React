@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -87,8 +88,8 @@ public class SecurityConfig {
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
-                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                                .authorizeHttpRequests(authConfig -> {
+                        .cors(Customizer.withDefaults())
+                        .authorizeHttpRequests(authConfig -> {
                                         authConfig.requestMatchers(AUTH_ENDPOINTS_PUBLIC).permitAll();
                                         authConfig.requestMatchers(HttpMethod.GET, OTHERS_ENDPOINTS_PUBLIC).permitAll();
                                         authConfig.requestMatchers("/private").hasRole("USER");
@@ -197,7 +198,7 @@ public class SecurityConfig {
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowCredentials(true);
-                configuration.setAllowedOrigins(List.of("http://localhost:5173","https://heydoc.vercel.app"));
+                    configuration.setAllowedOrigins(List.of("http://localhost:5173","https://heydoc.vercel.app"));
                 configuration.setAllowedMethods(
                                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
                 configuration.setAllowedHeaders(List.of("*"));
