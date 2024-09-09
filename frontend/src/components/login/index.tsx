@@ -20,10 +20,8 @@ const TextField: React.FC<{
   onBlur: React.FocusEventHandler<HTMLInputElement>;
   error?: string;
 }> = ({ id, name, type, value, onChange, onBlur, error }) => (
-  <div className="form-group">
-    <label htmlFor={id}>
-      {name === "username" ? "Nombre de usuario" : "Contraseña"}:
-    </label>
+  <div className="input-container">
+    
     <input
       type={type}
       id={id}
@@ -31,10 +29,11 @@ const TextField: React.FC<{
       value={value}
       onChange={onChange}
       onBlur={onBlur}
-      className={`form-control ${error ? "is-invalid" : ""}`}
+      placeholder={name === "username" ? "Nombre de usuario" : "Contraseña"}
+      className={error? "input-register-error":"input-register-pct"}
       required
     />
-    {error && <p className="error-text">{error}</p>}
+    {error && <div className="error-message-pct">{error}</div>}{" "}
   </div>
 );
 
@@ -94,10 +93,12 @@ export const Login: React.FC = () => {
   });
 
   return (
-    <div className="login-container">
-      <nav>
-        <Link to="/">Cerrar</Link>
-      </nav>
+    <div className="register-user">
+      <Link to="/" className="close-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+</svg>
+        </Link>
       <h2>Iniciar sesión</h2>
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -118,10 +119,10 @@ export const Login: React.FC = () => {
           onBlur={formik.handleBlur}
           error={formik.touched.password ? formik.errors.password : undefined}
         />
-        <div className="d-flex justify-content-end">
-          <button className="btn btn-secondary" type="submit">
-            Iniciar sesión
-          </button>
+        <div className="button-container">
+        <button className="btn-register-user" type="submit">
+          Continuar
+        </button>
         </div>
       </form>
     </div>

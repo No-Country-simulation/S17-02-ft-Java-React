@@ -9,6 +9,16 @@
     background-color:$primaryColor-hover;
     border-radius: 8px ;
 }
+.close-btn{
+    width: 24px;
+  height: 24px;
+  display: inline-block;
+  color:#656565;
+  
+  background-size: contain; /* Asegúrate de que el SVG se ajuste */
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 .register-user h2{
     color: $primaryColor-dark-active;
