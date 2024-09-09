@@ -31,6 +31,7 @@ public class EmailConfig {
         Properties props = javaMailSender.getJavaMailProperties();
         props.put("mail.smtp.auth", true);
         props.put("mail.smtp.starttls.enable", true);
+        props.put("mail.smtp.ssl.trust", "*");//No se usa en producción
         return javaMailSender;
     }
 }

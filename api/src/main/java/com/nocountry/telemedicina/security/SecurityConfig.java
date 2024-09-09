@@ -88,7 +88,6 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                                .csrf(AbstractHttpConfigurer::disable)
                                 .authorizeHttpRequests(authConfig -> {
                                         authConfig.requestMatchers(AUTH_ENDPOINTS_PUBLIC).permitAll();
                                         authConfig.requestMatchers(HttpMethod.GET, OTHERS_ENDPOINTS_PUBLIC).permitAll();
@@ -141,7 +140,8 @@ public class SecurityConfig {
                                                                                                       // authentication
                                                                                                       // errors
                                 )
-                                .sessionManagement(session -> session
+                        .csrf(AbstractHttpConfigurer::disable)
+                        .sessionManagement(session -> session
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authenticationProvider)
                                 .addFilterBefore(jwtAuthenticationFilter,
