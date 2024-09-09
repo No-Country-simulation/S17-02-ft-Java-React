@@ -10,5 +10,5 @@ import java.util.List;
 public interface ISchedulesService extends ICRUDService<Schedules, Long> {
     Schedules save(Schedules schedules, @CurrentUser UserPrincipal user);
     Page<Schedules> findAllByUserId(@CurrentUser UserPrincipal user,int page,int size,String sortField,String sortOrder);
-    List<Schedules> saveAll(Schedules schedules);
+    //List<Schedules> saveAll(Schedules schedules);
 }
