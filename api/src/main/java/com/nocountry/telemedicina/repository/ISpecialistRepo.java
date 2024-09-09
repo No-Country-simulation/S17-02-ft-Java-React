@@ -4,6 +4,7 @@ import com.nocountry.telemedicina.models.Specialist;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ISpecialistRepo extends IGenericRepo<Specialist,UUID>, JpaSpecificationExecutor<Specialist> {
@@ -14,5 +15,5 @@ public interface ISpecialistRepo extends IGenericRepo<Specialist,UUID>, JpaSpeci
             "\tINNER JOIN users u\n" +
             "\tON u.user_id=p.user_id\n" +
             "\tWHERE u.user_id=:userId",nativeQuery = true)
-    Specialist findByUserId(UUID userId);
+    Optional<Specialist> findByUserId(UUID userId);
 }

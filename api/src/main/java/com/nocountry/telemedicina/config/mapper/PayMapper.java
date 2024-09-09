@@ -13,7 +13,7 @@ public interface PayMapper {
     PayMapper INSTANCE = Mappers.getMapper(PayMapper.class);
 
     @Mapping(source = "booking.state",target = "payState")
-    @Mapping(source = "booking.schedules.specialist.bookingPrice",target = "mountPay")
+    @Mapping(source = "booking.schedule.specialist.bookingPrice",target = "mountPay")
     PayResponseDTO toPayDTO(Pay pay);
 
     @Mapping(source = "booking",target = "booking")

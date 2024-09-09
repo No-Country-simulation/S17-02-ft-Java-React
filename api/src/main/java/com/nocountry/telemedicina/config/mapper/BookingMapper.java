@@ -13,14 +13,14 @@ public interface BookingMapper {
 
     BookingMapper INSTANCE = Mappers.getMapper(BookingMapper.class);
 
-    @Mapping(source = "schedules.schedulesDay",target = "schedulesDay")
-    @Mapping(source = "schedules.schedulesStart",target = "schedulesStart")
-    @Mapping(source = "schedules.specialist.bookingPrice",target = "payAmount")
+    @Mapping(source = "schedule.date",target = "schedulesDay")
+    @Mapping(source = "schedule.startTime",target = "schedulesStart")
+    @Mapping(source = "schedule.specialist.bookingPrice",target = "payAmount")
     @Mapping(source = "user.userId",target = "userId")
     @Mapping(source = "user.username",target = "username")
     BookingResponseDTO toBookingDTO(Booking booking);
 
-    @Mapping(source = "schedules",target = "schedules")
+    @Mapping(source = "schedule",target = "schedule")
     @Mapping(source = "user",target = "user")
     Booking toBooking(BookingRequestDTO dto);
 
