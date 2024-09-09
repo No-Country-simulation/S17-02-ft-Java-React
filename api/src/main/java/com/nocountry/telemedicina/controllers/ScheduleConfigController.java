@@ -2,6 +2,7 @@ package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.config.mapper.SchedulesConfigMapper;
 import com.nocountry.telemedicina.dto.request.SchedulesRequestDTO;
+import com.nocountry.telemedicina.dto.response.ScheduleResponseDTO;
 import com.nocountry.telemedicina.dto.response.SchedulesConfigResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
@@ -79,11 +80,11 @@ public class ScheduleConfigController {
                         @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
         @PostMapping("/create")
-        public ResponseEntity<ScheduleConfig> save(@Valid @RequestBody SchedulesRequestDTO dto,
+        public ResponseEntity<SchedulesConfigResponseDTO> save(@Valid @RequestBody SchedulesRequestDTO dto,
                         @CurrentUser UserPrincipal user) {
                 ScheduleConfig mapperScheduleConfig = mapper.toSchedules(dto);
                 ScheduleConfig obj = service.save(mapperScheduleConfig, user);
-                return ResponseEntity.status(201).body(obj);
+                return ResponseEntity.status(201).body(mapper.toSchedulesDTO(obj));
         }
 
         /**

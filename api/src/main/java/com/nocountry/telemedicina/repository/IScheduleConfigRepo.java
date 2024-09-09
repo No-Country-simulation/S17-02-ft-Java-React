@@ -22,6 +22,6 @@ public interface IScheduleConfigRepo extends IGenericRepo<ScheduleConfig, Long> 
             "\tWHERE u.user_id=:userId", nativeQuery = true)
     Page<ScheduleConfig> findAllByUserId(UUID userId, Pageable pageable);
 
-    @Query(value = "SELECT * FROM schedules_config WHERE schedules_config.specialist_id = :specialistId", nativeQuery = true)
+    @Query(value = "SELECT * FROM schedules_config WHERE schedules_config.specialist_id = :specialistId AND schedules_config.active = true", nativeQuery = true)
     Optional<ScheduleConfig> findActiveBySpecialistId(@Param("specialistId") UUID specialistId);
 }
