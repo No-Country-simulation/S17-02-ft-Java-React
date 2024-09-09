@@ -72,7 +72,9 @@ public class SecurityConfig {
                         "/api/schedules",
                         "/api/schedule/**",
                         "/api/clinics",
-                        "/api/specialty"
+                        "/api/specialty",
+                        "/api/department",
+                        "/api/city",
         };
 
         /**
@@ -195,7 +197,7 @@ public class SecurityConfig {
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowCredentials(true);
-                configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+                configuration.setAllowedOrigins(List.of("http://localhost:5173","https://heydoc.vercel.app"));
                 configuration.setAllowedMethods(
                                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
                 configuration.setAllowedHeaders(List.of("*"));
