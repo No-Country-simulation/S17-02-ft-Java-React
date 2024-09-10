@@ -30,7 +30,7 @@ const TextField: React.FC<{
       onChange={onChange}
       onBlur={onBlur}
       placeholder={name === "username" ? "Nombre de usuario" : "Contraseña"}
-      className={error? "input-register-error":"input-register-pct"}
+      className={error? "input-register-error-pct":"input-register-pct"}
       required
     />
     {error && <div className="error-message-pct">{error}</div>}{" "}

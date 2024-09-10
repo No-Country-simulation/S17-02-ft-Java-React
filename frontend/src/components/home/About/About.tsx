@@ -2,8 +2,8 @@ import image from '../../../assets/images/About/img_about.png'
 
 const About = () => {
   return (
-    <section className="container p-5">
-    <div className="row">
+    <section className="d-flex justify-content-center flex-wrap mt-5 gap-3 gap-md-4">
+    <div className="row about-container">
       <div className="col-md-6 col-12 p-5">
         <h2 className="title mt-3 fs-2">Sobre Nosotros</h2>
         <span className="subtitle mt-3 fs-2"><strong>HeyDoc es una plataforma que te ayuda a mejorar tu salud</strong></span>
