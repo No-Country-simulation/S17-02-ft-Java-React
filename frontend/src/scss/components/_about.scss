@@ -1,18 +1,31 @@
 .about-container{
     border-radius: 15rem 0 0 0;
     background: linear-gradient(90deg, #CEF9F4 0%, #34CDC8 100%);
-    height: 80rem;
+    height: 65rem;
     width: 100%;
     padding:5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    &{h3{
+    justify-content: center;
+    text-align: center;
+    &{
+        h3{
         font-size: 2.4rem;
         text-transform: uppercase;
         
-    }}
+    }
+    h5{
+        font-size: 1.8rem;
+        font-weight: 500;
+        text-transform: capitalize;
+        margin-top: 1rem;
+    }
+    p{
+        margin-top: 1rem;
+        font-weight: 300;
+    }
+}
 }   
 @media (min-width: 768px){ 
     .about-container{
@@ -25,13 +38,21 @@
 }
 .image{
     background-image: url('../../../public/about-image.png');
-    max-width: 37rem;
+    max-width: 24rem;
     width: 100%;
-    height: 48rem;
+    height: 36rem;
     background-size: cover;
     background-position: top center;
     background-repeat: no-repeat;
 }
+@media (min-width: 768px){ 
+    .image{
+        max-width: 37rem;
+    width: 100%;
+    height: 48rem;
+    }
+}
+
 @media (min-width: 992px){ 
     .about-container{
         display: flex;
@@ -39,6 +60,8 @@
         justify-content: space-around;
         align-items: flex-start;
         height: 48rem;
+        text-align: left
+
 
 
     }
@@ -53,9 +76,14 @@
                 margin-bottom: 4rem;
             };
             h5{
+                width: 85%;
                 font-size: 2rem;
                 font-weight: 500;
                 text-transform: capitalize;
+            };
+            p{
+                margin-top: 3rem;
+                width: 85%;
             }
             
         }
