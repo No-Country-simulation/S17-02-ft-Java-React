@@ -1,4 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx";
 import InputField from "../profileSesion/inputField";
@@ -9,11 +10,23 @@ interface FormData {
   nombre: string;
   apellido: string;
   tipoDocumento: string;
-  documentNumber: string; // Add this field
+  documentNumber: string;
   imagen: string | null;
   fechaNacimiento: string;
   direccion: string;
   ciudad: string;
+  departamento: string;
+}
+
+interface City {
+  cityId: number;
+  cityName: string;
+}
+
+interface Department {
+  departmentId: number;
+  departmentName: string;
+  cities: City[];
 }
 
 const Formulario: React.FC = () => {
@@ -22,21 +35,80 @@ const Formulario: React.FC = () => {
     nombre: "",
     apellido: "",
     tipoDocumento: "",
-    documentNumber: "", // Initialize this field
+    documentNumber: "",
     imagen: null,
     fechaNacimiento: "",
     direccion: "",
     ciudad: "",
+    departamento: "",
   });
+
+  const [cities, setCities] = useState<City[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   const navigate = useNavigate();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get<City[]>("/api/city", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCities(response.data);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          console.error("Error al obtener las ciudades:", error.response.data);
+        } else {
+          console.error("Error desconocido:", error);
+        }
+      }
+    };
+
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get<Department[]>(
+          "/api/city/departament",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setDepartments(response.data);
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          console.error(
+            "Error al obtener los departamentos:",
+            error.response.data
+          );
+        } else {
+          console.error("Error desconocido:", error);
+        }
+      }
+    };
+
+    fetchCities();
+    fetchDepartments();
+  }, [token]);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value, type, options } = e.target as HTMLSelectElement;
+
+    if (type === "select-one") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: (options as HTMLOptionsCollection)[0]?.value || "",
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +124,7 @@ const Formulario: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!token || !roleId || !username || !password || !userId) {
-      console.error("Token, roleId, username, password, or userId is missing");
+      console.error("Faltan el token, roleId, username, password o userId");
       return;
     }
 
@@ -60,11 +132,21 @@ const Formulario: React.FC = () => {
       profileName: formData.nombre,
       profileLastname: formData.apellido,
       documentType: formData.tipoDocumento,
-      documentNumber: formData.documentNumber, // Include documentNumber
+      documentNumber: formData.documentNumber,
       avatarUrl: formData.imagen || "",
       birth: formData.fechaNacimiento,
       address: formData.direccion,
-      city: { cityId: 0, cityName: formData.ciudad },
+      city: cities.find((city) => city.cityName === formData.ciudad) || {
+        cityId: 0,
+        cityName: formData.ciudad,
+      },
+      department: departments.find(
+        (dept) => dept.departmentName === formData.departamento
+      ) || {
+        departmentId: 0,
+        departmentName: formData.departamento,
+        cities: [],
+      },
       user: {
         userId,
         username,
@@ -72,30 +154,29 @@ const Formulario: React.FC = () => {
         roles: [
           {
             roleId,
-            roleName: "string", // Placeholder, replace with actual role name if available
-            roleDescription: "string", // Placeholder, replace with actual role description if available
+            roleName: "string", // Reemplaza con el nombre del rol si está disponible
+            roleDescription: "string", // Reemplaza con la descripción del rol si está disponible
           },
         ],
       },
     };
 
     try {
-      const response = await fetch("/api/profiles", {
-        method: "POST",
+      const response = await axios.post("/api/profiles", requestBody, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) throw new Error("Error en la solicitud");
-
-      const data = await response.json();
-      console.log("Perfil creado con éxito:", data);
+      console.log("Perfil creado con éxito:", response.data);
       navigate("/");
     } catch (error) {
-      console.error("Error al enviar la solicitud:", error);
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Error al enviar la solicitud:", error.response.data);
+      } else {
+        console.error("Error desconocido:", error);
+      }
     }
   };
 
@@ -128,7 +209,7 @@ const Formulario: React.FC = () => {
         onChange={handleChange}
       />
       <InputField
-        label="Número de Documento" // Add this input for document number
+        label="Número de Documento"
         type="text"
         name="documentNumber"
         value={formData.documentNumber}
@@ -152,13 +233,32 @@ const Formulario: React.FC = () => {
         value={formData.direccion}
         onChange={handleChange}
       />
-      <InputField
-        label="Ciudad"
-        type="text"
-        name="ciudad"
-        value={formData.ciudad}
-        onChange={handleChange}
-      />
+      <div>
+        <label>Ciudad</label>
+        <select name="ciudad" value={formData.ciudad} onChange={handleChange}>
+          <option value="">Selecciona una ciudad</option>
+          {cities.map((city) => (
+            <option key={city.cityId} value={city.cityName}>
+              {city.cityName}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label>Departamento</label>
+        <select
+          name="departamento"
+          value={formData.departamento}
+          onChange={handleChange}
+        >
+          <option value="">Selecciona un departamento</option>
+          {departments.map((dept) => (
+            <option key={dept.departmentId} value={dept.departmentName}>
+              {dept.departmentName}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="container-fluid form-buttons-cont">
         <FormButtons onSkip={handleSkip} />
       </div>
