@@ -4,7 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/context.tsx";
-import { loginUser } from "../api"; // Puedes mover la lógica de login a un archivo api.ts
+import { loginUser } from "../api/index.ts";
 
 const validationSchema = Yup.object({
   username: Yup.string()
@@ -23,7 +23,8 @@ const validationSchema = Yup.object({
 
 const useRegisterForm = () => {
   const navigate = useNavigate();
-  const { setToken, setRole, setRoleId, setUsername, setPassword } = useAuth();
+  const { setToken, setRole, setRoleId, setUsername, setPassword, setUserId } =
+    useAuth();
   const roleId = "9c765b7d-9eec-421b-85c6-6d53bcd002da";
 
   const formik = useFormik({
@@ -41,6 +42,7 @@ const useRegisterForm = () => {
       };
 
       try {
+        // Perform registration
         await axios.post("/api/auth/register", payload, {
           headers: {
             "Content-Type": "application/json",
@@ -48,13 +50,19 @@ const useRegisterForm = () => {
         });
 
         const loginResponse = await loginUser(values.username, values.password);
-        const { token, role } = loginResponse;
+        const { userResponseDTO, token } = loginResponse;
+        const { userId } = userResponseDTO;
+
+        console.log("User Response DTO:", userResponseDTO);
 
         setToken(token);
-        setRole(role);
-        setRoleId(roleId);
+        setRole(userResponseDTO.roles[0]?.roleName || "");
+        setRoleId(userResponseDTO.roles[0]?.roleId || "");
         setUsername(values.username);
         setPassword(values.password);
+        setUserId(userId);
+
+        console.log("User ID:", userId);
 
         Swal.fire({
           icon: "success",
@@ -65,6 +73,7 @@ const useRegisterForm = () => {
         formik.resetForm();
         navigate("/profilesesion");
       } catch (error) {
+        console.error("Error al registrar el usuario:", error);
         Swal.fire({
           icon: "error",
           title: "Error Inesperado",

@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/context.tsx"; // Ajusta la ruta según sea necesario
+import { useAuth } from "../../context/context.tsx";
 import InputField from "../profileSesion/inputField";
 import FileInputWithPreview from "../profileSesion/fileInput";
 import FormButtons from "../profileSesion/formButtons";
@@ -9,6 +9,7 @@ interface FormData {
   nombre: string;
   apellido: string;
   tipoDocumento: string;
+  documentNumber: string; // Add this field
   imagen: string | null;
   fechaNacimiento: string;
   direccion: string;
@@ -16,11 +17,12 @@ interface FormData {
 }
 
 const Formulario: React.FC = () => {
-  const { token, roleId, username, password } = useAuth();
+  const { token, roleId, username, password, userId } = useAuth();
   const [formData, setFormData] = useState<FormData>({
     nombre: "",
     apellido: "",
     tipoDocumento: "",
+    documentNumber: "", // Initialize this field
     imagen: null,
     fechaNacimiento: "",
     direccion: "",
@@ -49,8 +51,8 @@ const Formulario: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!token || !roleId || !username || !password) {
-      console.error("Token, roleId, username, or password is missing");
+    if (!token || !roleId || !username || !password || !userId) {
+      console.error("Token, roleId, username, password, or userId is missing");
       return;
     }
 
@@ -58,15 +60,27 @@ const Formulario: React.FC = () => {
       profileName: formData.nombre,
       profileLastname: formData.apellido,
       documentType: formData.tipoDocumento,
+      documentNumber: formData.documentNumber, // Include documentNumber
       avatarUrl: formData.imagen || "",
       birth: formData.fechaNacimiento,
       address: formData.direccion,
       city: { cityId: 0, cityName: formData.ciudad },
-      user: { userId: roleId, username, password, roles: [{ roleId }] },
+      user: {
+        userId,
+        username,
+        password,
+        roles: [
+          {
+            roleId,
+            roleName: "string", // Placeholder, replace with actual role name if available
+            roleDescription: "string", // Placeholder, replace with actual role description if available
+          },
+        ],
+      },
     };
 
     try {
-      const response = await fetch("/api/profile", {
+      const response = await fetch("/api/profiles", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,21 +104,65 @@ const Formulario: React.FC = () => {
   };
 
   return (
-   <>
-   <form onSubmit={handleSubmit} className="form-profile">
+    <form onSubmit={handleSubmit} className="form-profile">
       <h3>Información personal</h3>
-      <InputField label="Nombre" type="text" name="nombre" value={formData.nombre} onChange={handleChange} />
-      <InputField label="Apellido" type="text" name="apellido" value={formData.apellido} onChange={handleChange} />
-      <InputField label="Tipo de Documento" type="text" name="tipoDocumento" value={formData.tipoDocumento} onChange={handleChange} />
-      <FileInputWithPreview onFileChange={handleFileChange} imageUrl={formData.imagen} />
-      <InputField label="Fecha de Nacimiento" type="date" name="fechaNacimiento" value={formData.fechaNacimiento} onChange={handleChange} />
-      <InputField label="Dirección" type="text" name="direccion" value={formData.direccion} onChange={handleChange} />
-      <InputField label="Ciudad" type="text" name="ciudad" value={formData.ciudad} onChange={handleChange} />
-    </form>
+      <InputField
+        label="Nombre"
+        type="text"
+        name="nombre"
+        value={formData.nombre}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Apellido"
+        type="text"
+        name="apellido"
+        value={formData.apellido}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Tipo de Documento"
+        type="text"
+        name="tipoDocumento"
+        value={formData.tipoDocumento}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Número de Documento" // Add this input for document number
+        type="text"
+        name="documentNumber"
+        value={formData.documentNumber}
+        onChange={handleChange}
+      />
+      <FileInputWithPreview
+        onFileChange={handleFileChange}
+        imageUrl={formData.imagen}
+      />
+      <InputField
+        label="Fecha de Nacimiento"
+        type="date"
+        name="fechaNacimiento"
+        value={formData.fechaNacimiento}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Dirección"
+        type="text"
+        name="direccion"
+        value={formData.direccion}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Ciudad"
+        type="text"
+        name="ciudad"
+        value={formData.ciudad}
+        onChange={handleChange}
+      />
       <div className="container-fluid form-buttons-cont">
-      <FormButtons onSkip={handleSkip} />
+        <FormButtons onSkip={handleSkip} />
       </div>
-   </>
+    </form>
   );
 };
 
