@@ -19,5 +19,5 @@ public interface ScheduleMapper {
 
     // este mapper obtiene las mismas configuraciones que el mapper individual
     List<ScheduleResponseDTO> toScheduleResponseDTOList(List<Schedule> schedules);
-
+    
 }

@@ -1,7 +1,7 @@
 package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.config.mapper.SchedulesConfigMapper;
-import com.nocountry.telemedicina.dto.request.SchedulesRequestDTO;
+import com.nocountry.telemedicina.dto.request.SchedulesConfigRequestDTO;
 import com.nocountry.telemedicina.dto.response.ScheduleResponseDTO;
 import com.nocountry.telemedicina.dto.response.SchedulesConfigResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
@@ -76,12 +76,12 @@ public class ScheduleConfigController {
         @Operation(summary = "Crea un turno", description = "Crea un Turno.Se requiere enviar los parametros descritos a continuación", tags = {})
         @ApiResponses({
                         @ApiResponse(responseCode = "200", content = {
-                                        @Content(schema = @Schema(implementation = SchedulesRequestDTO.class), mediaType = "application/json") }),
+                                        @Content(schema = @Schema(implementation = SchedulesConfigRequestDTO.class), mediaType = "application/json") }),
                         @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
         @PostMapping("/create")
-        public ResponseEntity<SchedulesConfigResponseDTO> save(@Valid @RequestBody SchedulesRequestDTO dto,
-                        @CurrentUser UserPrincipal user) {
+        public ResponseEntity<SchedulesConfigResponseDTO> save(@Valid @RequestBody SchedulesConfigRequestDTO dto,
+                                                               @CurrentUser UserPrincipal user) {
                 ScheduleConfig mapperScheduleConfig = mapper.toSchedules(dto);
                 ScheduleConfig obj = service.save(mapperScheduleConfig, user);
                 return ResponseEntity.status(201).body(mapper.toSchedulesDTO(obj));
@@ -97,12 +97,12 @@ public class ScheduleConfigController {
         @Operation(summary = "Actualiza datos de un Turno por ID", description = "Actualiza los datos de un Turno.Se envia los atributos a actualizar del turno y el ID del Turno", tags = {})
         @ApiResponses({
                         @ApiResponse(responseCode = "200", content = {
-                                        @Content(schema = @Schema(implementation = SchedulesRequestDTO.class), mediaType = "application/json") }),
+                                        @Content(schema = @Schema(implementation = SchedulesConfigRequestDTO.class), mediaType = "application/json") }),
                         @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
 
         @PutMapping("/update/{id}")
-        public ResponseEntity<ScheduleConfig> update(@RequestBody SchedulesRequestDTO dto,
+        public ResponseEntity<ScheduleConfig> update(@RequestBody SchedulesConfigRequestDTO dto,
                         @PathVariable("id") @Parameter(name = "id", description = "ID del Turno", example = "6097656c-e788-45cb-a41f-73d4e031ee60") Long id) {
                 ScheduleConfig obj = service.updateById(id, mapper.toSchedules(dto));
                 return new ResponseEntity<>(obj, HttpStatus.OK);
@@ -121,7 +121,7 @@ public class ScheduleConfigController {
                                         @Content(schema = @Schema(implementation = SchedulesConfigResponseDTO.class), mediaType = "application/json") }),
                         @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
                         @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
-        @GetMapping
+        @GetMapping("/list")
         public ResponseEntity<Page<SchedulesConfigResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "10") int size,
                         @RequestParam(defaultValue = "schedulesDay") String sortField,

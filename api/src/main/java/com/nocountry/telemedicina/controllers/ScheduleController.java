@@ -1,8 +1,7 @@
 package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.dto.response.ScheduleResponseDTO;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.nocountry.telemedicina.models.Schedule;
 import com.nocountry.telemedicina.services.IScheduleService;
@@ -15,8 +14,6 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "API de Turnos de Atención", description = "Se pueden visualizar los dias en los que atiende un especialista y ver los dias y horarios en los que atiende")
 @RestController
@@ -36,9 +33,9 @@ public class ScheduleController {
         return ResponseEntity.ok().body(schedules);
     }
 
-    @GetMapping("/specialist")
+    @GetMapping("/specialist/{specialistId}")
     public ResponseEntity<List<ScheduleResponseDTO>> findschedulesBySpecialistId(
-            @RequestParam("specialistId") UUID specialistId) {
+            @PathVariable("specialistId") UUID specialistId) {
 
         List<ScheduleResponseDTO> schedules = scheduleService.findSchedulesBySpecialist(specialistId);
 

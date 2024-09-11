@@ -9,10 +9,7 @@ public record SpecialistResponseDTO(
         Long specialtyId,
         String specialtyName,
         Double bookingPrice,
-        UUID clinicId,
-        String clinicName,
         String specialistName,
         String specialistLastname,
-        Integer reputation,
-        List<SchedulesConfigResponseDTO> schedules) {
+        Integer reputation) {
 }

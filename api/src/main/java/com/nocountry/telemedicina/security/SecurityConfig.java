@@ -70,7 +70,7 @@ public class SecurityConfig {
 
         private static final String[] OTHERS_ENDPOINTS_PUBLIC = {
                         "/api/specialist",
-                        "/api/schedules",
+                        "/api/schedules/**",
                         "/api/schedule/**",
                         "/api/clinics",
                         "/api/specialty",

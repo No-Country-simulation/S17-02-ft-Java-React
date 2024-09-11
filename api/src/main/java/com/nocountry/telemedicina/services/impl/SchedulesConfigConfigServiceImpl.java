@@ -26,7 +26,10 @@ import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleConfig, Long> implements ISchedulesConfigService {
@@ -113,6 +116,35 @@ public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleCo
         }
 
     }
+   /*@Override
+   public void createSchedules(ScheduleConfig scheduleConfig, UUID userId) {
+       int totalTime = scheduleConfig.getSchedulesDuration() + scheduleConfig.getSchedulesRest();
+       Specialist specialist = specialistRepo.findByUserId(userId)
+               .orElseThrow(() -> new NotFoundException(String.format("Specialist not found with id: %s", userId)));
+
+       // Se usa un TreeSet para guardar los dias y horas trabajado. Ya que lo devuelve de forma ordenada(NavigableSet)
+       NavigableSet<LocalDate> workingDays = generateWorkingDays(scheduleConfig.getSchedulesDayStart(), scheduleConfig.getSchedulesDayEnd(), scheduleConfig.getDays());
+       NavigableSet<LocalTime> workingHours = generateWorkingHours(scheduleConfig.getSchedulesStart(), scheduleConfig.getSchedulesStartRest(), scheduleConfig.getSchedulesEndRest(), scheduleConfig.getSchedulesEnd(), scheduleConfig.getSchedulesDuration(), scheduleConfig.getSchedulesRest());
+
+       try {
+           // Usa un bucle simple para iterear las horas de trabaja de los dias en que trabaja
+           for (LocalDate day : workingDays) {
+               for (LocalTime hour : workingHours) {
+                   Schedule schedule = new Schedule();
+                   schedule.setDate(day);
+                   schedule.setActive(true);
+                   schedule.setCreateBy(userId);
+                   schedule.setSpecialist(specialist);
+                   schedule.setStartTime(hour);
+                   schedule.setEndTime(hour.plusMinutes(totalTime));
+                   schedule.setScheduleConfig(scheduleConfig);
+                   scheduleRepo.save(schedule);
+               }
+           }
+       } catch (Exception ex) {
+           throw new CustomException(500, ex.getMessage());
+       }
+   }*/
 
     private Set<LocalDate> generateWorkingDays(LocalDate schedulesDay, LocalDate schedulesDayEnd,
             List<EnumDay> daysToInclude) {
@@ -131,7 +163,23 @@ public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleCo
         return filteredDays;
     }
 
-    private Set<LocalTime> generateWorkingHours(LocalTime start, LocalTime startRest,
+  /*  private NavigableSet<LocalDate> generateWorkingDays(LocalDate schedulesDay, LocalDate schedulesDayEnd, List<EnumDay> daysToInclude) {
+        NavigableSet<LocalDate> filteredDays = new TreeSet<>();
+        LocalDate current = schedulesDay;
+        Set<DayOfWeek> dayOfWeeksToInclude = new HashSet<>();
+        for (EnumDay day : daysToInclude) {
+            dayOfWeeksToInclude.add(DayOfWeek.valueOf(day.name()));
+        }
+        while (!current.isAfter(schedulesDayEnd)) {
+            if (dayOfWeeksToInclude.contains(current.getDayOfWeek())) {
+                filteredDays.add(current);
+            }
+            current = current.plusDays(1);
+        }
+        return filteredDays;
+    }
+*/
+   private Set<LocalTime> generateWorkingHours(LocalTime start, LocalTime startRest,
             LocalTime endRest, LocalTime end, Integer duration, Integer rest) {
         Integer totalTime = duration + rest;
         Set<LocalTime> workingHours = new HashSet<>();
@@ -141,6 +189,18 @@ public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleCo
 
         return workingHours;
     }
+
+  /*  private NavigableSet<LocalTime> generateWorkingHours(LocalTime start, LocalTime startRest, LocalTime endRest, LocalTime end, Integer duration, Integer rest) {
+        Integer totalTime = duration + rest;
+        NavigableSet<LocalTime> workingHours = new TreeSet<>();
+
+        generateIntervals(workingHours, start, startRest, totalTime);
+        generateIntervals(workingHours, endRest, end, totalTime);
+
+        return workingHours;
+    }*/
+
+
 
     private Sort getSort(String sortField, String sortOrder) {
         Sort sort = Sort.by(sortField);
@@ -161,5 +221,4 @@ public class SchedulesConfigConfigServiceImpl extends CRUDServiceImpl<ScheduleCo
             current = current.plusMinutes(duration);
         }
     }
-
 }
