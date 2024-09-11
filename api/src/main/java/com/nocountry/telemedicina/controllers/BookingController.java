@@ -2,6 +2,7 @@ package com.nocountry.telemedicina.controllers;
 
 import com.nocountry.telemedicina.config.mapper.BookingMapper;
 import com.nocountry.telemedicina.dto.request.BookingRequestDTO;
+import com.nocountry.telemedicina.dto.request.UpdatePaymentDTO;
 import com.nocountry.telemedicina.dto.response.BookingResponseDTO;
 import com.nocountry.telemedicina.exception.NotAuthorizedException;
 import com.nocountry.telemedicina.exception.NotFoundException;
@@ -78,8 +79,8 @@ public class BookingController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Booking> save(@Valid @RequestBody BookingRequestDTO dto, @CurrentUser UserPrincipal user) {
-        Booking obj = service.save(mapper.toBooking(dto), user);
+    public ResponseEntity<BookingResponseDTO> save(@Valid @RequestBody BookingRequestDTO dto, @CurrentUser UserPrincipal user) {
+        BookingResponseDTO obj = service.save(mapper.toBooking(dto), user);
         return ResponseEntity.status(201).body(obj);
     }
 
@@ -101,7 +102,14 @@ public class BookingController {
     public ResponseEntity<Booking> update(@Valid @RequestBody BookingRequestDTO dto,
             @PathVariable("id") @Parameter(name = "id", description = "ID del Reserva", example = "6097656c-e788-45cb-a41f-73d4e031ee60") UUID id) {
         Booking obj = service.updateById(id, mapper.toBooking(dto));
-        return new ResponseEntity<>(obj, HttpStatus.OK);
+        return ResponseEntity.status(200).body(obj);
+    }
+
+    @PutMapping("/update-payment/{id}")
+    public ResponseEntity<Booking> updatePayment(@Valid @RequestBody UpdatePaymentDTO dto,
+                                          @PathVariable("id") UUID bookingId) {
+        Booking obj = service.updatePayment(bookingId, dto.getPaymentStatus(),dto.getMpPaymentId());
+        return ResponseEntity.status(200).body(obj);
     }
 
     /**

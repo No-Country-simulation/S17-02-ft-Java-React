@@ -1,5 +1,7 @@
 package com.nocountry.telemedicina.services.impl;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map;
@@ -71,10 +73,11 @@ public class MercadoPagoServiceImpl {
                 }
         }
 
-        public String generatePreferenceId(List<ItemPreferenceDTO> productos) {
+        public String generatePreferenceId(ItemPreferenceDTO productoIn) {
                 try {
+                        String urlCallback = String.format("http://localhost:5173/payment?bookingId=%s",productoIn.getId());
                         MercadoPagoConfig.setAccessToken(mercadoPagoTokenPro);
-
+                        List<ItemPreferenceDTO> productos = Collections.singletonList(productoIn);
                         List<PreferenceItemRequest> items = productos.stream()
                                         .map(producto -> PreferenceItemRequest.builder()
                                                         .id(producto.getId().toString())
@@ -88,9 +91,9 @@ public class MercadoPagoServiceImpl {
                                         .collect(Collectors.toList());
 
                         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                                        .success("http://localhost:5173/")
-                                        .pending("http://localhost:5173/")
-                                        .failure("http://localhost:5173/")
+                                        .success(urlCallback)
+                                        .pending(urlCallback)
+                                        .failure(urlCallback)
                                         .build();
 
                         PreferenceRequest preferenceRequest = PreferenceRequest.builder()

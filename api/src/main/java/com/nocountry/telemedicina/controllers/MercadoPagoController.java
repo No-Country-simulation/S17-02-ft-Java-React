@@ -30,8 +30,7 @@ public class MercadoPagoController {
 
     @PostMapping("/generate-preference")
     public String postMethodName(@Valid @RequestBody ItemPreferenceDTO item) {
-        List<ItemPreferenceDTO> items = Arrays.asList(item);
-        return mercadoPagoServiceImpl.generatePreferenceId(items);
+        return mercadoPagoServiceImpl.generatePreferenceId(item);
     }
 
     @PostMapping("/webhook")

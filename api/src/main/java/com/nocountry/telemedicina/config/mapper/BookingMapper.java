@@ -21,7 +21,6 @@ public interface BookingMapper {
     BookingResponseDTO toBookingDTO(Booking booking);
 
     @Mapping(source = "schedule",target = "schedule")
-    @Mapping(source = "user",target = "user")
     Booking toBooking(BookingRequestDTO dto);
 
 
