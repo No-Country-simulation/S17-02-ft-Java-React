@@ -1,0 +1,44 @@
+.title-service{
+    font-size: 3rem;
+    font-weight: 300;
+    color:$primaryColor-dark
+}
+.service-container{
+    max-width: 42rem;
+    margin: 0 auto;
+    width: 100%;
+   display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    &{h4{
+        font-size: 1.8rem;
+        font-weight: 700;
+    }
+    &{
+        font-size: 1.6rem;
+        font-weight: 300;
+    }
+}
+}
+.service{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 18rem;
+}
+
+@media (min-width: 768px){ 
+   .title-service{
+       font-size: $heading-m-1;
+   }
+    .service-container{
+       max-width: 50rem;
+       gap: 5rem
+   } 
+}
+@media (min-width: 992px){ 
+    .service-container{
+        max-width: 110rem;
+    }
+}

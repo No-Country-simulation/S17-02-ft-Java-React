@@ -7,7 +7,7 @@ import Contact from "./Contact/Contact.tsx";
 
 const Home: React.FC = () => {
   return (
-    <>
+    
       <div>
         <Hero />
         <Brands />
@@ -16,7 +16,7 @@ const Home: React.FC = () => {
         <Services />
         <Contact />
       </div>
-    </>
+    
   );
 };
 
