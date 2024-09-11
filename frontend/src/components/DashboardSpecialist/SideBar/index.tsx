@@ -11,7 +11,7 @@ const Sidebar = () => {
     <div className="bg-dark col-auto col-md-3 min-vh-100 d-flex flex-column">
       <Link
         className="text-decoration-none d-flex align-items-center gap-1 text-white mt-3 d-none d-sm-inline"
-        to="home" 
+        to="/dashboard/home"
       >
         <i className="fs-4 bi bi-speedometer"></i>
         <span className="ms-1 fs-4">HeyDoc!</span>
@@ -20,7 +20,7 @@ const Sidebar = () => {
       <nav className="nav nav-pills flex-column gap-3 mt-4 flex-grow-1">
         <Link
           className="nav-link text-white d-flex align-items-center fs-4 gap-1"
-          to="home" 
+          to="/dashboard/home"
         >
           <i className="fs-4 bi bi-house"></i>
           <span className="ms-3 d-none d-sm-inline fs-4">Inicio</span>
@@ -28,7 +28,7 @@ const Sidebar = () => {
 
         <Link
           className="nav-link text-white fs-4 d-flex align-items-center gap-1"
-          to="perfil" 
+          to="/dashboard/perfil"
         >
           <i className="fs-4 bi bi-person"></i>
           <span className="ms-3 d-none d-sm-inline fs-4">Mi Perfil</span>
@@ -56,11 +56,17 @@ const Sidebar = () => {
             id="citas-collapse"
           >
             <nav className="nav flex-column ms-3 mt-2">
-              <Link className="nav-link text-white fs-5" to="nueva-cita"> {/* Mantener sin barra */}
+              <Link
+                className="nav-link text-white fs-5"
+                to="/dashboard/nueva-cita"
+              >
                 <i className="bi bi-plus-circle"></i>
                 <span className="ms-3 d-none d-sm-inline fs-4">Nueva Cita</span>
               </Link>
-              <Link className="nav-link text-white fs-5" to="ver-citas">
+              <Link
+                className="nav-link text-white fs-5"
+                to="/dashboard/ver-citas"
+              >
                 <i className="bi bi-list-ul"></i>
                 <span className="ms-3 d-none d-sm-inline fs-4">Ver Citas</span>
               </Link>
