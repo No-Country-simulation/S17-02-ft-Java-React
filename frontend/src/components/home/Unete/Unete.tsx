@@ -1,23 +1,19 @@
+import { Link } from "react-router-dom";
+
 const Unete = () => {
   return (
-    <section className="container row p-5 mx-auto">
-      <div className="col p-5">
-        <div className="d-flex justify-content-center">
-          <form className="contact-form d-flex flex-column">
-            <h2>Unete a HeyDoc!</h2>
-            <button className="btn btn-primary mt-3 btn-lg">Crear cuenta</button>
-          </form>
-        </div>
-      </div>
-      <div className="col p-5 ">
-        <div className="d-flex justify-content-start">
-          <h3 className="title text-start">
-            <strong>
-              Más de 10.000 profesionales ya gestionan su consulta digital con
-              HeyDoc!
-            </strong>
-          </h3>
-        </div>
+    <section className="unete-container">
+      <div className="unete-title">
+        <h3>
+          Pasa consulta por llamada o videollamada
+        </h3>
+        <button type="button" className="btn-unete">
+          Comenzar ahora
+        <Link to="/register" />
+        </button>
+      </div >
+      <div className="legend">
+      Gestiona todas tus comunicaciones en un solo lugar. Realiza llamadas de voz o videollamadas con tus pacientes de manera privada y segura, utilizando conexión 3G/Wifi. No es necesario compartir tu número de teléfono, solo conéctate y comienza a hablar cara a cara con un solo clic.
       </div>
     </section>
   );
