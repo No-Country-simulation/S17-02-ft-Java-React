@@ -7,10 +7,12 @@ const Unete = () => {
         <h3>
           Pasa consulta por llamada o videollamada
         </h3>
+        <Link to="/registeruser" 
+        >
         <button type="button" className="btn-unete">
           Comenzar ahora
-        <Link to="/register" />
         </button>
+        </Link>
       </div >
       <div className="legend">
       Gestiona todas tus comunicaciones en un solo lugar. Realiza llamadas de voz o videollamadas con tus pacientes de manera privada y segura, utilizando conexión 3G/Wifi. No es necesario compartir tu número de teléfono, solo conéctate y comienza a hablar cara a cara con un solo clic.
