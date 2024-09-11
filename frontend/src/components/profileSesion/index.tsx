@@ -15,11 +15,18 @@ interface FormData {
   fechaNacimiento: string;
   direccion: string;
   ciudad: string;
+  departamento: string;
 }
 
 interface City {
   cityId: number;
   cityName: string;
+}
+
+interface Department {
+  departmentId: number;
+  departmentName: string;
+  cities: City[];
 }
 
 const Formulario: React.FC = () => {
@@ -33,27 +40,38 @@ const Formulario: React.FC = () => {
     fechaNacimiento: "",
     direccion: "",
     ciudad: "",
+    departamento: "",
   });
 
   const [cities, setCities] = useState<City[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCities = async () => {
+    const fetchCitiesAndDepartments = async () => {
       try {
-        const response = await axios.get<City[]>("/api/city", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setCities(response.data);
+        const [citiesResponse, departmentsResponse] = await Promise.all([
+          axios.get<City[]>("/api/city", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get<Department[]>("/api/department", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+        setCities(citiesResponse.data);
+        setDepartments(departmentsResponse.data);
       } catch (error) {
-        console.error("Error al obtener las ciudades:", error);
+        console.error("Error al obtener las ciudades o departamentos:", error);
       }
     };
 
-    fetchCities();
+    fetchCitiesAndDepartments();
   }, [token]);
 
   const handleChange = (
@@ -85,6 +103,13 @@ const Formulario: React.FC = () => {
       return;
     }
 
+    const selectedDepartment = departments.find(
+      (department) => department.departmentName === formData.departamento
+    );
+    const selectedCity = selectedDepartment?.cities.find(
+      (city) => city.cityName === formData.ciudad
+    );
+
     const requestBody = {
       profileName: formData.nombre,
       profileLastname: formData.apellido,
@@ -93,10 +118,7 @@ const Formulario: React.FC = () => {
       avatarUrl: formData.imagen || "",
       birth: formData.fechaNacimiento,
       address: formData.direccion,
-      city: cities.find((city) => city.cityName === formData.ciudad) || {
-        cityId: 0,
-        cityName: formData.ciudad,
-      },
+      city: selectedCity || { cityId: 0, cityName: formData.ciudad },
       user: {
         userId,
         username,
@@ -111,6 +133,8 @@ const Formulario: React.FC = () => {
       },
     };
 
+    console.log("Enviando solicitud con el siguiente cuerpo:", requestBody);
+
     try {
       const response = await axios.post("/api/profiles", requestBody, {
         headers: {
@@ -123,6 +147,9 @@ const Formulario: React.FC = () => {
       navigate("/");
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Detalles del error:", error.response?.data);
+      }
     }
   };
 
@@ -180,14 +207,41 @@ const Formulario: React.FC = () => {
         onChange={handleChange}
       />
       <div>
+        <label>Provincia</label>
+        <select
+          name="departamento"
+          value={formData.departamento}
+          onChange={handleChange}
+        >
+          <option value="">Selecciona un departamento</option>
+          {departments.map((department) => (
+            <option
+              key={department.departmentId}
+              value={department.departmentName}
+            >
+              {department.departmentName}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
         <label>Ciudad</label>
         <select name="ciudad" value={formData.ciudad} onChange={handleChange}>
           <option value="">Selecciona una ciudad</option>
-          {cities.map((city) => (
-            <option key={city.cityId} value={city.cityName}>
-              {city.cityName}
-            </option>
-          ))}
+          {cities
+            .filter((city) =>
+              departments
+                .find(
+                  (department) =>
+                    department.departmentName === formData.departamento
+                )
+                ?.cities.some((c) => c.cityId === city.cityId)
+            )
+            .map((city) => (
+              <option key={city.cityId} value={city.cityName}>
+                {city.cityName}
+              </option>
+            ))}
         </select>
       </div>
       <div className="container-fluid form-buttons-cont">
