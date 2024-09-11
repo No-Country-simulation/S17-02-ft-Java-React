@@ -1,16 +1,16 @@
 const Contact = () => {
   return (
-    <section className="container row">
+    <section className="container form row">
       {/*  */}
       <div className="col p-5 col-md-6 col-12">
         {/* Logo */}
         <div className=" p-5">
-          <p>HeyDoc!</p>
+          <p className="badge">HeyDoc!</p>
         </div>
         <div className="p-5">
-          <p className="subtitle fs-3">Contactenos</p>
+          <p className="title-contact fs-3">Escribenos</p>
           <h3 className="title mt-3 fs-2"><strong>Consulta tus dudas</strong></h3>
-          <p className="mt-3 fs-4">Figma ipsum component variant main layer. Underline comment style strikethrough editor effect. Invite ipsum image italic fill comment. Group object variant ellipse variant flatten fill. Draft group hand prototype auto community community italic. Inspect link layer frame image underline. Link layout follower object frame. </p>
+          <p className="mt-3 fs-4">Completa tus datos o envíanos un correo electrónico a info@heydoc.com para comenzar a utilizar las soluciones de Telemedicina más completas e innovadoras. </p>
         </div>
       </div>
 
@@ -57,8 +57,8 @@ const Contact = () => {
           </div>
 
             <div className="form-group mb-3 d-flex justify-content-end">
-          <button type="submit" className=" btn btn-primary btn-lg fs-3">
-            Enviar Mensaje
+          <button type="submit" className=" btn-navbar-prof btn-lg fs-3">
+            Enviar
           </button>
 
             </div>
