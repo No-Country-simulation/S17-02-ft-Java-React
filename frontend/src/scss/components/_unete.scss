@@ -1,10 +1,12 @@
 .unete-container{
-    max-width: 144rem;
-    padding: 5rem 2rem;
+    max-width: 40rem;
+    
     margin: 0 auto;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
    
 }
 
@@ -28,20 +30,46 @@
     }
 }
 .unete-title{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
-    width: 25%;
+    margin-top: 1rem;
+    text-align: center;
     &{h3{
-        font-size: $heading-d-4;
+        text-align:center;
+        font-size: 2.8rem;
         font-weight: 500;
     }}
 }
 .legend{
-    width: 75%;
-    padding: 0 10rem;
+    text-align: center;
+    padding: 2rem;
     font-size: 2rem;
     font-weight: 300;
+}
+
+@media (min-width: 992px){ 
+    .unete-container{
+        max-width: 120rem;
+        padding: 5rem 2rem;
+        margin: 0 auto;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .unete-title{
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        width: 25%;
+        &{h3{
+            text-align: left;
+            font-size: $heading-d-4;
+            font-weight: 500;
+        }}
+    }
+    .legend{
+        width: 75%;
+        padding: 0 10rem 0 15rem;
+        text-align: left;
+    }
 }
