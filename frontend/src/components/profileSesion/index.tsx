@@ -15,18 +15,11 @@ interface FormData {
   fechaNacimiento: string;
   direccion: string;
   ciudad: string;
-  departamento: string;
 }
 
 interface City {
   cityId: number;
   cityName: string;
-}
-
-interface Department {
-  departmentId: number;
-  departmentName: string;
-  cities: City[];
 }
 
 const Formulario: React.FC = () => {
@@ -40,11 +33,9 @@ const Formulario: React.FC = () => {
     fechaNacimiento: "",
     direccion: "",
     ciudad: "",
-    departamento: "",
   });
 
   const [cities, setCities] = useState<City[]>([]);
-  const [departments, setDepartments] = useState<Department[]>([]);
 
   const navigate = useNavigate();
 
@@ -62,21 +53,7 @@ const Formulario: React.FC = () => {
       }
     };
 
-    const fetchDepartments = async () => {
-      try {
-        const response = await axios.get<Department[]>("/api/city/department", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setDepartments(response.data);
-      } catch (error) {
-        console.error("Error al obtener los departamentos:", error);
-      }
-    };
-
     fetchCities();
-    fetchDepartments();
   }, [token]);
 
   const handleChange = (
@@ -119,13 +96,6 @@ const Formulario: React.FC = () => {
       city: cities.find((city) => city.cityName === formData.ciudad) || {
         cityId: 0,
         cityName: formData.ciudad,
-      },
-      department: departments.find(
-        (dept) => dept.departmentName === formData.departamento
-      ) || {
-        departmentId: 0,
-        departmentName: formData.departamento,
-        cities: [],
       },
       user: {
         userId,
@@ -216,21 +186,6 @@ const Formulario: React.FC = () => {
           {cities.map((city) => (
             <option key={city.cityId} value={city.cityName}>
               {city.cityName}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>Departamento</label>
-        <select
-          name="departamento"
-          value={formData.departamento}
-          onChange={handleChange}
-        >
-          <option value="">Selecciona un departamento</option>
-          {departments.map((dept) => (
-            <option key={dept.departmentId} value={dept.departmentName}>
-              {dept.departmentName}
             </option>
           ))}
         </select>
