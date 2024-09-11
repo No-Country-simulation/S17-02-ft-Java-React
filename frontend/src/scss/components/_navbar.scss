@@ -1,6 +1,7 @@
 .navbar{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     gap: 2rem;
     border-bottom: .2rem solid #d9d9d9;
@@ -22,20 +23,32 @@
     background-color: transparent;
     font-size: 1.8rem;
     width: 100%;
-    max-width: 110rem;
+    max-width: 40rem;
     display: flex;
-    justify-content: space-between;
-    border-bottom: none
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+    border-bottom: none;
+    padding: 1rem;
+}
+.button-container-nav{
+    display: flex;
+    flex-direction: row;
+   align-items: center;
+   margin-top: 1rem;
+    gap: .5rem
+
 }
 
+
 .btn-navbar-pct{
-    width: 17.2rem;
+    width: 12.2rem;
     height: 4rem;
     border-radius: .8rem;
     border: none;
     text-transform: uppercase;
     background-color: $primaryColor-hover;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 500;
     margin: .2rem;
     color: $neutralColor-50;
@@ -47,13 +60,13 @@
 }
 
 .btn-navbar-prof{
-    width: 17.2rem;
+    width: 12.2rem;
     height: 4rem;
     text-transform: uppercase;
     border-radius: .8rem;
     border: .2rem solid $primaryColor-dark;
     background-color: $primaryColor-light-hover;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 500;
     margin: .2rem;
     color: $primaryColor-dark;
@@ -62,4 +75,26 @@
         cursor:pointer;
     background-color: $primaryColor-normal
 }
+}
+@media (min-width: 768px){ 
+    .btn-navbar-pct, 
+    .btn-navbar-prof{
+        width: 17.2rem;
+        height: 4rem;
+        font-size: 1.4rem;
+    }
+    .navbar{
+        flex-direction: row;
+    }
+    .bg-body-tertiar{
+        max-width: 110rem;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .button-container-nav{
+        margin: 0;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
 }

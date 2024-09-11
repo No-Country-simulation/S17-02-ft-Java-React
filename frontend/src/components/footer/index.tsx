@@ -4,18 +4,18 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <div> 
-      <a to ="/" className="badge">HeyDoc!
+      <a href="/" className="badge">HeyDoc!
         </a>  
       </div>
       <div className="footer-col d-flex flex-column">
-        <a href=""> acerca de <span>HeyDoc!</span></a>
-        <a href=""> Videoconsultas</a>
-        <a href=""> Innovación</a>
-        <a href=""> Ventajas y Beneficios</a>
+        <a href="/"> acerca de <span>HeyDoc!</span></a>
+        <a href="/"> Videoconsultas</a>
+        <a href="/"> Innovación</a>
+        <a href="/"> Ventajas y Beneficios</a>
       </div>
       <div className="footer-col d-flex flex-column">
-        <a href="">Opciones de Servicio</a>
-        <a href="">Contacto</a>
+        <a href="/">Opciones de Servicio</a>
+        <a href="/">Contacto</a>
       </div>
       <div className="footer-col d-flex flex-column">
         <a href="mailto:info@heydoc.com">info@heydoc.com</a>

@@ -35,14 +35,23 @@
         color:$neutralColor-100;
     }
 }
+.card-container-hero{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 5rem;
+    
+}
 .card{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:flex-end;
+    margin:1rem;
     margin-top: 5rem;
-width: 16.2rem;
-height: 14.9rem;
+width: 13.2rem;
+height: 10.9rem;
 border-radius: .8rem;
 border: .2rem solid $primaryColor-active;
 background-color: $primaryColor-normal;
@@ -52,15 +61,28 @@ transition: all .2s ease-in;
     background-color: $primaryColor-hover;
     border: none;
 }
-
 }
+
 .spec-name{
-    margin: -2.9rem auto;
+    margin: -4.0rem auto;
     color: $primaryColor-dark-active;
-    font-size: 2rem;    
+    font-size: 1.4rem;    
     font-weight: 500;
 
 }
+@media (min-width: 768px){ 
+    .card{
+     width: 16.2rem;
+ height: 14.9rem;
+ margin: 0;
+ margin-top: 5rem;
+    } 
+    .spec-name{
+        margin: -3.2rem auto;
+        font-size: 2rem;
+        
+    }
+ }
 .pediatrics{
 background-image: url(Specialists/pediatria.svg);
 background-repeat: no-repeat;
