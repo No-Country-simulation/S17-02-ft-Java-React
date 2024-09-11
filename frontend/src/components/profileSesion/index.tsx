@@ -58,34 +58,20 @@ const Formulario: React.FC = () => {
         });
         setCities(response.data);
       } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          console.error("Error al obtener las ciudades:", error.response.data);
-        } else {
-          console.error("Error desconocido:", error);
-        }
+        console.error("Error al obtener las ciudades:", error);
       }
     };
 
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get<Department[]>(
-          "/api/city/departament",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get<Department[]>("/api/city/department", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setDepartments(response.data);
       } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          console.error(
-            "Error al obtener los departamentos:",
-            error.response.data
-          );
-        } else {
-          console.error("Error desconocido:", error);
-        }
+        console.error("Error al obtener los departamentos:", error);
       }
     };
 
@@ -96,19 +82,12 @@ const Formulario: React.FC = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const { name, value, type, options } = e.target as HTMLSelectElement;
+    const { name, value, type } = e.target;
 
-    if (type === "select-one") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: (options as HTMLOptionsCollection)[0]?.value || "",
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "select-one" ? value : value,
+    }));
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -123,6 +102,7 @@ const Formulario: React.FC = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!token || !roleId || !username || !password || !userId) {
       console.error("Faltan el token, roleId, username, password o userId");
       return;
@@ -154,8 +134,8 @@ const Formulario: React.FC = () => {
         roles: [
           {
             roleId,
-            roleName: "string", // Reemplaza con el nombre del rol si está disponible
-            roleDescription: "string", // Reemplaza con la descripción del rol si está disponible
+            roleName: "string",
+            roleDescription: "string",
           },
         ],
       },
@@ -172,11 +152,7 @@ const Formulario: React.FC = () => {
       console.log("Perfil creado con éxito:", response.data);
       navigate("/");
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        console.error("Error al enviar la solicitud:", error.response.data);
-      } else {
-        console.error("Error desconocido:", error);
-      }
+      console.error("Error al enviar la solicitud:", error);
     }
   };
 
