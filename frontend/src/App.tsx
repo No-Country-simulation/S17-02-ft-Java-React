@@ -9,13 +9,13 @@ import axios from "axios";
 import "../src/css/App.scss";
 import Layout from "./layout/layout.tsx";
 import Home from "./components/home/index.tsx";
-import MercadoPago from "./components/mercadoPago/MercadoPago.tsx";
+import MercadoPago from "./components/mercadoPago/index.tsx";
 import ProfileComponent from "./Pages/Profile.tsx";
 import Booking from "./Pages/Booking.tsx";
 import DashboardLayout from "./layout/DashboardLayout";
-import DashboardHome from "./components/DashboardSpecialist/DashboardHome";
-import NuevaCita from "./components/DashboardSpecialist/NuevaCita.tsx";
-import ListaCitas from "./components/DashboardSpecialist/ListaCitas.tsx";
+import DashboardHome from "./components/DashboardSpecialist/Dashboard/index.tsx";
+import NuevaCita from "./components/DashboardSpecialist/NuevaCita/index.tsx";
+import ListaCitas from "./components/DashboardSpecialist/ListaCitas/index.tsx";
 import Profile from "./Pages/Profile.tsx";
 // import DashboardProfile from "./components/DashboardSpecialist/Profile";
 // import NuevaCita from "./components/DashboardSpecialist/NuevaCita";
@@ -35,16 +35,19 @@ const App: React.FC = () => {
           <Route path="/profile" element={<ProfileComponent />} />
           <Route path="/reservas" element={<Booking />} />
 
-          {/* Rutas del dashboard */} 
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<DashboardHome />} />
-        <Route path="home" element={<DashboardHome />} />
-        <Route path="perfil" element={<Profile />} />
-        <Route path="nueva-cita" element={<NuevaCita />} />
-        <Route path="ver-citas" element={<ListaCitas />} />
-      </Route>
+          {/* Rutas del dashboard */}
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="home" element={<DashboardHome />} />
+            <Route path="perfil" element={<Profile />} />
+            <Route path="nueva-cita" element={<NuevaCita />} />
+            <Route path="ver-citas" element={<ListaCitas />} />
+          </Route>
 
-          <Route path="/registerespecialist" element={<RegisterEspecialist />} />
+          <Route
+            path="/registerespecialist"
+            element={<RegisterEspecialist />}
+          />
           <Route path="/registeruser" element={<RegisterUser />} />
           <Route path="/profilesesion" element={<ProfileSesion />} />
         </Routes>

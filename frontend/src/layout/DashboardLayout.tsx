@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/DashboardSpecialist/Sidebar";
+import Sidebar from "../components/DashboardSpecialist/SideBar";
 
 const DashboardLayout = () => {
   return (
@@ -15,4 +15,3 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
-

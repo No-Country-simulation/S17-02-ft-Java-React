@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import BookingForm from "../components/Booking/BookingForm";
+import BookingForm from "../components/Booking";
 import { UserContext } from "../context/userContext";
 
 const Booking = () => {
@@ -10,7 +10,7 @@ const Booking = () => {
   }
 
   const { user } = userContext;
-  
+
   return (
     <section className="container p-5 d-flex flex-column align-items-center">
       <div className="mb-5">
