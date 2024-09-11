@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface IBookingService extends ICRUDService<Booking, UUID> {
     Page<IBookingProjection> findAllByUserId(@CurrentUser UserPrincipal user, int page, int size, String sortField, String sortOrder);
     Booking save(Booking booking, @CurrentUser UserPrincipal user);
+
+    Booking update(Booking booking, @CurrentUser UserPrincipal user);
 }

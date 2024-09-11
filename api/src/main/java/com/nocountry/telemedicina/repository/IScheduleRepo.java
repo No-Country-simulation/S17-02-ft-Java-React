@@ -24,4 +24,15 @@ public interface IScheduleRepo extends IGenericRepo<Schedule, UUID> {
 
     @Query(value = "SELECT * FROM schedules s WHERE s.specialist_id = :specialistId AND s.active = true", nativeQuery = true)
     List<Schedule> findSchedulesBySpecialistId(@Param("specialistId") UUID specialistId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE schedules SET  active = true WHERE schedule_id = :scheduleId", nativeQuery = true)
+    void ActiveScheduleById(@Param("scheduleId") UUID scheduleId);
+
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE schedules SET  active = false WHERE schedule_id = :scheduleId", nativeQuery = true)
+    void desactiveScheduleById(@Param("scheduleId") UUID scheduleId);
 }

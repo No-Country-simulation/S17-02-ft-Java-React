@@ -78,11 +78,9 @@ public class BookingController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
-    public ResponseEntity<Void> save(@Valid @RequestBody BookingRequestDTO dto, @CurrentUser UserPrincipal user) {
+    public ResponseEntity<Booking> save(@Valid @RequestBody BookingRequestDTO dto, @CurrentUser UserPrincipal user) {
         Booking obj = service.save(mapper.toBooking(dto), user);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getBookingId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(201).body(obj);
     }
 
     /**
