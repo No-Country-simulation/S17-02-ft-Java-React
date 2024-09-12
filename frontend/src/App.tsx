@@ -17,6 +17,7 @@ import DashboardHome from "./components/DashboardSpecialist/Dashboard/index.tsx"
 import NuevaCita from "./components/DashboardSpecialist/NuevaCita/index.tsx";
 import ListaCitas from "./components/DashboardSpecialist/ListaCitas/index.tsx";
 import Profile from "./Pages/Profile.tsx";
+import UpdateProfile from "./components/profile/UpdateProfile/index.tsx";
 // import DashboardProfile from "./components/DashboardSpecialist/Profile";
 // import NuevaCita from "./components/DashboardSpecialist/NuevaCita";
 // import VerCitas from "./components/DashboardSpecialist/VerCitas";
@@ -43,6 +44,7 @@ const App: React.FC = () => {
             <Route path="nueva-cita" element={<NuevaCita />} />
             <Route path="ver-citas" element={<ListaCitas />} />
           </Route>
+          <Route path="/updateprofile" element={<UpdateProfile />} />
 
           <Route
             path="/registerespecialist"

@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileInfo from "../components/profile/ProfileInfo";
+import ProfileInfo from "../components/profile/profileInfo";
 import PaymentMethod from "../components/profile/PaymentMethod";
 import ProfileActions from "../components/profile/ProfileActions";
 import Setting from "../components/profile/Setting";
