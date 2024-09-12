@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/context.tsx";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface City {
   cityId: number;
   cityName: string;
+}
+
+interface Department {
+  departmentId: number;
+  departmentName: string;
 }
 
 interface User {
@@ -42,7 +48,7 @@ const ProfileUpdate: React.FC = () => {
     birth: "",
     address: "",
     city: {
-      cityId: 1, // Default value for cityId
+      cityId: 2, // Default value for cityId
       cityName: "",
     },
     user: {
@@ -52,9 +58,12 @@ const ProfileUpdate: React.FC = () => {
       roles: [],
     },
   });
+  const [cities, setCities] = useState<City[]>([]);
+  const [, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     if (!token) {
@@ -63,6 +72,7 @@ const ProfileUpdate: React.FC = () => {
       return;
     }
 
+    // Fetch profile data
     axios
       .get("/api/profiles/my-profile", {
         headers: {
@@ -88,6 +98,25 @@ const ProfileUpdate: React.FC = () => {
         setError("Failed to fetch profile data");
         setLoading(false);
       });
+
+    // Fetch departments and cities
+    axios
+      .get("/api/department")
+      .then((response) => {
+        setDepartments(response.data);
+      })
+      .catch(() => {
+        setError("Failed to fetch departments");
+      });
+
+    axios
+      .get("/api/city")
+      .then((response) => {
+        setCities(response.data);
+      })
+      .catch(() => {
+        setError("Failed to fetch cities");
+      });
   }, [token]);
 
   const handleChange = (
@@ -100,14 +129,12 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const cityId = Number(e.target.value);
+    const selectedCity = cities.find((city) => city.cityId === cityId);
     setFormData((prev) => ({
       ...prev,
-      city: {
-        ...prev.city,
-        [name]: name === "cityId" ? Number(value) : value,
-      },
+      city: selectedCity || { cityId: 1, cityName: "" },
     }));
   };
 
@@ -160,6 +187,7 @@ const ProfileUpdate: React.FC = () => {
       .then((response) => {
         setSuccess("Profile updated successfully");
         setProfile(response.data);
+        navigate("/dashboard/perfil"); // Redirect to /dashboard/perfil
       })
       .catch(() => {
         setError("Failed to update profile data");
@@ -172,12 +200,12 @@ const ProfileUpdate: React.FC = () => {
 
   return (
     <div>
-      <h2>Update Profile</h2>
+      <h2>Actualizar Perfil</h2>
       {success && <p>{success}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>
-            First Name:
+            Nombre:
             <input
               type="text"
               name="profileName"
@@ -188,7 +216,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Last Name:
+            Apellido:
             <input
               type="text"
               name="profileLastname"
@@ -199,7 +227,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Document Type:
+            Tipo de Documento:
             <input
               type="text"
               name="documentType"
@@ -210,7 +238,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Document Number:
+            N° de Documento:
             <input
               type="text"
               name="documentNumber"
@@ -221,7 +249,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Birth Date:
+            Fecha de Nacimiento:
             <input
               type="date"
               name="birth"
@@ -232,7 +260,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Address:
+            Direccion:
             <input
               type="text"
               name="address"
@@ -243,29 +271,23 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            City ID:
-            <input
-              type="number"
+            Departamento:
+            <select
               name="cityId"
-              value={formData.city.cityId || ""}
+              value={formData.city.cityId}
               onChange={handleCityChange}
-            />
+            >
+              {cities.map((city) => (
+                <option key={city.cityId} value={city.cityId}>
+                  {city.cityName}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div>
           <label>
-            City Name:
-            <input
-              type="text"
-              name="cityName"
-              value={formData.city.cityName || ""}
-              onChange={handleCityChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Avatar URL:
+            Imagen de Perfil:
             <input
               type="text"
               name="avatarUrl"
@@ -274,7 +296,7 @@ const ProfileUpdate: React.FC = () => {
             />
           </label>
         </div>
-        <button type="submit">Update Profile</button>
+        <button type="submit">Actualizar</button>
       </form>
     </div>
   );

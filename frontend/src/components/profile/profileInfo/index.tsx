@@ -9,7 +9,7 @@ interface ProfileData {
   profileLastname: string;
   documentType: string;
   documentNumber: string;
-  avatarUrl: string;
+  avatarUrl?: string; // Optional field
   birth: string;
   address: string;
   cityName: string;
@@ -66,11 +66,21 @@ const ProfileInfo: React.FC = () => {
         {profile.documentType} • {profile.documentNumber}
       </p>
       <p>Fecha de nacimiento: {profile.birth}</p>
-      <p>Address: {profile.address}</p>
-      <p>City: {profile.cityName}</p>
+      <p>Direccion: {profile.address}</p>
+      <p>Departamento: {profile.cityName}</p>
       <p>Email: {profile.email}</p>
-      {profile.avatarUrl && (
-        <img src={profile.avatarUrl} alt="Profile Avatar" />
+      {profile.avatarUrl ? (
+        <img
+          src={profile.avatarUrl}
+          alt="Foto de Perfil"
+          style={{ width: 100, height: 100, borderRadius: "50%" }}
+        />
+      ) : (
+        <img
+          src="/path/to/placeholder-image.png"
+          alt="Placeholder Avatar"
+          style={{ width: 100, height: 100, borderRadius: "50%" }}
+        />
       )}
       <button onClick={handleEditProfile}>Editar perfil</button>
     </div>
