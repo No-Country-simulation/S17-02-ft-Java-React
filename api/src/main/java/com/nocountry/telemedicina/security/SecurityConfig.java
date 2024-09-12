@@ -198,7 +198,7 @@ public class SecurityConfig {
         CorsConfigurationSource corsConfigurationSource() {
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowCredentials(true);
-                    configuration.setAllowedOrigins(List.of("http://localhost:5173","https://heydoc.vercel.app"));
+                    configuration.setAllowedOrigins(List.of("http://localhost:5173","https://heydoc.vercel.app","https://heydoc-develop.netlify.app"));
                 configuration.setAllowedMethods(
                                 Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
                 configuration.setAllowedHeaders(List.of("*"));
