@@ -1,7 +1,9 @@
+import Home from "../../home/index.tsx";
+
 const DashboardHome = () => {
   return (
     <div className="mt-5">
-      <h1>Dashboard Home</h1>
+      <Home />
     </div>
   );
 };

@@ -25,15 +25,7 @@ const NavbarEspecialista: React.FC = () => {
 
         <div className="d-flex gap-2">
           <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-            <Link to="/">
-              <button className="btn-navbar-prof">Inicio</button>
-            </Link>
-            <Link to="/especialistas">
-              <button className="btn-navbar-prof">Especialistas</button>
-            </Link>
-            <Link to="/citas">
-              <button className="btn-navbar-prof">Citas</button>
-            </Link>
+            {/* Removed the "Inicio", "Especialistas", and "Citas" buttons */}
             <Link to="/historial">
               <button className="btn-navbar-prof">Historial</button>
             </Link>

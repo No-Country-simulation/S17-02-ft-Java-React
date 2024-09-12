@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/DashboardSpecialist/Sidebar";
+import Sidebar from "../../components/DashboardSpecialist/SideBar";
 
 const DashboardLayout = () => {
    // const [token, setTokenState] = useState<string | null>(
@@ -22,4 +22,3 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
-
