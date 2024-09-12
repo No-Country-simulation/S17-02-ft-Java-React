@@ -3,7 +3,7 @@
 
 ## Descripción
 
-[Nombre del Proyecto] es una aplicación web moderna que utiliza **Spring Boot** para el backend, **ReactJS** para el frontend, y **PostgreSQL** para la base de datos. La aplicación está diseñada para ofrecer una experiencia de usuario intuitiva y eficiente, utilizando **Bootstrap** para el diseño responsivo y **Figma** para los wireframes. El equipo usa **Postman** para pruebas y documentación de la API.
+HeyDoc es una aplicación web moderna que utiliza **Spring Boot** para el backend, **ReactJS** para el frontend, y **PostgreSQL** para la base de datos. La aplicación está diseñada para ofrecer una experiencia de usuario intuitiva y eficiente, utilizando **Bootstrap** para el diseño responsivo y **Figma** para los wireframes. El equipo usa **Postman** para pruebas y documentación de la API.
 
 ## Tecnologías
 
@@ -16,10 +16,47 @@
 
 ## Estructura del Equipo
 
-- **Backends**: 4
-- **Frontend**: 4
-- **UX/UI Designer**: 1
-- **QA**: 1
+## Backends:
+#### Tech Stack
+<div>
+<img src="https://www.vectorlogo.zone/logos/java/java-icon.svg" width="40" height="40"/>
+<img src="https://www.vectorlogo.zone/logos/springio/springio-icon.svg" width="40" height="40"/>
+</div>
+
+#### 🧑‍💻 Developers:
+
+| <img src="https://avatars.githubusercontent.com/u/30301847?v=4" width=50>| <img src="https://avatars.githubusercontent.com/u/125727012?v=4" width=50>|
+|:-:|:-:|
+| **Anderson Cusma**| **Catriel Escobar**|
+| <a href="https://github.com/anderson2093"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a><a href="https://www.linkedin.com/in/anderson-cusma-vasquez/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> | <a href="https://github.com/Catriel-Escobar"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/catrielescobar/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> |
+
+
+| <img src="https://avatars.githubusercontent.com/u/16294803?v=4" width=50>| 
+|:-:|
+| **Rogelio Olarte**|
+| <a href="https://github.com/rogelioolarte"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a><a href="https://www.linkedin.com/in/rogelio-olarte"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a> 
+
+## Frontend
+
+#### Tech Stack
+
+![React](https://img.shields.io/badge/React-61dbfb?style=for-the-badge&logo=React&logoColor=black)
+![Visual Studio Code](https://img.shields.io/badge/Visual_Studio_Code-22A7F2?style=for-the-badge&logo=Visual%20studio&logoColor=white)
+
+## UX/UI Designer
+
+#### Tech Stack
+
+![Figma](https://img.shields.io/badge/Figma-00000?style=for-the-badge&logo=Figma&logoColor=black)
+
+https://media.licdn.com/dms/image/v2/D4D03AQGCU-3QKanPFg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1699392640828?e=1731542400&v=beta&t=YDmaW0ITeL6MQ61tOplVJdHPT9Vd6tSyGEWDHoA9dII
+#### 🧑‍💻 Designers:
+
+| <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCU-3QKanPFg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1699392640828?e=1731542400&v=beta&t=YDmaW0ITeL6MQ61tOplVJdHPT9Vd6tSyGEWDHoA9dII" width=50>| 
+|:-:
+| **Nicolás García Tortosa**
+| <a href="https://www.behance.net/nicotortosa"><img src="https://img.shields.io/badge/behance-%23121011.svg?&style=for-the-badge&logo=behance&logoColor=white"/></a> <a href="https://www.linkedin.com/in/nicol%C3%A1s-garc%C3%ADa-tortosa-28b392190/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+## QA
 
 ## Instalación y Despliegue con Docker
 
