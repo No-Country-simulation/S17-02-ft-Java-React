@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/context.tsx";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 interface City {
   cityId: number;
@@ -11,6 +11,7 @@ interface City {
 interface Department {
   departmentId: number;
   departmentName: string;
+  cities: City[];
 }
 
 interface User {
@@ -48,7 +49,7 @@ const ProfileUpdate: React.FC = () => {
     birth: "",
     address: "",
     city: {
-      cityId: 2, // Default value for cityId
+      cityId: 1, // Default value for cityId
       cityName: "",
     },
     user: {
@@ -59,11 +60,13 @@ const ProfileUpdate: React.FC = () => {
     },
   });
   const [cities, setCities] = useState<City[]>([]);
-  const [, setDepartments] = useState<Department[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [filteredCities, setFilteredCities] = useState<City[]>([]);
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -100,24 +103,37 @@ const ProfileUpdate: React.FC = () => {
       });
 
     // Fetch departments and cities
-    axios
-      .get("/api/department")
-      .then((response) => {
-        setDepartments(response.data);
-      })
-      .catch(() => {
-        setError("Failed to fetch departments");
-      });
+    const fetchCitiesAndDepartments = async () => {
+      try {
+        const [citiesResponse, departmentsResponse] = await Promise.all([
+          axios.get<City[]>("/api/city", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get<Department[]>("/api/department", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
 
-    axios
-      .get("/api/city")
-      .then((response) => {
-        setCities(response.data);
-      })
-      .catch(() => {
-        setError("Failed to fetch cities");
-      });
+        setCities(citiesResponse.data);
+        setDepartments(departmentsResponse.data);
+      } catch (error) {
+        setError("Failed to fetch cities or departments");
+      }
+    };
+
+    fetchCitiesAndDepartments();
   }, [token]);
+
+  useEffect(() => {
+    const selectedDept = departments.find(
+      (dept) => dept.departmentName === selectedDepartment
+    );
+    setFilteredCities(selectedDept ? selectedDept.cities : []);
+  }, [selectedDepartment, departments]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -126,6 +142,15 @@ const ProfileUpdate: React.FC = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const departmentName = e.target.value;
+    setSelectedDepartment(departmentName);
+    setFormData((prev) => ({
+      ...prev,
+      city: { cityId: 1, cityName: "" },
     }));
   };
 
@@ -271,13 +296,34 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Departamento:
+            Provincia:
+            <select
+              name="department"
+              value={selectedDepartment}
+              onChange={handleDepartmentChange}
+            >
+              <option value="">Selecciona una Provincia</option>
+              {departments.map((department) => (
+                <option
+                  key={department.departmentId}
+                  value={department.departmentName}
+                >
+                  {department.departmentName}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            Ciudad:
             <select
               name="cityId"
               value={formData.city.cityId}
               onChange={handleCityChange}
             >
-              {cities.map((city) => (
+              <option value="">Selecciona una ciudad</option>
+              {filteredCities.map((city) => (
                 <option key={city.cityId} value={city.cityId}>
                   {city.cityName}
                 </option>
