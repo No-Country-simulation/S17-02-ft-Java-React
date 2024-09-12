@@ -49,7 +49,6 @@ HeyDoc es una aplicación web moderna que utiliza **Spring Boot** para el backen
 
 ![Figma](https://img.shields.io/badge/Figma-00000?style=for-the-badge&logo=Figma&logoColor=black)
 
-https://media.licdn.com/dms/image/v2/D4D03AQGCU-3QKanPFg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1699392640828?e=1731542400&v=beta&t=YDmaW0ITeL6MQ61tOplVJdHPT9Vd6tSyGEWDHoA9dII
 #### 🧑‍💻 Designers:
 
 | <img src="https://media.licdn.com/dms/image/v2/D4D03AQGCU-3QKanPFg/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1699392640828?e=1731542400&v=beta&t=YDmaW0ITeL6MQ61tOplVJdHPT9Vd6tSyGEWDHoA9dII" width=50>| 
