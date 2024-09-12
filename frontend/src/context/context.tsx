@@ -6,24 +6,27 @@ import React, {
   useEffect,
 } from "react";
 
+// Define the context type
 interface AuthContextType {
   token: string | null;
   role: string | null;
   roleId: string | null;
   username: string | null;
   password: string | null;
-  userId: string | null; // Add userId here
+  userId: string | null;
   setToken: (token: string | null) => void;
   setRole: (role: string | null) => void;
   setRoleId: (roleId: string | null) => void;
   setUsername: (username: string | null) => void;
   setPassword: (password: string | null) => void;
-  setUserId: (userId: string | null) => void; // Add setUserId here
+  setUserId: (userId: string | null) => void;
   logout: () => void;
 }
 
+// Create context with an undefined initial value
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Provider component
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -42,10 +45,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const [password, setPasswordState] = useState<string | null>(
     localStorage.getItem("password") || null
   );
-  const [userId, setUserIdState] = useState<string | null>( // Add userId state here
+  const [userId, setUserIdState] = useState<string | null>(
     localStorage.getItem("userId") || null
   );
 
+  // Setters
   const setToken = (token: string | null) => {
     localStorage.setItem("token", token || "");
     setTokenState(token);
@@ -72,33 +76,34 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const setUserId = (userId: string | null) => {
-    // Add setUserId function here
     localStorage.setItem("userId", userId || "");
     setUserIdState(userId);
   };
 
+  // Logout function
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("roleId");
     localStorage.removeItem("username");
     localStorage.removeItem("password");
-    localStorage.removeItem("userId"); // Remove userId from localStorage
+    localStorage.removeItem("userId");
     setTokenState(null);
     setRoleState(null);
     setRoleIdState(null);
     setUsernameState(null);
     setPasswordState(null);
-    setUserIdState(null); // Clear userId state
+    setUserIdState(null);
   };
 
+  // Initialize state on mount
   useEffect(() => {
     setTokenState(localStorage.getItem("token") || null);
     setRoleState(localStorage.getItem("role") || null);
     setRoleIdState(localStorage.getItem("roleId") || null);
     setUsernameState(localStorage.getItem("username") || null);
     setPasswordState(localStorage.getItem("password") || null);
-    setUserIdState(localStorage.getItem("userId") || null); // Initialize userId state
+    setUserIdState(localStorage.getItem("userId") || null);
   }, []);
 
   return (
@@ -109,13 +114,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         roleId,
         username,
         password,
-        userId, // Provide userId
+        userId,
         setToken,
         setRole,
         setRoleId,
         setUsername,
         setPassword,
-        setUserId, // Provide setUserId
+        setUserId,
         logout,
       }}
     >
@@ -124,6 +129,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// Custom hook to use the context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

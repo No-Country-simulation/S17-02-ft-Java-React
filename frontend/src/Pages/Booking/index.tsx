@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import BookingForm from "../components/Booking";
-import { UserContext } from "../context/userContext";
+import BookingForm from "../../components/Booking";
+import { UserContext } from "../../context/userContext";
 
 const Booking = () => {
   const userContext = useContext(UserContext);

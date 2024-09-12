@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Footer } from "../components/footer";
-import NavBar from "../components/navbar";
+import { Footer } from "../components/footer/index.tsx";
+import NavBar from "../components/navbar/index.tsx";
 import NavbarPacientes from "../components/patientsNavbar/index.tsx";
 import NavbarEspecialista from "../components/specialistsNavbar/index.tsx";
 import { useAuth } from "../context/context.tsx";

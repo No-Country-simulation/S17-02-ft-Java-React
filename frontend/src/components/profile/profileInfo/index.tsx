@@ -38,10 +38,12 @@ const ProfileInfo: React.FC = () => {
         },
       })
       .then((response) => {
+        console.log("Response data:", response.data); // Log response data
         setProfile(response.data);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error("Error fetching profile data:", err); // Log any errors
         setError("Failed to fetch profile data");
         setLoading(false);
       });
@@ -63,11 +65,13 @@ const ProfileInfo: React.FC = () => {
       <p>
         {profile.documentType} • {profile.documentNumber}
       </p>
-      <p>Born on: {profile.birth}</p>
+      <p>Fecha de nacimiento: {profile.birth}</p>
       <p>Address: {profile.address}</p>
       <p>City: {profile.cityName}</p>
       <p>Email: {profile.email}</p>
-      <img src={profile.avatarUrl} alt="Profile Avatar" />
+      {profile.avatarUrl && (
+        <img src={profile.avatarUrl} alt="Profile Avatar" />
+      )}
       <button onClick={handleEditProfile}>Editar perfil</button>
     </div>
   );

@@ -31,7 +31,7 @@ interface ProfileData {
 }
 
 const ProfileUpdate: React.FC = () => {
-  const { token } = useAuth(); // Get token from AuthContext
+  const { token } = useAuth();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [formData, setFormData] = useState<ProfileData>({
     profileName: "",
@@ -42,20 +42,14 @@ const ProfileUpdate: React.FC = () => {
     birth: "",
     address: "",
     city: {
-      cityId: 0,
+      cityId: 1, // Default value for cityId
       cityName: "",
     },
     user: {
       userId: "",
       username: "",
       password: "",
-      roles: [
-        {
-          roleId: "",
-          roleName: "",
-          roleDescription: "",
-        },
-      ],
+      roles: [],
     },
   });
   const [loading, setLoading] = useState(true);
@@ -76,8 +70,18 @@ const ProfileUpdate: React.FC = () => {
         },
       })
       .then((response) => {
-        setProfile(response.data);
-        setFormData(response.data); // Initialize formData with profile data
+        const data = response.data;
+        setProfile(data);
+        setFormData({
+          ...data,
+          city: data.city || { cityId: 1, cityName: "" },
+          user: data.user || {
+            userId: "",
+            username: "",
+            password: "",
+            roles: [],
+          },
+        });
         setLoading(false);
       })
       .catch(() => {
@@ -96,18 +100,31 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleNestedChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    section: keyof ProfileData
-  ) => {
+  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [section]: {
-        ...(prev[section] as any), // Ensure prev[section] is treated as an object
-        [name]: value,
+      city: {
+        ...prev.city,
+        [name]: name === "cityId" ? Number(value) : value,
       },
     }));
+  };
+
+  const validateForm = () => {
+    if (
+      !formData.profileName ||
+      !formData.profileLastname ||
+      !formData.documentType ||
+      !formData.documentNumber ||
+      !formData.address ||
+      !formData.city.cityId
+    ) {
+      setError("Please fill out all required fields");
+      return false;
+    }
+    setError(null);
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -118,8 +135,24 @@ const ProfileUpdate: React.FC = () => {
       return;
     }
 
+    if (!validateForm()) {
+      return;
+    }
+
+    // Prepare payload ensuring that optional fields can be empty
+    const payload = {
+      profileName: formData.profileName || undefined,
+      profileLastname: formData.profileLastname || undefined,
+      documentType: formData.documentType || undefined,
+      documentNumber: formData.documentNumber || undefined,
+      avatarUrl: formData.avatarUrl || undefined,
+      birth: formData.birth || undefined,
+      address: formData.address || undefined,
+      city: formData.city.cityId ? { cityId: formData.city.cityId } : undefined,
+    };
+
     axios
-      .put("/api/profiles/update-profile", formData, {
+      .put("/api/profiles/update-profile", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -214,8 +247,8 @@ const ProfileUpdate: React.FC = () => {
             <input
               type="number"
               name="cityId"
-              value={formData.city?.cityId || ""} // Ensure cityId is defined
-              onChange={(e) => handleNestedChange(e, "city")}
+              value={formData.city.cityId || ""}
+              onChange={handleCityChange}
             />
           </label>
         </div>
@@ -225,8 +258,8 @@ const ProfileUpdate: React.FC = () => {
             <input
               type="text"
               name="cityName"
-              value={formData.city?.cityName || ""} // Ensure cityName is defined
-              onChange={(e) => handleNestedChange(e, "city")}
+              value={formData.city.cityName || ""}
+              onChange={handleCityChange}
             />
           </label>
         </div>
@@ -241,29 +274,6 @@ const ProfileUpdate: React.FC = () => {
             />
           </label>
         </div>
-        <div>
-          <label>
-            Username:
-            <input
-              type="text"
-              name="username"
-              value={formData.user?.username || ""} // Ensure username is defined
-              onChange={(e) => handleNestedChange(e, "user")}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
-            <input
-              type="password"
-              name="password"
-              value={formData.user?.password || ""} // Ensure password is defined
-              onChange={(e) => handleNestedChange(e, "user")}
-            />
-          </label>
-        </div>
-        {/* Add additional user fields and role handling if necessary */}
         <button type="submit">Update Profile</button>
       </form>
     </div>
