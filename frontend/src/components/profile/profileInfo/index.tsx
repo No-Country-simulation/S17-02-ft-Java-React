@@ -77,7 +77,7 @@ const ProfileInfo: React.FC = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   if (!profile) return <p>No profile data available</p>;
-
+console.log(profile )
   return (
     <div className="bar-card">
       <div className="img-container">

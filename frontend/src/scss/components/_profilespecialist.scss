@@ -7,6 +7,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 2rem 0;
+    transition: all .1s ease-in-out;
+    &:hover{
+        background-color: $primaryColor-dark-hover;
+    }
 }
 .img-container{
 padding:0 1.6rem;
@@ -27,15 +32,18 @@ padding:0 1.6rem;
         }}
 }
 
-.edit-profile{
+.edit-profile, .ver-mas{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 8rem;
     height: 4rem;
     padding:1rem;
     border-radius: .8rem;
-    color: $primaryColor-light-light;
+    color: #FFF;
     background-color: $primaryColor-hover;
-    font-size: 1.2rem;
-    font-weight: 300;
+    font-size: 1rem;
+    font-weight: 500;
     border:none;
     text-transform: uppercase;
     transition: all .1s ease-in;

@@ -11,7 +11,7 @@ const ProfileActions: React.FC = () => {
   const { user } = context;
 
   return (
-    <div>
+    <div className="bar-card">
       <h3>Mis turnos</h3>
       {user.appointments.length > 0 ? (
         <ul>
@@ -20,9 +20,9 @@ const ProfileActions: React.FC = () => {
           ))}
         </ul>
       ) : (
-        <p>No tienes turnos reservados.</p>
+        <p>Sin reservas</p>
       )}
-      <button>Ver más</button>
+      <button className="ver-mas">Ver más</button>
     </div>
   );
 };
