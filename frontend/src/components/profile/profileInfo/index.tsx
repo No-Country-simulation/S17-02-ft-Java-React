@@ -9,8 +9,8 @@ interface ProfileData {
   profileLastname: string;
   documentType: string;
   documentNumber: string;
-  avatarUrl: string;
-  birth: string; // Birthdate in format YYYY-MM-DD
+  avatarUrl?: string; // Optional field
+  birth: string;
   address: string;
   cityName: string;
   email: string;

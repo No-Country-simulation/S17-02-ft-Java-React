@@ -7,7 +7,7 @@ const NavbarEspecialista: React.FC = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate("/");
+    navigate("/dashboard/home");
   };
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

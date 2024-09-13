@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/context.tsx";
+import { useNavigate } from "react-router-dom";
 
 interface City {
   cityId: number;
   cityName: string;
+}
+
+interface Department {
+  departmentId: number;
+  departmentName: string;
+  cities: City[];
 }
 
 interface User {
@@ -52,9 +59,14 @@ const ProfileUpdate: React.FC = () => {
       roles: [],
     },
   });
+  const [cities, setCities] = useState<City[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [filteredCities, setFilteredCities] = useState<City[]>([]);
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {
@@ -63,6 +75,7 @@ const ProfileUpdate: React.FC = () => {
       return;
     }
 
+    // Fetch profile data
     axios
       .get("/api/profiles/my-profile", {
         headers: {
@@ -88,7 +101,39 @@ const ProfileUpdate: React.FC = () => {
         setError("Failed to fetch profile data");
         setLoading(false);
       });
+
+    // Fetch departments and cities
+    const fetchCitiesAndDepartments = async () => {
+      try {
+        const [citiesResponse, departmentsResponse] = await Promise.all([
+          axios.get<City[]>("/api/city", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+          axios.get<Department[]>("/api/department", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }),
+        ]);
+
+        setCities(citiesResponse.data);
+        setDepartments(departmentsResponse.data);
+      } catch (error) {
+        setError("Failed to fetch cities or departments");
+      }
+    };
+
+    fetchCitiesAndDepartments();
   }, [token]);
+
+  useEffect(() => {
+    const selectedDept = departments.find(
+      (dept) => dept.departmentName === selectedDepartment
+    );
+    setFilteredCities(selectedDept ? selectedDept.cities : []);
+  }, [selectedDepartment, departments]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -100,14 +145,21 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const departmentName = e.target.value;
+    setSelectedDepartment(departmentName);
     setFormData((prev) => ({
       ...prev,
-      city: {
-        ...prev.city,
-        [name]: name === "cityId" ? Number(value) : value,
-      },
+      city: { cityId: 1, cityName: "" },
+    }));
+  };
+
+  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const cityId = Number(e.target.value);
+    const selectedCity = cities.find((city) => city.cityId === cityId);
+    setFormData((prev) => ({
+      ...prev,
+      city: selectedCity || { cityId: 1, cityName: "" },
     }));
   };
 
@@ -160,6 +212,7 @@ const ProfileUpdate: React.FC = () => {
       .then((response) => {
         setSuccess("Profile updated successfully");
         setProfile(response.data);
+        navigate("/dashboard/perfil"); // Redirect to /dashboard/perfil
       })
       .catch(() => {
         setError("Failed to update profile data");
@@ -172,12 +225,12 @@ const ProfileUpdate: React.FC = () => {
 
   return (
     <div>
-      <h2>Update Profile</h2>
+      <h2>Actualizar Perfil</h2>
       {success && <p>{success}</p>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>
-            First Name:
+            Nombre:
             <input
               type="text"
               name="profileName"
@@ -188,7 +241,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Last Name:
+            Apellido:
             <input
               type="text"
               name="profileLastname"
@@ -199,7 +252,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Document Type:
+            Tipo de Documento:
             <input
               type="text"
               name="documentType"
@@ -210,7 +263,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Document Number:
+            N° de Documento:
             <input
               type="text"
               name="documentNumber"
@@ -221,7 +274,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Birth Date:
+            Fecha de Nacimiento:
             <input
               type="date"
               name="birth"
@@ -232,7 +285,7 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            Address:
+            Direccion:
             <input
               type="text"
               name="address"
@@ -243,29 +296,44 @@ const ProfileUpdate: React.FC = () => {
         </div>
         <div>
           <label>
-            City ID:
-            <input
-              type="number"
+            Provincia:
+            <select
+              name="department"
+              value={selectedDepartment}
+              onChange={handleDepartmentChange}
+            >
+              <option value="">Selecciona una Provincia</option>
+              {departments.map((department) => (
+                <option
+                  key={department.departmentId}
+                  value={department.departmentName}
+                >
+                  {department.departmentName}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <div>
+          <label>
+            Ciudad:
+            <select
               name="cityId"
-              value={formData.city.cityId || ""}
+              value={formData.city.cityId}
               onChange={handleCityChange}
-            />
+            >
+              <option value="">Selecciona una ciudad</option>
+              {filteredCities.map((city) => (
+                <option key={city.cityId} value={city.cityId}>
+                  {city.cityName}
+                </option>
+              ))}
+            </select>
           </label>
         </div>
         <div>
           <label>
-            City Name:
-            <input
-              type="text"
-              name="cityName"
-              value={formData.city.cityName || ""}
-              onChange={handleCityChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Avatar URL:
+            Imagen de Perfil:
             <input
               type="text"
               name="avatarUrl"
@@ -274,7 +342,7 @@ const ProfileUpdate: React.FC = () => {
             />
           </label>
         </div>
-        <button type="submit">Update Profile</button>
+        <button type="submit">Actualizar</button>
       </form>
     </div>
   );

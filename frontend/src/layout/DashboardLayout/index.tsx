@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Sidebar from "../../components/DashboardSpecialist/SideBar";
+import SidebarClient from "../../components/DashboardClient/SidebarClient";
+
 
 const DashboardLayout = () => {
    // const [token, setTokenState] = useState<string | null>(
@@ -12,7 +13,7 @@ const DashboardLayout = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Sidebar />
+        <SidebarClient />
         <div className="col bg-light p-4">
           <Outlet />
         </div>
