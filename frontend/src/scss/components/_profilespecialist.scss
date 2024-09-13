@@ -1,0 +1,48 @@
+.bar-card{
+    background-color: $primaryColor-dark;
+    max-width: 80rem;
+    height: 8.6rem;
+    padding: .8rem 1.6rem;
+    border-radius: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.img-container{
+padding:0 1.6rem;
+    &{img{
+        width: 6rem;
+        height: 6rem;
+    }}
+}
+.info-container{
+    display: flex;
+    flex-direction: column;
+    color:$primaryColor-light-light;
+    &{h2{font-weight: 500;
+        font-size: 1.8rem;}
+        p{
+            font-size: 1.6rem;
+            font-weight: 300;
+        }}
+}
+
+.edit-profile{
+    width: 8rem;
+    height: 4rem;
+    padding:1rem;
+    border-radius: .8rem;
+    color: $primaryColor-light-light;
+    background-color: $primaryColor-hover;
+    font-size: 1.2rem;
+    font-weight: 300;
+    border:none;
+    text-transform: uppercase;
+    transition: all .1s ease-in;
+    &:hover{
+        background-color: $primaryColor-active;
+        cursor: pointer;
+        color: #128e8f;
+        border: 3px solid #128e8f;
+    }
+}

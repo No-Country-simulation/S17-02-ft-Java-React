@@ -10,7 +10,7 @@ interface ProfileData {
   documentType: string;
   documentNumber: string;
   avatarUrl: string;
-  birth: string;
+  birth: string; // Birthdate in format YYYY-MM-DD
   address: string;
   cityName: string;
   email: string;
@@ -38,7 +38,6 @@ const ProfileInfo: React.FC = () => {
         },
       })
       .then((response) => {
-        console.log("Response data:", response.data); // Log response data
         setProfile(response.data);
         setLoading(false);
       })
@@ -53,26 +52,47 @@ const ProfileInfo: React.FC = () => {
     navigate("/updateprofile"); // Navigate to the update profile page
   };
 
+  const calculateAge = (birthDate: string) => {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+
+    // Check if the current date is before the birthday in the current year
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
+  };
+
+  const formatBirthDate = (birthDate: string) => {
+    const date = new Date(birthDate);
+    const day = date.getDate().toString().padStart(2, '0'); // Add leading zero
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed, so we add 1
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
   if (!profile) return <p>No profile data available</p>;
 
   return (
-    <div>
-      <h2>
-        {profile.profileName} {profile.profileLastname}
-      </h2>
-      <p>
-        {profile.documentType} • {profile.documentNumber}
-      </p>
-      <p>Fecha de nacimiento: {profile.birth}</p>
-      <p>Address: {profile.address}</p>
-      <p>City: {profile.cityName}</p>
-      <p>Email: {profile.email}</p>
-      {profile.avatarUrl && (
-        <img src={profile.avatarUrl} alt="Profile Avatar" />
-      )}
-      <button onClick={handleEditProfile}>Editar perfil</button>
+    <div className="bar-card">
+      <div className="img-container">
+        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Profile Avatar" />}
+      </div>
+      <div className="info-container">
+        <h2>
+          {profile.profileName} {profile.profileLastname}
+        </h2>
+        
+        <p>
+          {calculateAge(profile.birth)} años ( {formatBirthDate(profile.birth)})
+        </p>
+      </div>
+        <button className="edit-profile" onClick={handleEditProfile}>Editar perfil</button>
     </div>
   );
 };

@@ -8,7 +8,7 @@ const Sidebar = () => {
   const toggleCitas = () => setIsCitasOpen(!isCitasOpen);
 
   return (
-    <div className="bg-dark col-auto col-md-3 min-vh-100 d-flex flex-column">
+    <div className="sidebar-container col-auto col-md-3 min-vh-100 d-flex flex-column">
       <Link
         className="text-decoration-none d-flex align-items-center gap-1 text-white mt-3 d-none d-sm-inline"
         to="/dashboard/home"
