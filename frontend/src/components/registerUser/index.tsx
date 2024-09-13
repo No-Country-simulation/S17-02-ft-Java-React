@@ -13,7 +13,7 @@ export const RegisterUser: React.FC = () => {
 
       <form onSubmit={handleSubmit} className="form-container">
         <div className="d-flex justify-content-start">
-          <h2 className="">Bienvenido</h2>
+          <h2 className="">Bienvenidos Pacientes</h2>
         </div>
 
         <FormField
