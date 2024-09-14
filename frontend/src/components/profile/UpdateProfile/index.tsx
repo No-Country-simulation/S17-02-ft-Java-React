@@ -38,7 +38,7 @@ interface ProfileData {
 }
 
 const ProfileUpdate: React.FC = () => {
-  const { token } = useAuth();
+  const { token, roleId } = useAuth(); // Use roleId from context
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [formData, setFormData] = useState<ProfileData>({
     profileName: "",
@@ -209,10 +209,15 @@ const ProfileUpdate: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
+      .then(() => {
         setSuccess("Profile updated successfully");
-        setProfile(response.data);
-        navigate("/dashboard/perfil"); // Redirect to /dashboard/perfil
+        if (roleId === "9c765b7d-9eec-421b-85c6-6d53bcd002da") {
+          navigate("/dashboardEspecialista/perfil");
+        } else if (roleId === "2326ec2c-4f97-4007-b52c-ba5561b434b9") {
+          navigate("/dashboardCliente/perfil-cliente");
+        } else {
+          navigate("/dashboard/perfil");
+        }
       })
       .catch(() => {
         setError("Failed to update profile data");
