@@ -3,9 +3,9 @@ import React from 'react';
 
 const Support: React.FC = () => {
     return (
-        <div>
+        <div className='bar-card config'>
             <h3>Ayuda y soporte</h3>
-            <button>Soporte 24hs</button>
+            <p>Soporte 24hs</p>
         </div>
     );
 };

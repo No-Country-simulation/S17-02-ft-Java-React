@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../../context/userContext";
 
 const PaymentMethod: React.FC = () => {
   const context = useContext(UserContext);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (!context) {
     throw new Error("PaymentMethod must be used within a UserProvider");
@@ -10,14 +11,28 @@ const PaymentMethod: React.FC = () => {
 
   const { user } = context;
 
+  const toggleExpand = () => {
+    if (user.paymentMethod) {
+      setIsExpanded(!isExpanded);
+    }
+  };
+
   return (
-    <div>
+    <div className={`payment-card ${isExpanded ? "expanded" : ""}`}>
       <h3>Método de pago</h3>
       {user.paymentMethod ? (
-        <p>{user.paymentMethod}</p>
+        <div className={`payment-info ${isExpanded ? "visible" : "hidden"}`}>
+          <p>{user.paymentMethod}</p>
+        </div>
       ) : (
-        <button>Añadir método de pago</button>
+        <p>Sin método de pago</p>
       )}
+      <button
+        className={`add-payment`}
+        onClick={user.paymentMethod ? toggleExpand : () => {/* lógica para añadir método de pago */}}
+      >
+        {user.paymentMethod ? "Ver más" : "Añadir método de pago"}
+      </button>
     </div>
   );
 };

@@ -3,9 +3,9 @@ import React from 'react';
 
 const Settings: React.FC = () => {
     return (
-        <div>
+        <div className='bar-card config'>
             <h3>Configuración</h3>
-            <button>Configura la cuenta a su manera</button>
+            <p>Configura la cuenta a su manera</p>
         </div>
     );
 };
