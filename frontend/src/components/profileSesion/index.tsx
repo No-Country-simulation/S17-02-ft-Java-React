@@ -144,7 +144,15 @@ const Formulario: React.FC = () => {
       });
 
       console.log("Perfil creado con éxito:", response.data);
-      navigate("/");
+
+      // Redireccionar según el roleId
+      if (roleId === "9c765b7d-9eec-421b-85c6-6d53bcd002da") {
+        navigate("/dashboardEspecialista");
+      } else if (roleId === "2326ec2c-4f97-4007-b52c-ba5561b434b9") {
+        navigate("/dashboardCliente");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
       if (axios.isAxiosError(error)) {

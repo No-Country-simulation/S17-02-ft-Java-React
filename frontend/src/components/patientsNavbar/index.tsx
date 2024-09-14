@@ -7,7 +7,7 @@ const NavbarPacientes: React.FC = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate("/");
+    navigate("/dashboardCliente");
   };
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -25,18 +25,10 @@ const NavbarPacientes: React.FC = () => {
 
         <div className="d-flex gap-2">
           <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-            <Link to="/">
+            <Link to="/dashboardCliente">
               <button className="btn-navbar-prof">Inicio</button>
             </Link>
-            <Link to="/pacientes">
-              <button className="btn-navbar-prof">Pacientes</button>
-            </Link>
-            <Link to="/reportes">
-              <button className="btn-navbar-prof">Reportes</button>
-            </Link>
-            <Link to="/configuracion">
-              <button className="btn-navbar-prof">Configuración</button>
-            </Link>
+
             {token && (
               <button onClick={handleLogout} className="btn-navbar-prof">
                 Logout

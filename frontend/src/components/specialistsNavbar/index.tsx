@@ -7,7 +7,7 @@ const NavbarEspecialista: React.FC = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate("/dashboard/home");
+    navigate("/dashboardEspecialista/home");
   };
 
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -25,7 +25,6 @@ const NavbarEspecialista: React.FC = () => {
 
         <div className="d-flex gap-2">
           <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
-            {/* Removed the "Inicio", "Especialistas", and "Citas" buttons */}
             <Link to="/historial">
               <button className="btn-navbar-prof">Historial</button>
             </Link>

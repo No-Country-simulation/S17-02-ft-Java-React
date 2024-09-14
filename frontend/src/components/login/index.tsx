@@ -6,11 +6,13 @@ import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx";
 
+// Schema de validación usando Yup
 const validationSchema = Yup.object({
   username: Yup.string().required("El nombre de usuario es obligatorio"),
   password: Yup.string().required("La contraseña es obligatoria"),
 });
 
+// Componente TextField para manejar los campos de entrada
 const TextField: React.FC<{
   id: string;
   name: string;
@@ -36,10 +38,12 @@ const TextField: React.FC<{
   </div>
 );
 
+// Componente Login principal
 export const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setToken, setRole, setRoleId } = useAuth();
 
+  // Hook de Formik para manejar el formulario
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -48,6 +52,7 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
+        // Llamada a la API para autenticación
         const response = await axios.post("/api/auth/login", {
           username: values.username,
           password: values.password,
@@ -63,17 +68,25 @@ export const Login: React.FC = () => {
           setRoleId(roleId);
 
           if (roleId === "9c765b7d-9eec-421b-85c6-6d53bcd002da") {
-            navigate("/dashboard/home");
+            navigate("/dashboardEspecialista");
+          } else if (roleId === "2326ec2c-4f97-4007-b52c-ba5561b434b9") {
+            navigate("/dashboardCliente");
           } else {
             navigate("/");
           }
-        }
 
-        Swal.fire({
-          icon: "success",
-          title: "Éxito",
-          text: "Has iniciado sesión correctamente.",
-        });
+          Swal.fire({
+            icon: "success",
+            title: "Éxito",
+            text: "Has iniciado sesión correctamente.",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se encontraron roles asociados al usuario.",
+          });
+        }
       } catch (err) {
         const errorMessage = axios.isAxiosError(err)
           ? "Error al iniciar sesión. Por favor, intenta nuevamente."

@@ -1,9 +1,11 @@
-
+import Home from "../../home/index.tsx";
 
 const HomeClient = () => {
   return (
-    <div>HomeClient</div>
-  )
-}
+    <div className="mt-5">
+      <Home />
+    </div>
+  );
+};
 
-export default HomeClient
+export default HomeClient;
