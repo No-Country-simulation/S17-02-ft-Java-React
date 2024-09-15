@@ -16,13 +16,13 @@ const NavBar = () => {
   };
 
   return (
-    <header className="navbar p-4">
+    <header className="navbar">
       <nav className="bg-body-tertiar">
         <button className="badge" onClick={handleHomeRedirect}>
           HeyDoc!
         </button>
 
-        <div className="d-flex gap-2">
+        <div className="button-container-nav">
           {!token ? (
             <>
               <Link to="/registerespecialist">
@@ -30,14 +30,14 @@ const NavBar = () => {
                   Registro profesionales
                 </button>
               </Link>
-              <div className="d-flex flex-column flex-md-row justify-content-center gap-4">
+              
                 <Link to="/registeruser">
-                  <button className="btn-navbar-pct">Registro pacientes</button>
+                  <button className="btn-navbar-pct" type="button" >Registro pacientes</button>
                 </Link>
                 <Link to="/login">
                   <button className="btn-navbar-prof">Login</button>
                 </Link>
-              </div>
+              
             </>
           ) : (
             <button onClick={handleLogout} className="btn-navbar-prof">

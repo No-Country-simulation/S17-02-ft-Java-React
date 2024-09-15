@@ -1,0 +1,192 @@
+.bar-card{
+    background-color: $primaryColor-dark;
+    max-width: 80rem;
+    height: 8.6rem;
+    padding: .8rem 1.6rem;
+    border-radius: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+    transition: all .1s ease-in-out;
+    &:hover{
+        background-color: $primaryColor-dark-hover;
+    }
+}
+.img-container{
+padding:0 1.6rem;
+    &{img{
+        width: 6rem;
+        height: 6rem;
+    }}
+}
+.info-container{
+    display: flex;
+    flex-direction: column;
+    color:$primaryColor-light-light;
+    &{h2{font-weight: 500;
+        font-size: 1.8rem;}
+        p{
+            font-size: 1.6rem;
+            font-weight: 300;
+        }}
+}
+
+.edit-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 4rem;
+    padding:1rem;
+    border-radius: .8rem;
+    color: #FFF;
+    background-color: $primaryColor-hover;
+    font-size: 1rem;
+    font-weight: 500;
+    border:none;
+    text-transform: uppercase;
+    transition: all .1s ease-in;
+    &:hover{
+        background-color: $primaryColor-active;
+        cursor: pointer;
+        color: #128e8f;
+        border: 3px solid #128e8f;
+    }
+}
+
+.bar-card-shift {
+    background-color: $primaryColor-dark;
+    max-width: 80rem;
+    height: 8.6rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    color: #FFF;
+    &{h3{font-weight: 500;
+        font-size: 1.8rem;}
+        p{
+            font-size: 1.6rem;
+            font-weight: 300;
+        }
+    }
+    &.expanded {
+      height: auto; 
+    }
+  
+    &:hover {
+      background-color: $primaryColor-dark-hover;
+    }
+  }
+  
+  ul.hidden {
+    display: none;
+  }
+  
+  ul.visible {
+    display: block;
+    padding-top: 1rem;
+  }
+  
+  .ver-mas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 8rem;
+    height: 4rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    color: #fff;
+    background-color: $primaryColor-hover;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    text-transform: uppercase;
+    transition: all 0.1s ease-in;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: $primaryColor-active;
+      color: #128e8f;
+      border: 3px solid #128e8f;
+    }
+  
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+  .payment-card {
+    background-color: $primaryColor-dark;
+    max-width: 80rem;
+    height: 8.6rem;
+    padding: 0.8rem 1.6rem;
+    border-radius: 1.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 2rem 0;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    color: #FFF;
+    &{h3{font-weight: 500;
+        font-size: 1.8rem;}
+        p{
+            font-size: 1.6rem;
+            font-weight: 300;
+        }
+    }
+    &.expanded {
+      height: auto;
+    }
+  }
+  
+  .payment-info.hidden {
+    display: none;
+  }
+  
+  .payment-info.visible {
+    display: block;
+    padding-top: 1rem;
+  }
+  
+  .add-payment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12rem;
+    height: 4rem;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    color: #fff;
+    background-color: $primaryColor-hover;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    text-transform: uppercase;
+    transition: all 0.1s ease-in;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: $primaryColor-active;
+      color: #128e8f;
+      border: 3px solid #128e8f;
+    }
+  }
+  .config{
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    color: #FFF;
+    h3{font-weight: 500;
+        font-size: 1.8rem;}
+        p{
+            font-size: 1.6rem;
+            font-weight: 300;
+        }
+  }
