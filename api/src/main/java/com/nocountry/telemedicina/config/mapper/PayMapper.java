@@ -8,7 +8,6 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-
 public interface PayMapper {
 
     PayMapper INSTANCE = Mappers.getMapper(PayMapper.class);

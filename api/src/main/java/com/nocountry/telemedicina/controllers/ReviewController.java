@@ -15,6 +15,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -122,11 +124,12 @@ public class ReviewController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
-    public ResponseEntity<List<ReviewResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public ResponseEntity<Page<ReviewResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "reviewId") String sortField, @RequestParam(defaultValue = "desc") String sortOrder){
         try {
 
-            List<ReviewResponseDTO> list = service.findAll(page,size).stream().map(p -> mapper.toReviewDTO(p)).collect(Collectors.toList());
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            List<ReviewResponseDTO> list = service.findAll(page,size,sortField,sortOrder).stream().map(p -> mapper.toReviewDTO(p)).collect(Collectors.toList());
+            Page<ReviewResponseDTO> listResponse = new PageImpl<>(list);
+            return new ResponseEntity<>(listResponse, HttpStatus.OK);
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener los especialistas", e);
         }
