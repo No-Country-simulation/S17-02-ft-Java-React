@@ -1,6 +1,8 @@
 package com.nocountry.telemedicina.services;
 
 import com.nocountry.telemedicina.models.Specialist;
+import com.nocountry.telemedicina.security.oauth2.user.CurrentUser;
+import com.nocountry.telemedicina.security.oauth2.user.UserPrincipal;
 import org.springframework.data.domain.Page;
 
 import java.util.UUID;
@@ -17,6 +19,8 @@ public interface ISpecialistService extends ICRUDService<Specialist, UUID> {
             Double minPrice,
             Double maxPrice,
             int page, int size,
-            boolean isAscendant,
-            String query);
+            String sortOrder,
+            String sortField);
+
+  Specialist save(Specialist specialist,@CurrentUser UserPrincipal userPrincipal);
 }
