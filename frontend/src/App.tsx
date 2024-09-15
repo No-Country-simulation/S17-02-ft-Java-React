@@ -21,6 +21,7 @@ import UpdateProfile from "./components/profile/UpdateProfile/index.tsx";
 import HomeCliente from "./components/DashboardClient/HomeClient/index.tsx";
 import ListaEspecialist from "./components/DashboardClient/ListaSpecialist/index.tsx";
 import ListaCitasCliente from "./components/DashboardClient/ListaCitasCliente/index.tsx";
+import { SearchSpecialist } from "./components/SearchSpecialist/index.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -54,6 +55,7 @@ const App: React.FC = () => {
             <Route path="nueva-cita-cliente" element={<Booking />} />
             <Route path="ver-citas-cliente" element={<ListaCitasCliente />} />
             <Route path="lista-especialistas" element={<ListaEspecialist />} />
+            <Route path="buscador" element={<SearchSpecialist />} />
           </Route>
           <Route path="/updateprofile" element={<UpdateProfile />} />
 
