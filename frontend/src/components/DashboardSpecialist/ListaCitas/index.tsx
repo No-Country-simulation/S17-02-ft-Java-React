@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Table from "react-bootstrap/Table";
-import { useAuth } from "../../../context/context"; // Ajusta la ruta del contexto según sea necesario
+import { useAuth } from "../../../context/context";
 
 interface ScheduleStart {
   hour: number;
@@ -21,7 +21,7 @@ interface Appointment {
 }
 
 const ListaCitas: React.FC = () => {
-  const { token, roleId, userId } = useAuth(); // Obtén el token, roleId y userId del contexto
+  const { token, roleId, userId } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,13 +30,12 @@ const ListaCitas: React.FC = () => {
     const fetchAppointments = async () => {
       try {
         const response = await axios.get<Appointment[]>("/api/bookings", {
-          params: { roleId, userId }, // Ajusta según cómo acepte la API estos parámetros
+          params: { roleId, userId },
           headers: {
-            Authorization: `Bearer ${token}`, // Incluye el token en el encabezado de autorización
+            Authorization: `Bearer ${token}`,
           },
         });
-        console.log("API response:", response.data); // Log para verificar el formato de la respuesta
-        // Verifica si la respuesta es un array, de lo contrario ajusta el acceso a datos
+        console.log("API response:", response.data);
         setAppointments(Array.isArray(response.data) ? response.data : []);
         setLoading(false);
       } catch (err) {
@@ -50,15 +49,13 @@ const ListaCitas: React.FC = () => {
     };
 
     fetchAppointments();
-  }, [token, roleId, userId]); // Vuelve a obtener los datos si cambia el token, roleId o userId
+  }, [token, roleId, userId]);
 
   const handleVideoCall = (bookingId: string) => {
-    // Aquí puedes agregar la lógica para iniciar una videollamada
     console.log(`Iniciar videollamada para la cita ${bookingId}`);
   };
 
   const handleViewMedicalHistory = (bookingId: string) => {
-    // Aquí puedes agregar la lógica para ver el historial clínico
     console.log(`Ver historial clínico para la cita ${bookingId}`);
   };
 

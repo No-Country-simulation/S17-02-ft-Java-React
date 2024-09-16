@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, InputGroup, Table } from "react-bootstrap";
 import axios from "axios";
-import { useAuth } from "../../../context/context.tsx"; // Adjust the import path as needed
+import { useAuth } from "../../../context/context.tsx";
 
 interface Specialist {
   specialistId: number;
@@ -29,11 +29,9 @@ const ListaEspecialist = () => {
           },
         });
 
-        // Log the response to check the data format
         console.log("API Response:", response.data);
 
-        // Extract specialists array from the response
-        const data = response.data.content; // Adjust this line to fit the actual structure
+        const data = response.data.content;
         if (Array.isArray(data)) {
           setSpecialists(data);
         } else {
@@ -51,7 +49,6 @@ const ListaEspecialist = () => {
     fetchSpecialists();
   }, [token]);
 
-  // Filter specialists based on the search query
   const filteredSpecialists = specialists.filter((specialist) =>
     specialist.specialtyName.toLowerCase().includes(searchQuery.toLowerCase())
   );
