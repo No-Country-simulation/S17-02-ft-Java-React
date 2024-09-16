@@ -32,8 +32,8 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/payment" element={<PaymentGateway />} />
+          <Route path="/login" element={<Login onClose={() => console.log('Login closed')} />} /> 
+                      <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/prueba-mp" element={<MercadoPago />} />
           <Route path="/profile" element={<ProfileComponent />} />
           <Route path="/reservas" element={<Booking />} />

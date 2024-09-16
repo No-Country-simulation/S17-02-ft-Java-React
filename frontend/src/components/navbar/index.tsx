@@ -1,10 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context";
+import { Modal } from "react-bootstrap";
+import  Login  from "../login";
+import { useState } from "react";
 
 const NavBar = () => {
   const { token, logout } = useAuth();
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
   const handleLogout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     logout();
@@ -14,7 +17,8 @@ const NavBar = () => {
   const handleHomeRedirect = () => {
     navigate("/");
   };
-
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
   return (
     <header className="navbar">
       <nav className="bg-body-tertiar">
@@ -34,8 +38,8 @@ const NavBar = () => {
                 <Link to="/registeruser">
                   <button className="btn-navbar-pct" type="button" >Registro pacientes</button>
                 </Link>
-                <Link to="/login">
-                  <button className="btn-navbar-prof">Login</button>
+                <Link to="/">
+                  <button className="btn-navbar-prof"onClick={handleShowModal}>Login</button>
                 </Link>
               
             </>
@@ -46,8 +50,18 @@ const NavBar = () => {
           )}
         </div>
       </nav>
+            <Modal show={showModal} onHide={handleCloseModal} centered>
+                    <Login onClose={handleCloseModal} />    
+            </Modal>
     </header>
   );
 };
 
 export default NavBar;
+
+
+
+
+
+
+
