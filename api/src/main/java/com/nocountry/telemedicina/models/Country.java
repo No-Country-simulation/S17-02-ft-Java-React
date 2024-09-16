@@ -24,7 +24,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "countries")
+<<<<<<< HEAD
 public class Country {
+=======
+public class Country extends Auditable{
+>>>>>>> 6154bf61d961c33b2735e02f4a831d9e1979bae0
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "country_id")

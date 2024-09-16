@@ -1,0 +1,32 @@
+.footer{
+display: grid;
+text-align: center;
+font-size: 500;
+grid-template-columns: repeat(2,1fr);
+background-color: $primaryColor-active;
+height: 40rem;
+&{a{
+    text-decoration: none;
+}}
+}
+@media (min-width: 992px){ 
+    .footer{
+        grid-template-columns: repeat(4,1fr);
+        text-align: left;
+        height: 24.5rem;
+        padding: 6.4rem 14.4rem;
+}}
+
+.footer-col{
+   &{a{
+    font-size: 1.4rem;
+    padding: .8rem;
+    color: $primaryColor-ultra-dark;
+    text-decoration: none;
+   }} 
+   &{
+    span{
+        color:#FFF
+    }
+   }
+}

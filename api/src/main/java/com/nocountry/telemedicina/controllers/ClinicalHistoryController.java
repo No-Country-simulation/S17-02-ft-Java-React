@@ -118,10 +118,10 @@ public class ClinicalHistoryController {
             @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
             @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping
-    public ResponseEntity<List<ClinicalHistoryResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+    public ResponseEntity<List<ClinicalHistoryResponseDTO>> findAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,@RequestParam(defaultValue = "historyCode") String sortField,@RequestParam(defaultValue = "desc") String sortOrder){
         try {
 
-            List<ClinicalHistoryResponseDTO> list = service.findAll(page,size).stream().map(p -> mapper.toClinicalHistoryDTO(p)).collect(Collectors.toList());
+            List<ClinicalHistoryResponseDTO> list = service.findAll(page,size,sortField,sortOrder).stream().map(p -> mapper.toClinicalHistoryDTO(p)).collect(Collectors.toList());
             return new ResponseEntity<>(list, HttpStatus.OK);
         }catch (Exception e) {
             throw new RuntimeException("Error al obtener historiales clinicos", e);

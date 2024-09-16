@@ -4,6 +4,8 @@
 
 /*Bootstrap*/
 @import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap-icons/font/bootstrap-icons";
+
 
 @import '../scss/abstracts/typography';
 /*Base*/
@@ -19,8 +21,15 @@
 @import '../scss/components/home';
 @import '../scss/components/register';
 @import '../scss/components/login';
-@import '../scss/components/buttonRegister';
 @import '../scss/components/register-specialist';
 @import '../scss/components/hero';
+@import '../scss/components/profile';
+@import '../scss/components/profilespecialist';
+@import '../scss/components/registerUser';
+@import '../scss/components/about';
+@import '../scss/components/unete';
+@import '../scss/components/services';
+@import '../scss/components/sidebar';
+@import '../scss/components/contact-us';
 
  
