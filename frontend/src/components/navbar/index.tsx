@@ -50,7 +50,9 @@ const NavBar = () => {
           )}
         </div>
       </nav>
-            <Modal show={showModal} onHide={handleCloseModal} centered>
+            <Modal show={showModal} onHide={handleCloseModal}  
+            dialogClassName="modal-90w"
+            centered>
                     <Login onClose={handleCloseModal} />    
             </Modal>
     </header>
