@@ -19,7 +19,7 @@ type FormData = {
   specialist: string;
   reason: string;
   appointmentDate: Date;
-  monto: number; 
+  monto: number;
 };
 
 const specialists = [
@@ -41,8 +41,8 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredSpecialists, setFilteredSpecialists] = useState(specialists);
-  const [showModal, setShowModal] = useState(false); 
-  const [submittedData, setSubmittedData] = useState<FormData | null>(null); 
+  const [showModal, setShowModal] = useState(false);
+  const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -63,22 +63,25 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
     );
   }, [searchTerm]);
 
-  const onSelectSpecialist = (specialistName: string, specialistMonto: number) => {
+  const onSelectSpecialist = (
+    specialistName: string,
+    specialistMonto: number
+  ) => {
     setValue("specialist", specialistName);
-    setValue("monto", specialistMonto); 
+    setValue("monto", specialistMonto);
     setSearchTerm(specialistName);
-    setFilteredSpecialists([]); 
+    setFilteredSpecialists([]);
   };
 
   const onSubmit = (data: FormData) => {
-    console.log("Datos del formulario:", data); 
+    console.log("Datos del formulario:", data);
     setSubmittedData(data);
     setShowModal(true);
   };
 
   const handleConfirm = () => {
     console.log("Reserva confirmada:", submittedData);
-    setShowModal(false); 
+    setShowModal(false);
   };
 
   return (
@@ -87,40 +90,40 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
         onSubmit={handleSubmit(onSubmit)}
         className="w-100 px-2 d-flex flex-column flex-md-row justify-content-center gap-5"
       >
-        {/* Información del usuario */}
         <fieldset className="w-50">
           <legend>Información del usuario</legend>
 
           <Form.Group className="mb-3">
             <Form.Label>Nombre:</Form.Label>
-            <Form.Control
-              type="text"
-              {...register("userName")}
-              disabled
-            />
+            <Form.Control type="text" {...register("userName")} disabled />
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Edad:</Form.Label>
+            <Form.Control type="number" {...register("userAge")} disabled />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Fecha de nacimiento:</Form.Label>
             <Form.Control
-              type="number"
-              {...register("userAge")}
+              className="hidden"
+              type="text"
+              {...register("userbirthDate")}
               disabled
             />
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Fecha de nacimiento:</Form.Label>
-            <Form.Control className="hidden" type="text" {...register("userbirthDate")} disabled />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
             <Form.Label>Género:</Form.Label>
-            <Form.Control className="hidden" type="text" {...register("userGender")} disabled />
+            <Form.Control
+              className="hidden"
+              type="text"
+              {...register("userGender")}
+              disabled
+            />
           </Form.Group>
         </fieldset>
 
-        {/* Búsqueda de especialistas */}
         <fieldset className="w-50 d-flex flex-column">
           <legend className="mb-3">Búsqueda de especialistas</legend>
 
@@ -139,7 +142,7 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
             {errors.specialist && (
               <p className="text-danger">{errors.specialist.message}</p>
             )}
-            {/* Mostrar la lista solo si hay texto en el campo de búsqueda */}
+
             {searchTerm && filteredSpecialists.length > 0 && (
               <ul className="list-group mt-2">
                 {filteredSpecialists.map((specialist) => (
@@ -154,7 +157,8 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
                       )
                     }
                   >
-                    {specialist.name} - {specialist.especialidad} - ${specialist.monto}
+                    {specialist.name} - {specialist.especialidad} - $
+                    {specialist.monto}
                   </li>
                 ))}
               </ul>
@@ -170,7 +174,6 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
             />
           </Form.Group>
 
-          {/* Selector de fecha */}
           <Form.Group className="mb-3 d-flex gap-3" controlId="formBasicDate">
             <Form.Label className="py-2"> Selecciona una fecha: </Form.Label>
             <Controller
@@ -183,14 +186,14 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
                   onChange={(date) => field.onChange(date)}
                   className="form-control w-100 px-4"
                   placeholderText="Selecciona una fecha y hora:"
-                  dateFormat="dd/MM/yyyy h:mm aa" // Formato de fecha y hora
-                  showTimeSelect // Habilita la selección de horas
-                  timeFormat="HH:mm" // Formato de la hora
-                  timeIntervals={60} // Intervalos de 60 minutos
-                  timeCaption="Hora" // Etiqueta para el selector de hora
-                  minDate={new Date()} // Bloquear fechas pasadas
+                  dateFormat="dd/MM/yyyy h:mm aa"
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={60}
+                  timeCaption="Hora"
+                  minDate={new Date()}
                   minTime={new Date(new Date().setHours(7, 0))}
-                  maxTime={new Date(new Date().setHours(20, 0))} 
+                  maxTime={new Date(new Date().setHours(20, 0))}
                 />
               )}
             />
@@ -199,7 +202,6 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
             )}
           </Form.Group>
 
-          {/* Campo oculto para el monto */}
           <Form.Group className="mb-3">
             <Form.Control
               type="hidden"
@@ -207,34 +209,47 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
             />
           </Form.Group>
 
-          {/* Botón de enviar */}
           <Button
             variant="primary"
             size="lg"
             className="mb-3 w-50 align-self-end"
             type="submit"
-            
           >
             Reservar Cita
           </Button>
         </fieldset>
       </Form>
 
-      {/* Modal para confirmar la cita */}
       {submittedData && (
         <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
             <Modal.Title>Confirmar Reserva</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p><strong>Paciente:</strong> {submittedData.userName}</p>
-            <p><strong>Fecha de nacimiento:</strong> {submittedData.userbirthDate}</p>
-            <p><strong>Edad:</strong> {submittedData.userAge}</p>
+            <p>
+              <strong>Paciente:</strong> {submittedData.userName}
+            </p>
+            <p>
+              <strong>Fecha de nacimiento:</strong>{" "}
+              {submittedData.userbirthDate}
+            </p>
+            <p>
+              <strong>Edad:</strong> {submittedData.userAge}
+            </p>
             <br />
-            <p><strong>Especialista:</strong> {submittedData.specialist}</p>
-            <p><strong>Razón:</strong> {submittedData.reason}</p>
-            <p><strong>Fecha:</strong> {submittedData.appointmentDate.toLocaleString()}</p>
-            <p><strong>Monto:</strong> ${submittedData.monto}</p>
+            <p>
+              <strong>Especialista:</strong> {submittedData.specialist}
+            </p>
+            <p>
+              <strong>Razón:</strong> {submittedData.reason}
+            </p>
+            <p>
+              <strong>Fecha:</strong>{" "}
+              {submittedData.appointmentDate.toLocaleString()}
+            </p>
+            <p>
+              <strong>Monto:</strong> ${submittedData.monto}
+            </p>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShowModal(false)}>

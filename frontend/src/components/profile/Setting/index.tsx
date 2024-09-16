@@ -10,7 +10,7 @@ const Settings: React.FC = () => {
 
   return (
     <div className="bar-card config">
-      <h3>Configuración</h3>
+      <h3>Configuración de Especialidad</h3>
       <p>Configura la Tu Especialidad</p>
       <button onClick={handleClick}>Ir a Configuraciones</button>
     </div>

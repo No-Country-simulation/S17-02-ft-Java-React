@@ -3,8 +3,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx";
+import TextField from "../login/TextField/index.tsx";
+import CloseButton from "../login/CloseButton/index.tsx";
 
 // Schema de validación usando Yup
 const validationSchema = Yup.object({
@@ -12,38 +14,11 @@ const validationSchema = Yup.object({
   password: Yup.string().required("La contraseña es obligatoria"),
 });
 
-// Componente TextField para manejar los campos de entrada
-const TextField: React.FC<{
-  id: string;
-  name: string;
-  type: string;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  onBlur: React.FocusEventHandler<HTMLInputElement>;
-  error?: string;
-}> = ({ id, name, type, value, onChange, onBlur, error }) => (
-  <div className="input-container">
-    <input
-      type={type}
-      id={id}
-      name={name}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      placeholder={name === "username" ? "Nombre de usuario" : "Contraseña"}
-      className={error ? "input-register-error-pct" : "input-register-pct"}
-      required
-    />
-    {error && <div className="error-message-pct">{error}</div>}
-  </div>
-);
-
 // Componente Login principal
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
   const { setToken, setRole, setRoleId } = useAuth();
 
-  // Hook de Formik para manejar el formulario
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -52,7 +27,6 @@ export const Login: React.FC = () => {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        // Llamada a la API para autenticación
         const response = await axios.post("/api/auth/login", {
           username: values.username,
           password: values.password,
@@ -67,13 +41,12 @@ export const Login: React.FC = () => {
           setRole(roleName);
           setRoleId(roleId);
 
-          if (roleId === "9c765b7d-9eec-421b-85c6-6d53bcd002da") {
-            navigate("/dashboardEspecialista");
-          } else if (roleId === "2326ec2c-4f97-4007-b52c-ba5561b434b9") {
-            navigate("/dashboardCliente");
-          } else {
-            navigate("/");
-          }
+          const routes: { [key: string]: string } = {
+            "9c765b7d-9eec-421b-85c6-6d53bcd002da": "/dashboardEspecialista",
+            "2326ec2c-4f97-4007-b52c-ba5561b434b9": "/dashboardCliente",
+          };
+
+          navigate(routes[roleId] || "/");
 
           Swal.fire({
             icon: "success",
@@ -103,18 +76,7 @@ export const Login: React.FC = () => {
 
   return (
     <div className="register-user">
-      <Link to="/" className="close-btn">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          className="bi bi-x-lg"
-          viewBox="0 0 16 16"
-        >
-          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-        </svg>
-      </Link>
+      <CloseButton />
       <h2>Iniciar sesión</h2>
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -144,3 +106,5 @@ export const Login: React.FC = () => {
     </div>
   );
 };
+
+export default Login;

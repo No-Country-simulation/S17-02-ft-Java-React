@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Login } from "./components/login/index.tsx";
+import Login from "./components/login/index.tsx";
 import { PaymentGateway } from "./components/paymentGateway/index.tsx";
 import { RegisterEspecialist } from "./components/registerEspecialist/index.tsx";
 import { RegisterUser } from "./components/registerUser/index.tsx";

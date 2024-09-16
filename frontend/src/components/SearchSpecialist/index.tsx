@@ -2,18 +2,16 @@ import { useState, useEffect } from "react";
 import { getSpecialists } from "../../services/specialistsService";
 
 export interface Specialist {
-    specialistId: string,
-    specialistCode: string,
-    specialtyId?: number,
-    specialtyName?: string,
-    bookingPrice?: number,
-    reputation?: number,
-    specialistName: string,
-    specialistLastname: string
+  specialistId: string;
+  specialistCode: string;
+  specialtyId?: number;
+  specialtyName?: string;
+  bookingPrice?: number;
+  reputation?: number;
+  specialistName: string;
+  specialistLastname: string;
 }
 
-
-// Componente PerSpecialist sin usar Material Tailwind
 function PerSpecialist({
   specialistLastname,
   specialistName,
@@ -35,7 +33,6 @@ function PerSpecialist({
   );
 }
 
-// Componente principal SearchSpecialist
 export function SearchSpecialist() {
   const [specialists, setSpecialists] = useState<Specialist[]>([]);
   const [searchValue, setSearchValue] = useState("");
@@ -46,18 +43,16 @@ export function SearchSpecialist() {
     "specialistLastname",
     "specialtyName",
   ];
-  // Funcion que gestiona el obtener el listado de especialistas
+
   const obtainSpecialists = async () => {
-    // getSpecialists()  <-- es la funcion del servicio que obtiene la lista de especialistas
     const response = await getSpecialists();
     if (response) {
       setSpecialists(response);
     } else {
-      console.log('Ha ocurrido un error')
+      console.log("Ha ocurrido un error");
     }
   };
 
-  // Filtrar especialistas basados en el valor del input
   const handleSearch = (value: string) => {
     const lowercasedValue = value.toLowerCase();
     const filtered = specialists.filter((specialist: Specialist) =>
@@ -71,7 +66,7 @@ export function SearchSpecialist() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (specialists.length === 0) {
-        console.log()
+        console.log();
         obtainSpecialists();
       }
     }, 2000);
