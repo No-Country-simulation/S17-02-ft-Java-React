@@ -6,6 +6,8 @@ import Modal from "react-bootstrap/Modal";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { User } from "../../interfaces/profile";
+import { useAuth } from "../../context/context.tsx";
+import axios from "axios";
 
 interface BookingFormProps {
   user: User;
@@ -22,13 +24,35 @@ type FormData = {
   monto: number;
 };
 
-const specialists = [
-  { id: 1, name: "especialista 1", especialidad: "Cardióloga", monto: 1000 },
-  { id: 2, name: "especialista 2", especialidad: "Pediatría", monto: 1000 },
-  { id: 3, name: "especialista 3", especialidad: "Ginecóloga", monto: 1000 },
-  { id: 4, name: "especialista 4", especialidad: "Neurología", monto: 1000 },
-  { id: 5, name: "especialista 5", especialidad: "Dermatología", monto: 1000 },
-];
+type Specialist = {
+  specialistId: string;
+  specialistCode: string;
+  specialtyId: number;
+  specialtyName: string;
+  bookingPrice: number;
+  specialistName: string;
+  specialistLastname: string;
+  reputation: number;
+};
+
+interface Schedule {
+  scheduleId: string;
+  date: string;
+  startTime: {
+    hour: number;
+    minute: number;
+    second: number;
+    nano: number;
+  };
+  endTime: {
+    hour: number;
+    minute: number;
+    second: number;
+    nano: number;
+  };
+  specialistId: string;
+  scheduleConfigId: number;
+}
 
 const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
   const {
@@ -39,8 +63,9 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredSpecialists, setFilteredSpecialists] = useState(specialists);
+  const { token } = useAuth(); // Usa el hook useAuth
+
+  const [specialists, setSpecialists] = useState<Specialist[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [submittedData, setSubmittedData] = useState<FormData | null>(null);
 
@@ -54,24 +79,26 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
   }, [user, setValue]);
 
   useEffect(() => {
-    setFilteredSpecialists(
-      specialists.filter((specialist) =>
-        `${specialist.name} - ${specialist.especialidad}`
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      )
-    );
-  }, [searchTerm]);
+    const fetchSpecialists = async () => {
+      try {
+        const response = await axios.get("/api/specialist", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Incluye el token si es necesario
+            "Content-Type": "application/json",
+          },
+        });
+        if (response.data && Array.isArray(response.data.content)) {
+          setSpecialists(response.data.content); // Accede a la lista de especialistas
+        } else {
+          console.error("Formato de datos inesperado:", response.data);
+        }
+      } catch (error) {
+        console.error("Error al obtener los especialistas:", error);
+      }
+    };
 
-  const onSelectSpecialist = (
-    specialistName: string,
-    specialistMonto: number
-  ) => {
-    setValue("specialist", specialistName);
-    setValue("monto", specialistMonto);
-    setSearchTerm(specialistName);
-    setFilteredSpecialists([]);
-  };
+    fetchSpecialists();
+  }, [token]);
 
   const onSubmit = (data: FormData) => {
     console.log("Datos del formulario:", data);
@@ -79,9 +106,45 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
     setShowModal(true);
   };
 
-  const handleConfirm = () => {
-    console.log("Reserva confirmada:", submittedData);
-    setShowModal(false);
+  const handleConfirm = async () => {
+    if (submittedData) {
+      // Prepara los datos para el POST
+      const schedule: Schedule = {
+        scheduleId: "3fa85f64-5717-4562-b3fc-2c963f66afa6", // Puedes obtener esto de alguna manera dinámica
+        date: submittedData.appointmentDate.toISOString().split("T")[0], // Formato de fecha: YYYY-MM-DD
+        startTime: {
+          hour: submittedData.appointmentDate.getHours(),
+          minute: submittedData.appointmentDate.getMinutes(),
+          second: 0,
+          nano: 0,
+        },
+        endTime: {
+          hour: submittedData.appointmentDate.getHours() + 1, // Asumiendo que la cita dura 1 hora
+          minute: submittedData.appointmentDate.getMinutes(),
+          second: 0,
+          nano: 0,
+        },
+        specialistId: submittedData.specialist,
+        scheduleConfigId: 0, // Este valor debe ser ajustado según tus necesidades
+      };
+
+      try {
+        const response = await axios.post(
+          "/api/bookings",
+          { schedule },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Incluye el token si es necesario
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("Reserva confirmada:", response.data);
+        setShowModal(false);
+      } catch (error) {
+        console.error("Error al confirmar la reserva:", error);
+      }
+    }
   };
 
   return (
@@ -125,43 +188,37 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
         </fieldset>
 
         <fieldset className="w-50 d-flex flex-column">
-          <legend className="mb-3">Búsqueda de especialistas</legend>
+          <legend className="mb-3">Selecciona un especialista</legend>
 
           <Form.Group className="mb-3" controlId="formBasicSpecialist">
-            <Form.Label>Selecciona un especialista</Form.Label>
+            <Form.Label>Especialista</Form.Label>
             <Form.Control
-              type="text"
-              value={searchTerm}
-              onInput={(e) => setSearchTerm(e.currentTarget.value)}
-              placeholder="Busca un especialista..."
-              size="lg"
+              as="select"
               {...register("specialist", {
                 required: "Selecciona un especialista",
               })}
-            />
+              onChange={(e) => {
+                const selectedSpecialist = specialists.find(
+                  (spec) => spec.specialistId === e.target.value
+                );
+                if (selectedSpecialist) {
+                  setValue("monto", selectedSpecialist.bookingPrice);
+                }
+              }}
+            >
+              <option value="">Seleccione un especialista</option>
+              {specialists.map((specialist) => (
+                <option
+                  key={specialist.specialistId}
+                  value={specialist.specialistId}
+                >
+                  {specialist.specialistName} {specialist.specialistLastname} -{" "}
+                  {specialist.specialtyName} - ${specialist.bookingPrice}
+                </option>
+              ))}
+            </Form.Control>
             {errors.specialist && (
               <p className="text-danger">{errors.specialist.message}</p>
-            )}
-
-            {searchTerm && filteredSpecialists.length > 0 && (
-              <ul className="list-group mt-2">
-                {filteredSpecialists.map((specialist) => (
-                  <li
-                    key={specialist.id}
-                    className="list-group-item list-group-item-action"
-                    role="button"
-                    onClick={() =>
-                      onSelectSpecialist(
-                        `${specialist.name} - ${specialist.especialidad}`,
-                        specialist.monto
-                      )
-                    }
-                  >
-                    {specialist.name} - {specialist.especialidad} - $
-                    {specialist.monto}
-                  </li>
-                ))}
-              </ul>
             )}
           </Form.Group>
 
@@ -220,47 +277,31 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
         </fieldset>
       </Form>
 
-      {submittedData && (
-        <Modal show={showModal} onHide={() => setShowModal(false)}>
-          <Modal.Header closeButton>
-            <Modal.Title>Confirmar Reserva</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              <strong>Paciente:</strong> {submittedData.userName}
-            </p>
-            <p>
-              <strong>Fecha de nacimiento:</strong>{" "}
-              {submittedData.userbirthDate}
-            </p>
-            <p>
-              <strong>Edad:</strong> {submittedData.userAge}
-            </p>
-            <br />
-            <p>
-              <strong>Especialista:</strong> {submittedData.specialist}
-            </p>
-            <p>
-              <strong>Razón:</strong> {submittedData.reason}
-            </p>
-            <p>
-              <strong>Fecha:</strong>{" "}
-              {submittedData.appointmentDate.toLocaleString()}
-            </p>
-            <p>
-              <strong>Monto:</strong> ${submittedData.monto}
-            </p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
-              Cancelar
-            </Button>
-            <Button variant="primary" onClick={handleConfirm}>
-              Confirmar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmar Reserva</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Nombre: {submittedData?.userName}</p>
+          <p>Edad: {submittedData?.userAge}</p>
+          <p>Fecha de nacimiento: {submittedData?.userbirthDate}</p>
+          <p>Género: {submittedData?.userGender}</p>
+          <p>Especialista: {submittedData?.specialist}</p>
+          <p>Razón: {submittedData?.reason}</p>
+          <p>
+            Fecha de la cita: {submittedData?.appointmentDate.toLocaleString()}
+          </p>
+          <p>Monto: ${submittedData?.monto}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleConfirm}>
+            Confirmar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
