@@ -23,6 +23,7 @@ import ListaEspecialist from "./components/DashboardClient/ListaSpecialist/index
 import ListaCitasCliente from "./components/DashboardClient/ListaCitasCliente/index.tsx";
 import { SearchSpecialist } from "./components/SearchSpecialist/index.tsx";
 import Setting from "./components/SettingSpecialist/index.tsx";
+import ClinicalHistory from "./components/clinicalhistory/ClinicalHistory.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -37,6 +38,7 @@ const App: React.FC = () => {
           <Route path="/prueba-mp" element={<MercadoPago />} />
           <Route path="/profile" element={<ProfileComponent />} />
           <Route path="/reservas" element={<Booking />} />
+          <Route path="clinicalhistory" element={<ClinicalHistory />} />
 
           {/* Rutas del dashboard especialista */}
           <Route path="/dashboardEspecialista" element={<DashboardLayout />}>
@@ -46,6 +48,7 @@ const App: React.FC = () => {
             <Route path="nueva-cita" element={<NuevaCita />} />
             <Route path="ver-citas" element={<ListaCitas />} />
             <Route path="settings" element={<Setting />} />
+            <Route path="clinicalhistory" element={<ClinicalHistory />} />
           </Route>
           <Route path="/updateprofile" element={<UpdateProfile />} />
 
