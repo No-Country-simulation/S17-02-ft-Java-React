@@ -24,6 +24,7 @@
     "react-hook-form": "^7.53.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
+    "react-select": "^5.8.0",
     "sass": "^1.77.8",
     "sweetalert2": "^11.13.2",
     "yup": "^1.4.0"

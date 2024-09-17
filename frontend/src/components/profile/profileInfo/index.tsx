@@ -25,12 +25,20 @@ const ProfileInfo: React.FC = () => {
   const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
+    const cachedProfile = localStorage.getItem("profileData");
+  
+    if (cachedProfile) {
+      setProfile(JSON.parse(cachedProfile));
+      setLoading(false);
+      return;
+    }
+  
     if (!token) {
       setError("Authentication token is not available");
       setLoading(false);
       return;
     }
-
+  
     axios
       .get("/api/profiles/my-profile", {
         headers: {
@@ -39,6 +47,7 @@ const ProfileInfo: React.FC = () => {
       })
       .then((response) => {
         setProfile(response.data);
+        localStorage.setItem("profileData", JSON.stringify(response.data)); // Cache profile data
         setLoading(false);
       })
       .catch((err) => {
@@ -47,20 +56,22 @@ const ProfileInfo: React.FC = () => {
         setLoading(false);
       });
   }, [token]);
+  
 
   const handleEditProfile = () => {
     navigate("/updateprofile"); // Navigate to the update profile page
   };
 
-  const calculateAge = (birthDate: string) => {
+  const calculateAge = (birthDateString: string): number => {
     const today = new Date();
-    const birth = new Date(birthDate);
-    let age = today.getFullYear() - birth.getFullYear();
-    const monthDiff = today.getMonth() - birth.getMonth();
+    const birthDate = new Date(birthDateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    const monthDifference = today.getMonth() - birthDate.getMonth();
 
     // Check if the current date is before the birthday in the current year
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
-      age--;
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+      age -= 1;
     }
 
     return age;
@@ -74,14 +85,31 @@ const ProfileInfo: React.FC = () => {
     return `${day}-${month}-${year}`;
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-  if (!profile) return <p>No profile data available</p>;
-console.log(profile )
+  if (loading) {
+    return (
+      <div className="bar-card">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="bar-card">
+        <p>{error}</p>
+      </div>
+    );
+  }
+  if (!profile) {
+    return (
+      <div className="bar-card">
+        <p>No profile data available</p>
+      </div>
+    );
+  }
   return (
     <div className="bar-card">
       <div className="img-container">
-        {profile.avatarUrl && <img src={profile.avatarUrl} alt="Profile Avatar" />}
+        {profile.avatarUrl ? <img src={profile.avatarUrl} alt="Profile Avatar" /> : <i className="bi bi-person-circle"></i>}
       </div>
       <div className="info-container">
         <h2>

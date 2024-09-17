@@ -5,7 +5,7 @@
     width: 30rem;
     height: 60rem;
     justify-content: center;
-    gap: 1.6rem 0;
+    
 }
 .form-profile h3{
     font-size: 2rem;
@@ -13,12 +13,14 @@
 }
 
 .input-container{
-    gap:2rem 0;
+    margin:2rem 0;
+
 }
 .input-profile{
     width: 28rem;
     height: 4rem;
     font-size: 1.6rem;
+    margin: .5rem 0;
     border-radius: .8rem;
     border: 1px solid $neutralColor-900;
     background-color: $neutralColor-100;
@@ -39,6 +41,7 @@
     width: 100%;
     border-top: 1px solid $neutralColor-300;
     padding: 3.2rem 0 ;
+    gap:1rem
 }
 .form-buttons{
     display: flex;
@@ -50,6 +53,8 @@
     width: 172px;
     height: 48px;
     padding: 9px 36px;
+    margin: 0 auto;
+    margin-top:1rem;
     justify-content: center;
     align-items: center;
     gap: 10px;

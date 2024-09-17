@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useAuth } from "../../../context/context.tsx";
 import { useNavigate } from "react-router-dom";
+import InputField from "../../profileSesion/inputField/index.tsx";
+import Select from 'react-select';
 
 interface City {
   cityId: number;
@@ -38,7 +40,7 @@ interface ProfileData {
 }
 
 const ProfileUpdate: React.FC = () => {
-  const { token, roleId } = useAuth(); // Use roleId from context
+  const { token, roleId } = useAuth(); 
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [formData, setFormData] = useState<ProfileData>({
     profileName: "",
@@ -49,7 +51,7 @@ const ProfileUpdate: React.FC = () => {
     birth: "",
     address: "",
     city: {
-      cityId: 1, // Default value for cityId
+      cityId: 1,
       cityName: "",
     },
     user: {
@@ -68,65 +70,71 @@ const ProfileUpdate: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const fetchProfileData = useCallback(async () => {
     if (!token) {
       setError("Authentication token is not available");
       setLoading(false);
       return;
     }
 
-    // Fetch profile data
-    axios
-      .get("/api/profiles/my-profile", {
+    try {
+      const response = await axios.get("/api/profiles/my-profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then((response) => {
-        const data = response.data;
-        setProfile(data);
-        setFormData({
-          ...data,
-          city: data.city || { cityId: 1, cityName: "" },
-          user: data.user || {
-            userId: "",
-            username: "",
-            password: "",
-            roles: [],
-          },
-        });
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to fetch profile data");
-        setLoading(false);
       });
-
-    // Fetch departments and cities
-    const fetchCitiesAndDepartments = async () => {
-      try {
-        const [citiesResponse, departmentsResponse] = await Promise.all([
-          axios.get<City[]>("/api/city", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-          axios.get<Department[]>("/api/department", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }),
-        ]);
-
-        setCities(citiesResponse.data);
-        setDepartments(departmentsResponse.data);
-      } catch (error) {
-        setError("Failed to fetch cities or departments");
-      }
-    };
-
-    fetchCitiesAndDepartments();
+      const data = response.data;
+      setProfile(data);
+      setFormData({
+        ...data,
+        city: data.city || { cityId: 1, cityName: "" },
+        user: data.user || {
+          userId: "",
+          username: "",
+          password: "",
+          roles: [],
+        },
+      });
+    } catch {
+      setError("Failed to fetch profile data");
+    } finally {
+      setLoading(false);
+    }
   }, [token]);
+
+  const fetchCitiesAndDepartments = useCallback(async () => {
+    if (!token) {
+      setError("Authentication token is not available");
+      return;
+    }
+
+    try {
+      const [citiesResponse, departmentsResponse] = await Promise.all([
+        axios.get<City[]>("/api/city", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+        axios.get<Department[]>("/api/department", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      ]);
+
+      setCities(citiesResponse.data);
+      setDepartments(departmentsResponse.data);
+    } catch {
+      setError("Failed to fetch cities or departments");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (!profile) {
+      fetchProfileData();
+      fetchCitiesAndDepartments();
+    }
+  }, [profile, fetchProfileData, fetchCitiesAndDepartments]);
 
   useEffect(() => {
     const selectedDept = departments.find(
@@ -145,8 +153,8 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleDepartmentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const departmentName = e.target.value;
+  const handleDepartmentChange = (option: { value: string; label: string } | null) => {
+    const departmentName = option?.value || "";
     setSelectedDepartment(departmentName);
     setFormData((prev) => ({
       ...prev,
@@ -154,9 +162,9 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const cityId = Number(e.target.value);
-    const selectedCity = cities.find((city) => city.cityId === cityId);
+  const handleCityChange = (option: { value: number; label: string } | null) => {
+    const cityId = option?.value || 1;
+    const selectedCity = filteredCities.find((city) => city.cityId === cityId);
     setFormData((prev) => ({
       ...prev,
       city: selectedCity || { cityId: 1, cityName: "" },
@@ -203,6 +211,7 @@ const ProfileUpdate: React.FC = () => {
       city: formData.city.cityId ? { cityId: formData.city.cityId } : undefined,
     };
 
+
     axios
       .put("/api/profiles/update-profile", payload, {
         headers: {
@@ -229,127 +238,97 @@ const ProfileUpdate: React.FC = () => {
   if (!profile) return <p>No profile data available</p>;
 
   return (
-    <div>
-      <h2>Actualizar Perfil</h2>
-      {success && <p>{success}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Nombre:
-            <input
-              type="text"
-              name="profileName"
-              value={formData.profileName}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Apellido:
-            <input
-              type="text"
-              name="profileLastname"
-              value={formData.profileLastname}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Tipo de Documento:
-            <input
-              type="text"
-              name="documentType"
-              value={formData.documentType}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            N° de Documento:
-            <input
-              type="text"
-              name="documentNumber"
-              value={formData.documentNumber}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Fecha de Nacimiento:
-            <input
-              type="date"
-              name="birth"
-              value={formData.birth}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Direccion:
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Provincia:
-            <select
-              name="department"
-              value={selectedDepartment}
-              onChange={handleDepartmentChange}
-            >
-              <option value="">Selecciona una Provincia</option>
-              {departments.map((department) => (
-                <option
-                  key={department.departmentId}
-                  value={department.departmentName}
-                >
-                  {department.departmentName}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div>
-          <label>
-            Ciudad:
-            <select
-              name="cityId"
-              value={formData.city.cityId}
-              onChange={handleCityChange}
-            >
-              <option value="">Selecciona una ciudad</option>
-              {filteredCities.map((city) => (
-                <option key={city.cityId} value={city.cityId}>
-                  {city.cityName}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div>
-          <label>
-            Imagen de Perfil:
-            <input
-              type="text"
-              name="avatarUrl"
-              value={formData.avatarUrl}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <button type="submit">Actualizar</button>
+      
+      
+      <form className="form-profile" onSubmit={handleSubmit}>
+        <InputField
+          label="Nombre"
+          type="text"
+          name="profileName"
+          value={formData.profileName}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Apellido"
+          type="text"
+          name="profileLastname"
+          value={formData.profileLastname}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Tipo de Documento"
+          type="text"
+          name="documentType"
+          value={formData.documentType}
+          onChange={handleChange}
+        />
+        <InputField
+          label="N° de Documento"
+          type="text"
+          name="documentNumber"
+          value={formData.documentNumber}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Fecha de Nacimiento"
+          type="date"
+          name="birth"
+          value={formData.birth}
+          onChange={handleChange}
+        />
+        <InputField
+          label="Dirección"
+          type="text"
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+        />
+      
+      <Select
+  name="department"
+  value={departments.find(department => department.departmentName === selectedDepartment) || null}
+  onChange={(option) => {
+    setSelectedDepartment(option?.value || "");
+    setFormData((prev) => ({
+      ...prev,
+      city: { cityId: 1, cityName: "" },
+    }));
+  }}
+  options={departments.map(department => ({
+    value: department.departmentName,
+    label: department.departmentName,
+  })) || []}
+  placeholder="Selecciona una Provincia"
+/>
+
+<Select
+  name="cityId"
+  value={filteredCities.find(city => city.cityId === formData.city.cityId) || null}
+  onChange={(option) => {
+    const selectedCity = filteredCities.find(city => city.cityId === option?.value);
+    setFormData((prev) => ({
+      ...prev,
+      city: selectedCity || { cityId: 1, cityName: "" },
+    }));
+  }}
+  options={filteredCities.map(city => ({
+    value: city.cityId,
+    label: city.cityName,
+  })) || []}
+  placeholder="Selecciona una Ciudad"
+/>
+
+
+        <InputField
+          label="Imagen de Perfil"
+          type="text"
+          name="avatarUrl"
+          value={formData.avatarUrl}
+          onChange={handleChange}
+        />
+        <button  className="btn-special" type="submit">Actualizar</button>
       </form>
-    </div>
+    
   );
 };
 

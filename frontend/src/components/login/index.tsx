@@ -67,16 +67,21 @@ const Login = ({ onClose }: { onClose: () => void }) => {
           setToken(token);
           setRole(roleName);
           setRoleId(roleId);
-          console.log("Role ID:", roleId);
+          
+          const routes: { [key: string]: string } = {
+            "9c765b7d-9eec-421b-85c6-6d53bcd002da": "/dashboardEspecialista",
+            "2326ec2c-4f97-4007-b52c-ba5561b434b9": "/dashboardCliente",
+          };
+          
+          navigate(routes[roleId] || "/");
         }
-
         Swal.fire({
           icon: "success",
           title: "Éxito",
           text: "Has iniciado sesión correctamente.",
         });
         if (onClose) onClose();
-        navigate("/");
+        
       } catch (err) {
         const errorMessage = axios.isAxiosError(err)
           ? "Error al iniciar sesión. Por favor, intenta nuevamente."

@@ -12,13 +12,22 @@
     &:hover{
         background-color: $primaryColor-dark-hover;
     }
+    &{p{
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: $primaryColor-light-light;
+    }}
 }
 .img-container{
-padding:0 1.6rem;
+padding:0;
     &{img{
         width: 6rem;
         height: 6rem;
-    }}
+    }
+  i{
+    color: $primaryColor-normal;
+    font-size: 6rem;
+  }}
 }
 .info-container{
     display: flex;
