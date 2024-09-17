@@ -199,3 +199,21 @@ padding:0;
             font-weight: 300;
         }
   }
+
+  .react-select__control {
+    border-color: $primaryColor-darker;
+  }
+  
+  .react-select__option--is-selected {
+    background-color: #2684FF;
+    color: $primaryColor-dark;
+  }
+  
+  .react-select__option--is-focused {
+    background-color: #B2D4FF;
+    color: #333;
+  }
+  
+  .react-select__single-value {
+    color: #333;
+  }

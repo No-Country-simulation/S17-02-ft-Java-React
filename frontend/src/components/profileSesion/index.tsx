@@ -5,13 +5,15 @@ import { useAuth } from "../../context/context.tsx";
 import InputField from "../profileSesion/inputField";
 import FileInputWithPreview from "../profileSesion/fileInput";
 import FormButtons from "../profileSesion/formButtons";
+import { Form } from 'react-bootstrap';
+
 
 interface FormData {
   nombre: string;
   apellido: string;
   tipoDocumento: string;
   documentNumber: string;
-  imagen: string | null;
+  avatarUrl: string | null;
   fechaNacimiento: string;
   direccion: string;
   ciudad: string;
@@ -36,7 +38,7 @@ const Formulario: React.FC = () => {
     apellido: "",
     tipoDocumento: "",
     documentNumber: "",
-    imagen: null,
+    avatarUrl: "",
     fechaNacimiento: "",
     direccion: "",
     ciudad: "",
@@ -115,7 +117,7 @@ const Formulario: React.FC = () => {
       profileLastname: formData.apellido,
       documentType: formData.tipoDocumento,
       documentNumber: formData.documentNumber,
-      avatarUrl: formData.imagen || "",
+      avatarUrl: formData.avatarUrl || "",
       birth: formData.fechaNacimiento,
       address: formData.direccion,
       city: selectedCity || { cityId: 0, cityName: formData.ciudad },
@@ -198,7 +200,7 @@ const Formulario: React.FC = () => {
       />
       <FileInputWithPreview
         onFileChange={handleFileChange}
-        imageUrl={formData.imagen}
+        imageUrl={formData.avatarUrl}
       />
       <InputField
         label="Fecha de Nacimiento"
@@ -214,44 +216,56 @@ const Formulario: React.FC = () => {
         value={formData.direccion}
         onChange={handleChange}
       />
-      <div>
-        <label>Provincia</label>
-        <select
-          name="departamento"
-          value={formData.departamento}
-          onChange={handleChange}
+    <div>
+  <Form.Group controlId="departmentSelect">
+    <Form.Select
+      name="departamento"
+      value={formData.departamento}
+      onChange={handleChange}
+      aria-placeholder="Selecciona una provincia"
+      className="input-profile"
+    >
+      <option value="">Selecciona una provincia</option>
+      {departments.map((department) => (
+        <option
+          key={department.departmentId}
+          value={department.departmentName}
         >
-          <option value="">Selecciona un departamento</option>
-          {departments.map((department) => (
-            <option
-              key={department.departmentId}
-              value={department.departmentName}
-            >
-              {department.departmentName}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label>Ciudad</label>
-        <select name="ciudad" value={formData.ciudad} onChange={handleChange}>
-          <option value="">Selecciona una ciudad</option>
-          {cities
-            .filter((city) =>
-              departments
-                .find(
-                  (department) =>
-                    department.departmentName === formData.departamento
-                )
-                ?.cities.some((c) => c.cityId === city.cityId)
+          {department.departmentName}
+        </option>
+      ))}
+    </Form.Select>
+  </Form.Group>
+</div>
+
+<div>
+  <Form.Group controlId="citySelect">
+    
+    <Form.Select
+      name="ciudad"
+      value={formData.ciudad}
+      onChange={handleChange}
+      aria-placeholder="Selecciona una ciudad"
+      className="input-profile"
+    >
+      <option value="">Selecciona una ciudad</option>
+      {cities
+        .filter((city) =>
+          departments
+            .find(
+              (department) =>
+                department.departmentName === formData.departamento
             )
-            .map((city) => (
-              <option key={city.cityId} value={city.cityName}>
-                {city.cityName}
-              </option>
-            ))}
-        </select>
-      </div>
+            ?.cities.some((c) => c.cityId === city.cityId)
+        )
+        .map((city) => (
+          <option key={city.cityId} value={city.cityName}>
+            {city.cityName}
+          </option>
+        ))}
+    </Form.Select>
+  </Form.Group>
+</div>
       <div className="container-fluid form-buttons-cont">
         <FormButtons onSkip={handleSkip} />
       </div>

@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, ChangeEvent } from "react";
 import axios from "axios";
-import { useAuth } from "../../../context/context.tsx";
+import { useAuth } from "../../../context/context";
 import { useNavigate } from "react-router-dom";
-import InputField from "../../profileSesion/inputField/index.tsx";
-import Select from 'react-select';
+import InputField from "../../profileSesion/inputField";
+import { Form } from 'react-bootstrap';
+import FileInputWithPreview from "../../profileSesion/fileInput";
 
+// Definir las interfaces para los tipos utilizados
 interface City {
   cityId: number;
   cityName: string;
@@ -78,7 +80,7 @@ const ProfileUpdate: React.FC = () => {
     }
 
     try {
-      const response = await axios.get("/api/profiles/my-profile", {
+      const response = await axios.get<ProfileData>("/api/profiles/my-profile", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -91,6 +93,7 @@ const ProfileUpdate: React.FC = () => {
         user: data.user || {
           userId: "",
           username: "",
+          avatarUrl: "",
           password: "",
           roles: [],
         },
@@ -153,8 +156,8 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleDepartmentChange = (option: { value: string; label: string } | null) => {
-    const departmentName = option?.value || "";
+  const handleDepartmentChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const departmentName = e.target.value;
     setSelectedDepartment(departmentName);
     setFormData((prev) => ({
       ...prev,
@@ -162,13 +165,23 @@ const ProfileUpdate: React.FC = () => {
     }));
   };
 
-  const handleCityChange = (option: { value: number; label: string } | null) => {
-    const cityId = option?.value || 1;
+  const handleCityChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const cityId = parseInt(e.target.value, 10);
     const selectedCity = filteredCities.find((city) => city.cityId === cityId);
     setFormData((prev) => ({
       ...prev,
       city: selectedCity || { cityId: 1, cityName: "" },
     }));
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFormData((prevData) => ({
+        ...prevData,
+        avatarUrl: URL.createObjectURL(file),
+      }));
+    }
   };
 
   const validateForm = () => {
@@ -199,7 +212,6 @@ const ProfileUpdate: React.FC = () => {
       return;
     }
 
-    // Prepare payload ensuring that optional fields can be empty
     const payload = {
       profileName: formData.profileName || undefined,
       profileLastname: formData.profileLastname || undefined,
@@ -210,7 +222,6 @@ const ProfileUpdate: React.FC = () => {
       address: formData.address || undefined,
       city: formData.city.cityId ? { cityId: formData.city.cityId } : undefined,
     };
-
 
     axios
       .put("/api/profiles/update-profile", payload, {
@@ -238,94 +249,89 @@ const ProfileUpdate: React.FC = () => {
   if (!profile) return <p>No profile data available</p>;
 
   return (
-      
-      
-      <form className="form-profile" onSubmit={handleSubmit}>
-        <InputField
-          label="Nombre"
-          type="text"
-          name="profileName"
-          value={formData.profileName}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Apellido"
-          type="text"
-          name="profileLastname"
-          value={formData.profileLastname}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Tipo de Documento"
-          type="text"
-          name="documentType"
-          value={formData.documentType}
-          onChange={handleChange}
-        />
-        <InputField
-          label="N° de Documento"
-          type="text"
-          name="documentNumber"
-          value={formData.documentNumber}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Fecha de Nacimiento"
-          type="date"
-          name="birth"
-          value={formData.birth}
-          onChange={handleChange}
-        />
-        <InputField
-          label="Dirección"
-          type="text"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-      
-      <Select
-  name="department"
-  value={departments.find(department => department.departmentName === selectedDepartment) || null}
-  onChange={(option) => {
-    setSelectedDepartment(option?.value || "");
-    setFormData((prev) => ({
-      ...prev,
-      city: { cityId: 1, cityName: "" },
-    }));
-  }}
-  options={departments.map(department => ({
-    value: department.departmentName,
-    label: department.departmentName,
-  })) || []}
-  placeholder="Selecciona una Provincia"
-/>
+    <form className="form-profile" onSubmit={handleSubmit}>
+      <InputField
+        label="Nombre"
+        type="text"
+        name="profileName"
+        value={formData.profileName}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Apellido"
+        type="text"
+        name="profileLastname"
+        value={formData.profileLastname}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Tipo de Documento"
+        type="text"
+        name="documentType"
+        value={formData.documentType}
+        onChange={handleChange}
+      />
+      <InputField
+        label="N° de Documento"
+        type="text"
+        name="documentNumber"
+        value={formData.documentNumber}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Fecha de Nacimiento"
+        type="date"
+        name="birth"
+        value={formData.birth}
+        onChange={handleChange}
+      />
+      <InputField
+        label="Dirección"
+        type="text"
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+      />
 
-<Select
-  name="cityId"
-  value={filteredCities.find(city => city.cityId === formData.city.cityId) || null}
-  onChange={(option) => {
-    const selectedCity = filteredCities.find(city => city.cityId === option?.value);
-    setFormData((prev) => ({
-      ...prev,
-      city: selectedCity || { cityId: 1, cityName: "" },
-    }));
-  }}
-  options={filteredCities.map(city => ({
-    value: city.cityId,
-    label: city.cityName,
-  })) || []}
-  placeholder="Selecciona una Ciudad"
-/>
+<div>
+  <Form.Group controlId="departmentSelect" className="mb-3">
+    <Form.Select
+      value={selectedDepartment}
+      onChange={handleDepartmentChange}
+      aria-placeholder="Selecciona una Provincia"
+      className="input-profile"
+    >
+      <option value="">Selecciona una Provincia</option>
+      {departments.map((department) => (
+        <option key={department.departmentId} value={department.departmentName}>
+          {department.departmentName}
+        </option>
+      ))}
+    </Form.Select>
+  </Form.Group>
+
+  <Form.Group controlId="citySelect" className="mb-3">
+    <Form.Select
+      value={formData.city.cityId}
+      onChange={handleCityChange}
+      aria-placeholder="Selecciona una Ciudad"
+      className="input-profile"
+    >
+      <option value="">Selecciona una Ciudad</option>
+      {filteredCities.map((city) => (
+        <option key={city.cityId} value={city.cityId}>
+          {city.cityName}
+        </option>
+      ))}
+    </Form.Select>
+  </Form.Group>
+</div>
 
 
-        <InputField
-          label="Imagen de Perfil"
-          type="text"
-          name="avatarUrl"
-          value={formData.avatarUrl}
-          onChange={handleChange}
-        />
+<FileInputWithPreview
+        onFileChange={handleFileChange}
+        imageUrl={profile.avatarUrl}
+      />
         <button  className="btn-special" type="submit">Actualizar</button>
       </form>
     
@@ -333,3 +339,4 @@ const ProfileUpdate: React.FC = () => {
 };
 
 export default React.memo(ProfileUpdate);
+

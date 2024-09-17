@@ -106,6 +106,7 @@ const ProfileInfo: React.FC = () => {
       </div>
     );
   }
+  console.log("imagen" + profile.avatarUrl)
   return (
     <div className="bar-card">
       <div className="img-container">
