@@ -33,6 +33,13 @@ const Sidebar = () => {
           <i className="fs-4 bi bi-person"></i>
           <span className="ms-3 d-none d-sm-inline fs-4">Mi Perfil</span>
         </Link>
+        <Link
+          className="nav-link text-white fs-4 d-flex align-items-center gap-1"
+          to="/dashboardEspecialista/schedules"
+        >
+          <i className="bi bi-clock-history"></i>
+          <span className="ms-3 d-none d-sm-inline fs-4">Elige tu horario de atención</span>
+        </Link>
 
         <div className="nav-item">
           <a

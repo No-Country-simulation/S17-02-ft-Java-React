@@ -24,6 +24,7 @@ import ListaCitasCliente from "./components/DashboardClient/ListaCitasCliente/in
 import { SearchSpecialist } from "./components/SearchSpecialist/index.tsx";
 import Setting from "./components/SettingSpecialist/index.tsx";
 import ClinicalHistory from "./components/clinicalhistory/ClinicalHistory.tsx";
+import ScheduleConfig from "./components/DashboardSpecialist/Schedules/ScheduleConfig/index.tsx";
 
 axios.defaults.baseURL = "https://telemedicina-v1-0.onrender.com";
 
@@ -33,8 +34,8 @@ const App: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/payment" element={<PaymentGateway />} />
+          <Route path="/login" element={<Login onClose={() => console.log('Login closed')} />} /> 
+                      <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/prueba-mp" element={<MercadoPago />} />
           <Route path="/profile" element={<ProfileComponent />} />
           <Route path="/reservas" element={<Booking />} />
@@ -48,7 +49,7 @@ const App: React.FC = () => {
             <Route path="nueva-cita" element={<NuevaCita />} />
             <Route path="ver-citas" element={<ListaCitas />} />
             <Route path="settings" element={<Setting />} />
-            <Route path="clinicalhistory" element={<ClinicalHistory />} />
+            <Route path="schedules" element={<ScheduleConfig />} />
           </Route>
           <Route path="/updateprofile" element={<UpdateProfile />} />
 
