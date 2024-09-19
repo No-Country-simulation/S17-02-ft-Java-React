@@ -2,9 +2,8 @@
 // import Natura from "../../../assets/images/Brands/marcaNatura.png";
 // import Sanofi from "../../../assets/images/Brands/marcaSanofi.png";
 import Aciu from "../../../assets/images/Brands/marcaAciu.png";
-import CruzRoja from "../../../assets/images/Brands/marcaCruzRoja.png";
-import Hartmann from "../../../assets/images/Brands/marcaHartmann.png";
-import Crecimg from "../../../assets/images/Brands/marcaCrecimg.png";
+import CruzRoja from "../../../assets/images/Brands/marcaHartmann.png";
+import Crecimg from "../../../assets/images/Brands/marcaNatura.png";
 import Vithas from "../../../assets/images/Brands/marcaVithas.png";
 
 const Brands = () => {
@@ -23,9 +22,7 @@ const Brands = () => {
         <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
           <img src={CruzRoja} className="w-75 h-auto img-fluid" alt="Cruz Roja" />
         </div>
-        <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
-          <img src={Hartmann} className="w-75 h-auto img-fluid" alt="Hartmann" />
-        </div>
+        
         <div className="col-6 col-sm-4 col-md-3 col-lg-2 d-flex justify-content-center">
           <img src={Vithas} className="w-75 h-auto img-fluid" alt="Vithas" />
         </div>

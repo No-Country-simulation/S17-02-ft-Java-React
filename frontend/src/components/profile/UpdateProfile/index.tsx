@@ -133,6 +133,7 @@ const ProfileUpdate: React.FC = () => {
   }, [token]);
 
   useEffect(() => {
+    console.log(cities , success )
     if (!profile) {
       fetchProfileData();
       fetchCitiesAndDepartments();

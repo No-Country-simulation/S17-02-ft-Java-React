@@ -61,7 +61,10 @@ transition: all .2s ease-in;
     background-color: $primaryColor-hover;
     border: none;
 }
-}
+img{
+    background-position: center;
+    margin-bottom: 3rem;
+}}
 
 .spec-name{
     margin: -4.0rem auto;
@@ -83,28 +86,3 @@ transition: all .2s ease-in;
         
     }
  }
-.pediatrics{
-background-image: url(Specialists/pediatria.svg);
-background-repeat: no-repeat;
-background-position: center;
-}
-.clinics{
-   background-image: url(Specialists/medicoClinico.svg);
-   background-repeat: no-repeat;
-   background-position: center; 
-}
-.psych{
-    background-image: url(Specialists/Psychologist-bro\ 1.svg); 
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.dermat{
-    background-image: url(Specialists/Dermatologia.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.cardio{
-    background-image: url(Specialists/Cardiologist-bro\ 1.svg);
-    background-repeat: no-repeat;
-    background-position: center;    
-}
