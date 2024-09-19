@@ -1,0 +1,49 @@
+
+/*Primary Colors*/
+$primaryColor-ultra-dark:#062a2d;
+$primaryColor-darker:#154b4c;
+$primaryColor-dark-active:#14595b;
+$primaryColor-dark-hover:#137072;
+$primaryColor-dark:#128e8f;
+$primaryColor-active:#1ab2af;
+$primaryColor-hover: #34cdc8;
+$primaryColor-normal: #55e2d9;
+$primaryColor-light-active: #9df2ea;
+$primaryColor-light-hover: #cef9f4;
+$primaryColor-light-light: #f1fcfb;
+/*Neutral Colors*/
+$neutralColor-950:#292929;
+$neutralColor-900:#3d3d3d;
+$neutralColor-800:#464646;
+$neutralColor-700:#525252;
+$neutralColor-600:#656565;
+$neutralColor-500:#7c7c7c;
+$neutralColor-400:#989898;
+$neutralColor-300:#bdbdbd;
+$neutralColor-200:#dcdcdc;
+$neutralColor-100:#efefef;
+$neutralColor-50:#ffffff;
+/*Headings sizes*/
+$display-1:   14.4rem;
+$display-2:   9.6rem;
+$display-3:   6.4rem;
+$heading-d-1: 5.6rem;
+$heading-m-1: 4rem;
+$heading-d-2: 4.8rem;
+$heading-m-2: 3.2rem;
+$heading-d-3: 4rem;
+$heading-m-3: 2.4rem;
+$heading-d-4: 3.2rem;
+/*body*/
+$hero-bold:(
+    font-size:2.8rem,
+    font-weight:700
+);
+$hero-accent:(
+    font-size:2.8rem,
+    font-weight:500,
+);
+$hero-standard:(
+font-size:2.8rem,
+font-weight:300
+)

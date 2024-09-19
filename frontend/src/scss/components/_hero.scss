@@ -1,0 +1,110 @@
+.container-hero{
+    min-height: 64rem;
+    padding: 3.2rem 15rem;
+    background: linear-gradient(180deg, #CEF9F4 0%, #34CDC8 100%);
+    width: 100%;
+    box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.10);}
+.main-hero{
+    display: block;
+    font-size: $heading-m-2;
+    color: $primaryColor-ultra-dark;
+    max-width: 110rem;
+    text-transform: uppercase;
+    ;
+};
+@media (min-width: 768px){ 
+    .main-hero{
+        font-size: $heading-d-1;
+    }
+}
+
+.btn-hero{
+    width: 17.2rem;
+    height: 15.2rem;
+    border-radius: .8rem;
+    border: none;
+    background-color: #d9d9d9;
+    color: $neutralColor-950;
+    font-size: $heading-m-3;
+    font-weight: 300;
+    line-height: .3rem;
+    transition: all .1s ease-in;
+    &:hover{
+        cursor: pointer;
+        background-color: $neutralColor-500;
+        color:$neutralColor-100;
+    }
+}
+.card-container-hero{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 5rem;
+    
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-end;
+    margin:.5rem;
+    margin-top: 5rem;
+width: 11rem;
+height: 9rem;
+border-radius: .8rem;
+border: .2rem solid $primaryColor-active;
+background-color: $primaryColor-normal;
+transition: all .2s ease-in;
+&:hover{        
+    cursor: pointer;
+    background-color: $primaryColor-hover;
+    border: none;
+}
+}
+
+.spec-name{
+    margin: -4.0rem auto;
+    color: $primaryColor-dark-active;
+    font-size: 1.4rem;    
+    font-weight: 500;
+
+}
+@media (min-width: 768px){ 
+    .card{
+     width: 16.2rem;
+ height: 14.9rem;
+ margin: 0;
+ margin-top: 5rem;
+    } 
+    .spec-name{
+        margin: -3.2rem auto;
+        font-size: 2rem;
+        
+    }
+ }
+.pediatrics{
+background-image: url(Specialists/pediatria.svg);
+background-repeat: no-repeat;
+background-position: center;
+}
+.clinics{
+   background-image: url(Specialists/medicoClinico.svg);
+   background-repeat: no-repeat;
+   background-position: center; 
+}
+.psych{
+    background-image: url(Specialists/Psychologist-bro\ 1.svg); 
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.dermat{
+    background-image: url(Specialists/Dermatologia.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.cardio{
+    background-image: url(Specialists/Cardiologist-bro\ 1.svg);
+    background-repeat: no-repeat;
+    background-position: center;    
+}

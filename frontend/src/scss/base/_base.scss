@@ -1,0 +1,17 @@
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+  }
+
+body{
+    font-family: $font-primary;
+    height: 100vh;
+}
+*,*::before, *::after {
+  box-sizing: inherit;
+}
+h1, h2, h3{
+  font-weight: 700;
+}
+

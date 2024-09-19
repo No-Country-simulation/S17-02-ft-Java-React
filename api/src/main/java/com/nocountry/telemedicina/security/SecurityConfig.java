@@ -54,8 +54,6 @@ public class SecurityConfig {
         private JwtAuthenticationFilter jwtAuthenticationFilter;
         @Autowired
         private AuthenticationProvider authenticationProvider;
-        // @Autowired
-        // private CorsConfigurationSource corsConfigurationSource;
 
         private static final String[] AUTH_ENDPOINTS_PUBLIC = {
                         "/api/auth/login",
@@ -65,7 +63,8 @@ public class SecurityConfig {
                         "/api/auth/login/oauth",
                         "/swagger-ui/**",
                         "/v3/api-docs/**",
-                        "/api/mercado-pago/webhook"
+                        "/api/mercado-pago/webhook",
+                        "/api/mercado-pago/generate-preference"
         };
 
         private static final String[] OTHERS_ENDPOINTS_PUBLIC = {

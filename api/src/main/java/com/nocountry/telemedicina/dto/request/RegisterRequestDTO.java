@@ -19,7 +19,7 @@ public class RegisterRequestDTO {
     @NotBlank
     @Size(min = 8)
     private String password;
-
+    @NotBlank
     @NotEmpty
     private List<UUID> rolesId;
 }

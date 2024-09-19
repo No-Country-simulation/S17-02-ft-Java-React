@@ -1,0 +1,83 @@
+.register-container{
+max-width: 144rem;
+ height: 100vh;
+ background-image: linear-gradient(to right, transparent 45%, white 0%), url('/Specialists/image.png');
+background-repeat: no-repeat;
+background-position: left center;
+align-content: center;
+display: grid; 
+grid-template-columns: repeat(2,1fr);
+grid-column: 2 / 3;
+}
+
+.form-container{
+    max-width: 56.7rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+.form-container h2{
+    font-size: $heading-d-3;
+}
+.register-specialist{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.input-register{
+    width: 100%;
+    height: 5.35rem;
+    padding: .8rem 1.6rem;
+    background-color: $neutralColor-100;
+    border-radius: .8rem;
+    font-size: 1.8rem;
+    font-weight: 300;
+    border: none;
+    &::placeholder{
+        color:$neutralColor-400;
+        font-size: 1.8rem;
+        font-weight: 300;
+        text-transform: capitalize;
+    }
+
+}
+.input-register-error{
+    width: 100%;
+    height: 5.35rem;
+    font-size: 1.8rem;
+    font-weight: 300;
+    padding: .8rem 1.6rem;
+    border-radius: .8rem;
+    border: 1px solid #fa9292;
+    background-color: #f8cdca;
+}
+.footer-register{
+    display: grid;
+    width: 100%;
+    grid-template-rows: repeat(2,1fr);
+    
+}
+.checkbox-footer{
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: #000
+}
+.checkbox-footer span{
+color: $primaryColor-active;
+font-weight: 700;
+}
+.btn-footer{
+display: flex;
+justify-content: flex-end;
+margin-top: 5rem;
+}
+.error-message{
+    color:#e44a41
+}
