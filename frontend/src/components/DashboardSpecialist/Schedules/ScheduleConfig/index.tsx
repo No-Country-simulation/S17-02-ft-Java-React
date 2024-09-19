@@ -85,7 +85,7 @@ export default function ScheduleConfig() {
     { setSubmitting }: FormikHelpers<ScheduleConfigFormValues>
   ) => {
     setSubmitting(false);
-    console.log(values);
+    console.log(formatDay , values);
   };
 
   return (

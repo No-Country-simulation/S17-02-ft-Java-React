@@ -1,9 +1,15 @@
+import { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context/context.tsx";
 import SidebarClient from "../../components/DashboardClient/SidebarClient/index.tsx";
 import Sidebar from "../../components/DashboardSpecialist/SideBar/index.tsx";
 
-const DashboardLayout = () => {
+// Añade ReactNode como el tipo para las props de DashboardLayout
+interface DashboardLayoutProps {
+  children?: ReactNode;
+}
+
+const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   const { roleId } = useAuth();
 
   let SidebarComponent = null;
@@ -18,7 +24,7 @@ const DashboardLayout = () => {
       <div className="row">
         {SidebarComponent && <SidebarComponent />}
         <div className="col bg-light p-4">
-          <Outlet />
+          {children || <Outlet />}
         </div>
       </div>
     </div>

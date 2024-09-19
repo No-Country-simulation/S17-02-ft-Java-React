@@ -38,7 +38,7 @@ const ListaCitasCliente = () => {
             <td className="text-center">09:00 - 10:00 </td>
             <td className="text-center"> Detalles de la sesion</td>
             <td className="text-center">
-              <button className="btn btn-primary">
+              <button className="btn-navbar-pct">
                 Iniciar Videollamada
               </button>
             </td>

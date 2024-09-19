@@ -6,21 +6,21 @@ import { format } from "date-fns";
 import "bootstrap-icons/font/bootstrap-icons.css"; // Importación de iconos de Bootstrap
 
 interface CustomDateRangeFormFieldProps {
-  values: DateRange;
-  setFieldValue: (
+  readonly values: DateRange;
+  readonly setFieldValue: (
     field: string,
     value: Date,
     shouldValidate?: boolean
   ) => Promise<void | FormikErrors<any>>;
-  touched: FormikTouched<any>;
-  errors: FormikErrors<any>;
-  fieldNameFrom: string;
-  fieldNameTo: string;
-  labelFrom: string;
-  labelTo: string;
-  placeholderFrom?: string;
-  placeholderTo?: string;
-  disabled: Matcher | Matcher[] | undefined;
+  readonly touched: FormikTouched<any>;
+  readonly errors: FormikErrors<any>;
+  readonly fieldNameFrom: string;
+  readonly fieldNameTo: string;
+  readonly labelFrom: string;
+  readonly labelTo: string;
+  readonly placeholderFrom?: string;
+  readonly placeholderTo?: string;
+  readonly disabled: Matcher | Matcher[] | undefined;
 }
 
 export default function CustomDateRangeFormField({
@@ -37,7 +37,7 @@ export default function CustomDateRangeFormField({
   disabled,
 }: CustomDateRangeFormFieldProps) {
   const [showPopover, setShowPopover] = useState(false);
-
+  console.log(labelFrom + labelTo)
   return (
     <div className="custom-date-range">
       <OverlayTrigger
