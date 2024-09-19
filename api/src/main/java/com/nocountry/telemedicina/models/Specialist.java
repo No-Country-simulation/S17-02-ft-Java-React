@@ -34,11 +34,22 @@ public class Specialist extends Auditable{
     @Column(name = "booking_price", nullable = false)
     private Double bookingPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "clinic_id", foreignKey = @ForeignKey(name = "FK_SPECIALISTS_CLINIC"), nullable = false)
-    private Clinic clinic;
+    @Column(name = "reputation", nullable = false)
+    private Integer reputation = 0;
+
+    @OneToOne
+    @JoinColumn(name = "profile_id",foreignKey = @ForeignKey(name = "FK_SPECIALISTS_Profile"),nullable = false)
+    private Profile profile;
 
     @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
     @JsonIgnore
-    private List<Schedules>schedules;
+    private List<ScheduleConfig> schedulesConfig;
+
+    @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
+    private List<Schedule> schedules;
+
+    @OneToMany(mappedBy = "specialist", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @JsonIgnore
+    private List<Review> reviews;
 }
