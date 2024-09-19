@@ -56,7 +56,10 @@ HeyDoc es una aplicación web moderna que utiliza **Spring Boot** para el backen
 | **Nicolás García Tortosa**
 | <a href="https://www.behance.net/nicotortosa"><img src="https://img.shields.io/badge/behance-%23121011.svg?&style=for-the-badge&logo=behance&logoColor=white"/></a> <a href="https://www.linkedin.com/in/nicol%C3%A1s-garc%C3%ADa-tortosa-28b392190/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>
 ## QA
-
+| <img src="https://media.licdn.com/dms/image/v2/D4D03AQEWMxBVHFMBMw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1705529500435?e=1732147200&v=beta&t=ubZTxmw2K39hNNn4QJ-ucyfgLdgp7lpJwA3y5MKLuBs" width=50>| 
+|:-:
+| **Cynthia Sotelo**
+| <a href="https://www.linkedin.com/in/cynthiasotelo/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>
 ## Instalación y Despliegue con Docker
 
 ### Requisitos
