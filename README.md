@@ -43,6 +43,19 @@ HeyDoc es una aplicación web moderna que utiliza **Spring Boot** para el backen
 ![React](https://img.shields.io/badge/React-61dbfb?style=for-the-badge&logo=React&logoColor=black)
 ![Visual Studio Code](https://img.shields.io/badge/Visual_Studio_Code-22A7F2?style=for-the-badge&logo=Visual%20studio&logoColor=white)
 
+### Developers:
+
+| <img src="https://media.licdn.com/dms/image/v2/D4D35AQHPPOzc5H-ZZg/profile-framedphoto-shrink_200_200/profile-framedphoto-shrink_200_200/0/1706212843627?e=1727316000&v=beta&t=mzN-Cwvtb4janhB45y1UBpDm-O2-rxUC9HLs5J8cQZE" width=50>| <img src="https://avatars.githubusercontent.com/u/163625466?v=4" width=50>| 
+|:-:|:-:|
+| **Pablo Agustin Guerreño**| **Blas Pachano**|
+| <a href="https://github.com/Guerre-Pablo-Agustin"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/guerre-pablo-agustin/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>| <a href="https://github.com/Blaschu"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/blas-pachano-1059a91b0/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+
+| <img src="https://media.licdn.com/dms/image/v2/D4D35AQF686d9Aff9gQ/profile-framedphoto-shrink_200_200/profile-framedphoto-shrink_200_200/0/1725847906394?e=1727319600&v=beta&t=50w3XnKVSzK_xkrm-rmm12muPBJWX_NV7bMAeHfRwio" width=50>| <img src="https://avatars.githubusercontent.com/u/128660982?v=4" width=50>| 
+|:-:|:-:|
+| **Fernando Juan Batres**| **Pablo Hernan Rubiño**|
+| <a href="https://github.com/FerjuanB"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/ferjuanb101/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>| <a href="https://github.com/PHRCOOK"><img src="https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white"/></a> <a href="https://www.linkedin.com/in/pablo-hernan-rubi%C3%B1o/"><img src="https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white"/></a>
+
+
 ## UX/UI Designer
 
 #### Tech Stack
