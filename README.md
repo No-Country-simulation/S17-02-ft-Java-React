@@ -135,6 +135,7 @@ Los wireframes y diseños están disponibles en [Figma](https://www.figma.com/fi
 
 - **Backend**: Usa [Postman](https://www.postman.com/) para probar los endpoints de la API.
 - **Frontend**: Realiza pruebas manuales y automatizadas para garantizar la calidad y el rendimiento.
+- **QA**: Link a la plantilla de Test Cases: [Google Sheets] (https://bit.ly/3BemV5Y)
 
 ## Contribución
 
