@@ -269,7 +269,7 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
           <Button
             variant="primary"
             size="lg"
-            className="mb-3 w-50 align-self-end"
+            className="btn-navbar-pct"
             type="submit"
           >
             Reservar Cita
@@ -294,10 +294,10 @@ const ReservationForm: React.FC<BookingFormProps> = ({ user }) => {
           <p>Monto: ${submittedData?.monto}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" className="btn-navbar-prof" onClick={() => setShowModal(false)}>
             Cancelar
           </Button>
-          <Button variant="primary" onClick={handleConfirm}>
+          <Button variant="primary" className="btn-navbar-pct" onClick={handleConfirm}>
             Confirmar
           </Button>
         </Modal.Footer>

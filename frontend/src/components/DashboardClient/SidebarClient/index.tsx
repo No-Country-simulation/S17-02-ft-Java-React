@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap-icons/font/bootstrap-icons.css";
-
+import { useAuth } from "../../../context/context";
 const SidebarClient = () => {
+  const {logout} = useAuth();
   const [isCitasOpen, setIsCitasOpen] = useState(false);
 
   const toggleCitas = () => setIsCitasOpen(!isCitasOpen);
 
   return (
-    <div className="bg-dark col-auto col-md-3 min-vh-100 d-flex flex-column">
+    <div className="sidebar-container col-auto col-md-3 min-vh-100 d-flex flex-column">
       <Link
         className="text-decoration-none d-flex align-items-center gap-1 text-white mt-3 d-none d-sm-inline"
         to="/dashboardCliente/home-cliente"
@@ -84,13 +85,13 @@ const SidebarClient = () => {
       </nav>
 
       <div className="mt-auto mb-3">
-        <a
+        <button
           className="nav-link text-white fs-4 d-flex align-items-center gap-1"
-          href="#"
+         onClick={()=>logout()}
         >
           <i className="fs-4 bi bi-box-arrow-right"></i>
           <span className="ms-1 fs-4">Cerrar Sesión</span>
-        </a>
+        </button>
       </div>
     </div>
   );

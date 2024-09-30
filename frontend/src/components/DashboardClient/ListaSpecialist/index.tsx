@@ -101,7 +101,7 @@ const ListaEspecialist = () => {
                 <td className="text-center">{specialist.specialistCode}</td>
                 <td className="text-center">{specialist.specialtyName}</td>
                 <td className="text-center">
-                  <button className="btn btn-primary">
+                  <button className="btn-navbar-pct">
                     Ver horarios disponibles
                   </button>
                 </td>
